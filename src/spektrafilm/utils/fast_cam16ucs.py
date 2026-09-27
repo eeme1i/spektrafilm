@@ -19,6 +19,8 @@ import math
 import numpy as np
 from numba import njit, prange
 
+from spektrafilm.utils.dtypes import as_float_array
+
 _EPSILON = float(np.finfo(np.float64).eps)
 _UCS_C1 = 0.007
 _UCS_C2 = 0.0228
@@ -209,7 +211,7 @@ def _cam16ucs_to_xyz_kernel(jab, M16_inv, D_RGB, F_L, N_bb, A_w, cz, t_coef, chr
 def xyz_to_cam16ucs(xyz, xyz_w, L_A, Y_b):
     """Fast equivalent of ``colour.XYZ_to_CAM16UCS(xyz, XYZ_w=xyz_w, L_A=L_A, Y_b=Y_b)``."""
     M16, _, D_RGB, *scalars = _cam16_constants(xyz_w, L_A, Y_b)
-    xyz = np.asarray(xyz, dtype=np.float64)
+    xyz = as_float_array(xyz)
     flat = np.ascontiguousarray(xyz.reshape(-1, 3))
     out = np.empty_like(flat)
     _xyz_to_cam16ucs_kernel(flat, M16, D_RGB, *scalars, out)
@@ -219,7 +221,7 @@ def xyz_to_cam16ucs(xyz, xyz_w, L_A, Y_b):
 def cam16ucs_to_xyz(jab, xyz_w, L_A, Y_b):
     """Fast equivalent of ``colour.CAM16UCS_to_XYZ(jab, XYZ_w=xyz_w, L_A=L_A, Y_b=Y_b)``."""
     _, M16_inv, D_RGB, *scalars = _cam16_constants(xyz_w, L_A, Y_b)
-    jab = np.asarray(jab, dtype=np.float64)
+    jab = as_float_array(jab)
     flat = np.ascontiguousarray(jab.reshape(-1, 3))
     out = np.empty_like(flat)
     _cam16ucs_to_xyz_kernel(flat, M16_inv, D_RGB, *scalars, out)

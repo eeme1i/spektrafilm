@@ -33,6 +33,7 @@ from matplotlib.path import Path as MplPath
 from numba import njit, prange
 from scipy.ndimage import map_coordinates
 
+from spektrafilm.utils.dtypes import as_float_array
 from spektrafilm.utils.fast_cam16ucs import cam16ucs_to_xyz, xyz_to_cam16ucs
 from spektrafilm.utils.fast_colour import rgb_to_xyz, xyz_to_rgb
 
@@ -298,7 +299,7 @@ def reinhard_knee(
     bit-identical by spektrafilm-research/studies/a40_lut_system/
     validate_compression_against_references.py).
     """
-    out = np.asarray(d, dtype=float).copy()
+    out = as_float_array(d).copy()
     mask = out > threshold
     if np.any(mask):
         scale = limit - threshold
@@ -510,8 +511,10 @@ def _c_max_lookup(
     L_grid: np.ndarray, h_grid: np.ndarray, C_max_table: np.ndarray,
 ) -> np.ndarray:
     """Bilinear lookup of C_max(L, h)."""
-    L, h = np.broadcast_arrays(np.asarray(L, dtype=np.float64), np.asarray(h, dtype=np.float64))
-    out = np.empty(L.shape)
+    L, h = np.broadcast_arrays(as_float_array(L), as_float_array(h))
+    if L.dtype != h.dtype:
+        L, h = L.astype(np.float64), h.astype(np.float64)
+    out = np.empty(L.shape, dtype=L.dtype)
     _c_max_lookup_kernel(
         np.ascontiguousarray(L).reshape(-1), np.ascontiguousarray(h).reshape(-1),
         np.ascontiguousarray(L_grid, dtype=np.float64), np.ascontiguousarray(h_grid, dtype=np.float64),
@@ -755,6 +758,7 @@ def _compress_lightness(
     Y >= 0 by physical construction.
     """
     threshold, limit, power = params
+    L_white = float(L_white)
     L_norm = L / L_white
     L_norm = reinhard_knee(
         L_norm, threshold=threshold, limit=limit, power=power,
@@ -1165,7 +1169,7 @@ def compress_rgb_cam16ucs_chroma(
     by the output whitepoint's Jp (≈100 under the configured viewing
     conditions). Black (Jp = 0) is left untouched.
     """
-    rgb = np.asarray(rgb, dtype=float)
+    rgb = as_float_array(rgb)
     cs = colour.RGB_COLOURSPACES[output_color_space]
     white = np.asarray(cs.whitepoint, dtype=float)
     xyz_w = _output_cs_whitepoint_xyz(output_color_space)
@@ -1234,13 +1238,16 @@ def compress_rgb(
         ``C_max(L, h)`` table. Ignored for ``"aces_rgc"``, which
         operates purely in destination RGB.
     """
+    # Results come back in the input's working precision (float32 or
+    # float64) whatever precision an algorithm computes in internally.
+    rgb = as_float_array(rgb)
     if spec.algorithm == "off":
-        return np.asarray(rgb, dtype=float)
+        return rgb
     threshold, limit, power = spec.knee
     if spec.algorithm == "aces_rgc":
-        return compress_rgb_aces_rgc(
+        return np.asarray(compress_rgb_aces_rgc(
             rgb, threshold=threshold, limit=limit, power=power,
-        )
+        )).astype(rgb.dtype, copy=False)
     perceptual_fns = {
         "oklch": compress_rgb_oklch_chroma,
         "oklrab": compress_rgb_oklrab_chroma,
@@ -1252,11 +1259,11 @@ def compress_rgb(
             raise ValueError(
                 f"output_color_space is required when algorithm={spec.algorithm!r}"
             )
-        return perceptual_fns[spec.algorithm](
+        return np.asarray(perceptual_fns[spec.algorithm](
             rgb, output_color_space=output_color_space,
             threshold=threshold, limit=limit, power=power,
             lightness_compression=spec.lightness_compression,
-        )
+        )).astype(rgb.dtype, copy=False)
     raise ValueError(f"unknown output algorithm {spec.algorithm!r}")
 
 

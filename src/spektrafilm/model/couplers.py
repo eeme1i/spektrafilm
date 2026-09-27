@@ -92,6 +92,10 @@ def compute_exposure_correction_dir_couplers(log_raw, density_cmy, density_max,
     Returns:
     numpy.ndarray: The modified raw exposure data after applying the effect of inhibitors.
     """
+    # Small per-channel inputs take the image dtype so float32 stays float32.
+    dtype = density_cmy.dtype
+    density_max = np.asarray(density_max).astype(dtype, copy=False)
+    dir_couplers_matrix = np.asarray(dir_couplers_matrix).astype(dtype, copy=False)
     if positive:
         density_silver = density_max - density_cmy
     else:

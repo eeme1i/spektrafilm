@@ -5,6 +5,7 @@ import pytest
 
 from .conftest import make_fast_test_params
 
+from spektrafilm.runtime.params_builder import init_params
 from spektrafilm.runtime.process import simulate
 
 
@@ -201,3 +202,24 @@ def test_auto_exposure_normalizes_bright_inputs(default_params) -> None:
 
     assert np.mean(auto_result) < np.mean(manual_result)
     assert 0.45 < np.mean(auto_result) < 0.51
+
+
+@pytest.mark.parametrize('scan_film', [False, True])
+def test_pipeline_carries_images_as_float32_with_all_effects(scan_film) -> None:
+    # Every stage keeps the float32 working precision; a float64 promotion
+    # anywhere would double memory traffic for the rest of the pipeline.
+    params = init_params(film_profile='kodak_portra_400', print_profile='kodak_portra_endura')
+    params.io.scan_film = scan_film
+    params.film_render.grain.active = True
+    params.film_render.halation.active = True
+    params.film_render.dir_couplers.active = True
+    params.print_render.glare.active = True
+    params.settings.use_fast_stats = True
+    params.settings.use_enlarger_lut = True
+    params.settings.use_scanner_lut = True
+    image = np.random.default_rng(0).random((32, 32, 3))
+
+    result = simulate(image, params)
+
+    assert result.dtype == np.float32
+    _assert_valid_output(result, shape=(32, 32, 3), bounded=False)

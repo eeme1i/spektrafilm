@@ -13,6 +13,7 @@ from spektrafilm.runtime.services import (
 )
 from spektrafilm.runtime.stages import FilmingStage, PrintingStage, ScanningStage
 from spektrafilm.runtime.topology import Node, Tap, run_topology
+from spektrafilm.utils.dtypes import IMAGE_DTYPE
 from spektrafilm.utils.timings import format_timings
 
 
@@ -189,7 +190,7 @@ class SimulationPipeline:
         ]
 
     def _preprocess(self, image):
-        image = np.double(np.array(image)[:, :, 0:3])
+        image = np.array(np.asarray(image)[:, :, 0:3], dtype=IMAGE_DTYPE)
         image = self._filming_stage.auto_exposure(image)
         image = self._resize_service.crop_and_rescale(image)
         return image

@@ -1,4 +1,5 @@
 import numpy as np
+from spektrafilm.utils.dtypes import as_float_array
 from spektrafilm.utils.fast_interp_lut import apply_lut_3d, apply_lut_cubic_2d
 
 def _as_channel_bounds(bounds):
@@ -41,7 +42,12 @@ def compute_with_lut(data, function, xmin=(0.0, 0.0, 0.0), xmax=(1.0, 1.0, 1.0),
         raise ValueError('xmax must be greater than xmin')
     if lut is None:
         lut = _create_lut_3d(function, xmin, xmax, steps)
-    data_normalized = (data - xmin) / (xmax - xmin)
+    # Normalize in the data's own precision (float32 images stay float32);
+    # the LUT itself is built and kept in float64.
+    data = as_float_array(data)
+    xmin_d = xmin.astype(data.dtype)
+    inv_span = (1.0 / (xmax - xmin)).astype(data.dtype)
+    data_normalized = (data - xmin_d) * inv_span
     return apply_lut_3d(lut, data_normalized), lut
 
 def warmup_luts():

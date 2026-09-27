@@ -1,6 +1,8 @@
 import numpy as np
 from numba import njit, prange
 
+from spektrafilm.utils.dtypes import as_float_array
+
 
 @njit(parallel=True, cache=True, fastmath=True)
 def _boost_curve_kernel(
@@ -74,7 +76,7 @@ def boost_highlights(
     if midgray < 0.0:
         raise ValueError("midgray must be >= 0")
 
-    x = np.asarray(x, dtype=np.float64)
+    x = as_float_array(x)
     if x.ndim != 3:
         raise ValueError("x must be a 3D array, e.g. HxWxC")
     if not x.flags["C_CONTIGUOUS"]:

@@ -159,7 +159,7 @@ def cubic_interp_lut_at_3d(lut, r, g, b):
 @njit(parallel=True, cache=True)
 def _apply_lut_constant_3d(lut, image):
     height, width, _ = image.shape
-    output = np.empty((height, width, 3), dtype=lut.dtype)
+    output = np.empty((height, width, 3), dtype=image.dtype)
     value = _constant_lut_value_3d(lut)
     for i in prange(height):
         for j in range(width):
@@ -175,7 +175,7 @@ def _apply_lut_cubic_3d(lut, image):
     Apply cubic interpolation to a 3D LUT with reflected boundary handling.
     """
     height, width, _ = image.shape
-    output = np.empty((height, width, 3), dtype=lut.dtype)
+    output = np.empty((height, width, 3), dtype=image.dtype)
     scale = lut.shape[0] - 1
     for i in prange(height):
         for j in range(width):
@@ -464,7 +464,7 @@ def _pchip_interp_lut_at_3d_prepared(lut, slope_x, slope_y, slope_z, cell_min, c
 @njit(parallel=True, cache=True)
 def _apply_lut_pchip_3d_prepared(lut, slope_x, slope_y, slope_z, cell_min, cell_max, image):
     height, width, _ = image.shape
-    output = np.empty((height, width, 3), dtype=lut.dtype)
+    output = np.empty((height, width, 3), dtype=image.dtype)
     scale = lut.shape[0] - 1
     for i in prange(height):
         for j in range(width):
@@ -569,7 +569,7 @@ def apply_lut_cubic_2d(lut, image):
 def _apply_lut_linear_2d(lut, image):
     height, width, _ = image.shape
     channels = lut.shape[2]
-    output = np.empty((height, width, channels), dtype=np.float64)
+    output = np.empty((height, width, channels), dtype=image.dtype)
     size = lut.shape[0]
     for i in prange(height):
         for j in range(width):
@@ -588,7 +588,7 @@ def _apply_lut_cubic_2d(lut, image):
     """
     height, width, _ = image.shape
     channels = lut.shape[2]
-    output = np.empty((height, width, channels), dtype=np.float64)
+    output = np.empty((height, width, channels), dtype=image.dtype)
     scale = lut.shape[0] - 1
     for i in prange(height):
         for j in range(width):

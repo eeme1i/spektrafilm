@@ -98,7 +98,10 @@ class SpectralLUTService:
         use_lut: bool = False,
     ):
         if not use_lut:
-            return spectral_calculation(cmy_data)
+            # The per-pixel spectral maths runs in float64; hand the image
+            # back in its working precision.
+            cmy_data = np.asarray(cmy_data)
+            return spectral_calculation(cmy_data).astype(cmy_data.dtype, copy=False)
 
         test_results = spectral_calculation(np.array(self._cmy_test_values))
 
@@ -136,7 +139,10 @@ class SpectralLUTService:
         use_lut: bool = False,
     ):
         if not use_lut:
-            return spectral_calculation(cmy_data)
+            # The per-pixel spectral maths runs in float64; hand the image
+            # back in its working precision.
+            cmy_data = np.asarray(cmy_data)
+            return spectral_calculation(cmy_data).astype(cmy_data.dtype, copy=False)
 
         test_results = spectral_calculation(np.array(self._cmy_test_values))
 

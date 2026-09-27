@@ -52,6 +52,8 @@ def apply_halation_um(raw, halation, pixel_size_um):
     if s_amount > 0 and (np.any(sigma_c_px > 0) or np.any(lambda_t_px > 0)):
         core = fast_gaussian_filter(raw, np.maximum(sigma_c_px, 1e-6))
         tail = fast_exponential_filter(raw, np.maximum(lambda_t_px, 1e-6))
+        # Per-channel weights take the image dtype so float32 stays float32.
+        w_s = w_s.astype(raw.dtype, copy=False)
         scattered = (1.0 - w_s) * core + w_s * tail
         raw = (1.0 - s_amount) * raw + s_amount * scattered
 
@@ -71,7 +73,8 @@ def apply_halation_um(raw, halation, pixel_size_um):
         halation_blur = np.zeros_like(raw)
         for k, wk in zip(range(1, N + 1), decay):
             sigma_k_px = np.maximum(sigma_h_px * np.sqrt(k), 1e-6)
-            halation_blur += wk * fast_gaussian_filter(raw, sigma_k_px)
+            halation_blur += float(wk) * fast_gaussian_filter(raw, sigma_k_px)
+        a_tot = a_tot.astype(raw.dtype, copy=False)
         raw = raw + a_tot * halation_blur
         if halation.halation_renormalize:
             raw = raw / (1.0 + a_tot)

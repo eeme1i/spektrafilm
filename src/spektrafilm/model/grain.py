@@ -60,7 +60,7 @@ def _fast_poisson_binomial_grain(density, density_max, n_particles_per_pixel, gr
     # using the fast_stats samplers (same arithmetic, one pass, no temporaries).
     n_rows, n_cols = density.shape
     od_particle = density_max/n_particles_per_pixel
-    grain = np.empty((n_rows, n_cols))
+    grain = np.empty((n_rows, n_cols), dtype=density.dtype)
     for i in prange(n_rows):
         for j in range(n_cols):
             probability = min(max(density[i, j]/density_max, 1e-6), 1-1e-6)
@@ -74,7 +74,7 @@ def add_micro_structure(density_cmy_out, micro_structure, pixel_size_um):
     grain_micro_structure_sigma = micro_structure[1]*0.001/pixel_size_um  # grain microstructure[1] is in nm
     if grain_micro_structure_sigma > 0.05:
         clumping = fast_lognormal_from_mean_std(np.ones_like(density_cmy_out),
-                                                np.ones_like(density_cmy_out)*grain_micro_structure_sigma)
+                                                np.full_like(density_cmy_out, grain_micro_structure_sigma))
         if grain_micro_structure_blur_pixel>0.4:
             # clumping = scipy.ndimage.gaussian_filter(clumping, (grain_micro_structure_blur_pixel,
             #                                                     grain_micro_structure_blur_pixel, 0))
@@ -159,14 +159,14 @@ def apply_grain_to_density_layers(density_cmy_layers, # x,y,sublayers,rgb array,
     else:
         seed = [0, 1, 2]
     
-    density_cmy_out = np.zeros(density_cmy_layers.shape[0:3])
+    density_cmy_out = np.zeros(density_cmy_layers.shape[0:3], dtype=density_cmy_layers.dtype)
     for ch in np.arange(3): # rgb channels
         for sl in np.arange(3): # sublayers
             if isinstance(density_cmy_layers, DensityLayers):
                 density_layer = density_cmy_layers.layer(sl, ch)
             else:
                 density_layer = density_cmy_layers[:,:,sl,ch]
-            density_cmy_out[:,:,ch] += layer_particle_model(density_layer + density_min_layers[sl,ch],
+            density_cmy_out[:,:,ch] += layer_particle_model(density_layer + float(density_min_layers[sl,ch]),
                                                             density_max=density_max_layers[sl,ch],
                                                             n_particles_per_pixel=n_particles_per_pixel[sl,ch],
                                                             grain_uniformity=grain_uniformity[ch],

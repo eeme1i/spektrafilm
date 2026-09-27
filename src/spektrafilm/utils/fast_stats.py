@@ -146,7 +146,7 @@ def fast_lognormal(mu_arr, sigma_arr):
     result : numpy array of float64
         Lognormal random variates, same shape as mu_arr.
     """
-    result = np.empty(mu_arr.shape, dtype=np.float64)
+    result = np.empty(mu_arr.shape, dtype=mu_arr.dtype)
     flat_mu = mu_arr.ravel()
     flat_sigma = sigma_arr.ravel()
     flat_result = result.ravel()
@@ -193,8 +193,8 @@ def fast_lognormal_from_mean_std(mean_arr, std_arr):
         Lognormal random variates, same shape as mean_arr.
     """
     result_shape = mean_arr.shape
-    mu_arr = np.empty(result_shape, dtype=np.float64)
-    sigma_arr = np.empty(result_shape, dtype=np.float64)
+    mu_arr = np.empty(result_shape, dtype=mean_arr.dtype)
+    sigma_arr = np.empty(result_shape, dtype=mean_arr.dtype)
     flat_mean = mean_arr.ravel()
     flat_std = std_arr.ravel()
     flat_mu = mu_arr.ravel()

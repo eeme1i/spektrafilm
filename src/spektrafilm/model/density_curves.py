@@ -1,6 +1,7 @@
 import numba
 import numpy as np
 import scipy
+from spektrafilm.utils.dtypes import as_float_array
 from spektrafilm.utils.fast_interp import fast_interp
 
 ################################################################################
@@ -58,7 +59,8 @@ class DensityLayers:
     """
 
     def __init__(self, density_cmy, density_curves, density_curves_layers, positive_film=False):
-        self._density_cmy = np.asarray(density_cmy, dtype=np.float64)
+        self._density_cmy = as_float_array(density_cmy)
+        self.dtype = self._density_cmy.dtype
         self._sign = -1.0 if positive_film else 1.0
         self._x_axes = np.ascontiguousarray((self._sign * np.asarray(density_curves, dtype=np.float64)).T)
         dx = np.diff(self._x_axes, axis=1)
@@ -68,7 +70,7 @@ class DensityLayers:
         self.shape = self._density_cmy.shape[0:2] + (3, 3)
 
     def layer(self, layer, channel):
-        out = np.empty(self.shape[0:2])
+        out = np.empty(self.shape[0:2], dtype=self.dtype)
         _interp_density_layer_kernel(self._density_cmy[:, :, channel], self._x_axes[channel],
                                      self._inv_dx[channel], self._y_layers[layer, channel],
                                      self._sign, out)

@@ -338,10 +338,12 @@ def fast_exponential_filter(image, decay_constant, *, n_gaussians=3, truncate=3.
     for amplitude, sigma_ratio in fit:
         sigma_k = sigma_ratio * decay_constant
         component = fast_gaussian_filter(image, sigma_k, truncate=truncate)
+        # Python float keeps a float32 component float32 (NumPy 2 promotion).
+        component *= float(amplitude)
         if result is None:
-            result = amplitude * component
+            result = component
         else:
-            result += amplitude * component
+            result += component
     return result
 
 

@@ -12,6 +12,8 @@ colour to floating-point rounding.
 import colour
 import numpy as np
 
+from spektrafilm.utils.dtypes import as_float_array
+
 _MATRIX_CACHE: dict[tuple, np.ndarray] = {}
 
 
@@ -43,10 +45,17 @@ def _cached_matrix(key, compute):
     return matrix
 
 
+def _cctf(function, values):
+    # colour evaluates transfer functions in float64; return the input's
+    # working precision so float32 images stay float32.
+    values = as_float_array(values)
+    return np.asarray(function(values)).astype(values.dtype, copy=False)
+
+
 def _apply_matrix(values, matrix_transposed):
-    values = np.asarray(values, dtype=np.float64)
+    values = as_float_array(values)
     flat = values.reshape(-1, 3)
-    return (flat @ matrix_transposed).reshape(values.shape)
+    return (flat @ matrix_transposed.astype(values.dtype, copy=False)).reshape(values.shape)
 
 
 def rgb_to_xyz(rgb, colourspace, illuminant=None, chromatic_adaptation_transform='CAT02',
@@ -60,7 +69,7 @@ def rgb_to_xyz(rgb, colourspace, illuminant=None, chromatic_adaptation_transform
         )),
     )
     if apply_cctf_decoding:
-        rgb = _colourspace(colourspace).cctf_decoding(rgb)
+        rgb = _cctf(_colourspace(colourspace).cctf_decoding, rgb)
     return _apply_matrix(rgb, matrix_t)
 
 
@@ -76,7 +85,7 @@ def xyz_to_rgb(xyz, colourspace, illuminant=None, chromatic_adaptation_transform
     )
     rgb = _apply_matrix(xyz, matrix_t)
     if apply_cctf_encoding:
-        rgb = _colourspace(colourspace).cctf_encoding(rgb)
+        rgb = _cctf(_colourspace(colourspace).cctf_encoding, rgb)
     return rgb
 
 
@@ -91,8 +100,8 @@ def rgb_to_rgb(rgb, input_colourspace, output_colourspace, chromatic_adaptation_
         )),
     )
     if apply_cctf_decoding:
-        rgb = _colourspace(input_colourspace).cctf_decoding(rgb)
+        rgb = _cctf(_colourspace(input_colourspace).cctf_decoding, rgb)
     rgb = _apply_matrix(rgb, matrix_t)
     if apply_cctf_encoding:
-        rgb = _colourspace(output_colourspace).cctf_encoding(rgb)
+        rgb = _cctf(_colourspace(output_colourspace).cctf_encoding, rgb)
     return rgb
