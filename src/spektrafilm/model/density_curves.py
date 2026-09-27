@@ -1,3 +1,4 @@
+import numba
 import numpy as np
 import scipy
 from spektrafilm.utils.fast_interp import fast_interp
@@ -32,18 +33,57 @@ def interpolate_exposure_to_density(log_exposure_rgb, density_curves, log_exposu
     return density_cmy
 
 
+@numba.njit(parallel=True, fastmath=True, cache=True)
+def _interp_density_layer_kernel(density, x_axis, inv_dx, y_layer, sign, out):
+    # Same interpolation rule as fast_interp: endpoint clamping, right-biased exact matches.
+    n_rows, n_cols = density.shape
+    K = x_axis.shape[0]
+    for i in numba.prange(n_rows):
+        for j in range(n_cols):
+            x = sign * density[i, j]
+            if x <= x_axis[0]:
+                out[i, j] = y_layer[0]
+            elif x >= x_axis[K - 1]:
+                out[i, j] = y_layer[K - 1]
+            else:
+                low = np.searchsorted(x_axis, x, side='right') - 1
+                t = (x - x_axis[low]) * inv_dx[low]
+                out[i, j] = y_layer[low] + t * (y_layer[low + 1] - y_layer[low])
+    return out
+
+
+class DensityLayers:
+    """Per-layer densities (x, y, layer, rgb) of ``density_cmy``, interpolated
+    one (layer, channel) plane at a time so the full 4D array is never held.
+    """
+
+    def __init__(self, density_cmy, density_curves, density_curves_layers, positive_film=False):
+        self._density_cmy = np.asarray(density_cmy, dtype=np.float64)
+        self._sign = -1.0 if positive_film else 1.0
+        self._x_axes = np.ascontiguousarray((self._sign * np.asarray(density_curves, dtype=np.float64)).T)
+        dx = np.diff(self._x_axes, axis=1)
+        self._inv_dx = np.zeros_like(dx)
+        np.divide(1.0, dx, out=self._inv_dx, where=dx != 0)
+        self._y_layers = np.ascontiguousarray(np.transpose(density_curves_layers, (1, 2, 0)), dtype=np.float64)
+        self.shape = self._density_cmy.shape[0:2] + (3, 3)
+
+    def layer(self, layer, channel):
+        out = np.empty(self.shape[0:2])
+        _interp_density_layer_kernel(self._density_cmy[:, :, channel], self._x_axes[channel],
+                                     self._inv_dx[channel], self._y_layers[layer, channel],
+                                     self._sign, out)
+        return out
+
+
 def interp_density_cmy_layers(density_cmy, density_curves, density_curves_layers, positive_film=False):
-    density_cmy_layers = np.zeros((density_cmy.shape[0], density_cmy.shape[1], 3, 3)) # x,y,layer,rgb
-    if positive_film:
-        for ch in np.arange(3):
-            density_cmy_layers[:,:,:,ch] = fast_interp(-np.repeat(density_cmy[:,:,ch,np.newaxis], 3, -1),
-                                                       -density_curves[:,ch], density_curves_layers[:,:,ch])
-    else:
-        for ch in np.arange(3):
-            density_cmy_layers[:,:,:,ch] = fast_interp(np.repeat(density_cmy[:,:,ch,np.newaxis], 3, -1),
-                                                       density_curves[:,ch], density_curves_layers[:,:,ch])
+    """Split total CMY density into per-layer densities, shape (x, y, layer, rgb)."""
+    layers = DensityLayers(density_cmy, density_curves, density_curves_layers, positive_film)
+    density_cmy_layers = np.empty(layers.shape)
+    for ch in range(3):
+        for sl in range(3):
+            density_cmy_layers[:, :, sl, ch] = layers.layer(sl, ch)
     return density_cmy_layers
-    
+
 # This method was used for multilayer grain, but it is not used anymore
 # def interpolate_layers(self, exposure_rgb):
 #     density_curves_layers = density_curves_layers_model(self.log_exposure, self.parameters, self.type)

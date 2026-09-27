@@ -1,9 +1,10 @@
 import numpy as np
 import scipy
 import scipy.ndimage
-from spektrafilm.model.density_curves import interp_density_cmy_layers
+from numba import njit, prange
+from spektrafilm.model.density_curves import DensityLayers
 from spektrafilm.runtime.params_schema import GrainParams
-from spektrafilm.utils.fast_stats import fast_binomial, fast_poisson, fast_lognormal_from_mean_std
+from spektrafilm.utils.fast_stats import binomial_sample, fast_lognormal_from_mean_std, poisson_sample
 from spektrafilm.utils.fast_gaussian_filter import fast_gaussian_filter
 
 ################################################################################
@@ -22,9 +23,16 @@ def layer_particle_model(density,
     if seed is not None:
         np.random.seed(seed) # scipy uses np.random
     
+    od_particle = density_max/n_particles_per_pixel
+    if method=='poisson_binomial' and use_fast_stats:
+        grain = _fast_poisson_binomial_grain(density, float(density_max),
+                                             float(n_particles_per_pixel), float(grain_uniformity))
+        if blur_particle>0:
+            grain = fast_gaussian_filter(grain, blur_particle*np.sqrt(od_particle))
+        return grain
+
     probability_of_development = density/density_max
     probability_of_development = np.clip(probability_of_development, 1e-6, 1-1e-6) # for safe calc
-    od_particle = density_max/n_particles_per_pixel
     
     grain = np.zeros_like(density)
     if method=='gamma_beta':
@@ -34,12 +42,8 @@ def layer_particle_model(density,
         grain = beta_rvs(probability_of_development*n_particles_per_pixel,
                         (1-probability_of_development)*n_particles_per_pixel)*seeds*od_particle
     elif method=='poisson_binomial':
-        if use_fast_stats:
-            binom_rvs = fast_binomial
-            poisson_rvs = fast_poisson
-        else:
-            binom_rvs = scipy.stats.binom.rvs
-            poisson_rvs = scipy.stats.poisson.rvs
+        binom_rvs = scipy.stats.binom.rvs
+        poisson_rvs = scipy.stats.poisson.rvs
         saturation = 1 - probability_of_development*grain_uniformity*(1-1e-6)
         seeds = poisson_rvs(n_particles_per_pixel/saturation)
         grain = binom_rvs(seeds, probability_of_development)
@@ -48,6 +52,21 @@ def layer_particle_model(density,
     if blur_particle>0:
         # grain = scipy.ndimage.gaussian_filter(grain, blur_particle*np.sqrt(od_particle))
         grain = fast_gaussian_filter(grain, blur_particle*np.sqrt(od_particle))
+    return grain
+
+@njit(parallel=True, cache=True)
+def _fast_poisson_binomial_grain(density, density_max, n_particles_per_pixel, grain_uniformity):
+    # Fused per-pixel version of the poisson_binomial branch of layer_particle_model
+    # using the fast_stats samplers (same arithmetic, one pass, no temporaries).
+    n_rows, n_cols = density.shape
+    od_particle = density_max/n_particles_per_pixel
+    grain = np.empty((n_rows, n_cols))
+    for i in prange(n_rows):
+        for j in range(n_cols):
+            probability = min(max(density[i, j]/density_max, 1e-6), 1-1e-6)
+            saturation = 1 - probability*grain_uniformity*(1-1e-6)
+            seeds = poisson_sample(n_particles_per_pixel/saturation)
+            grain[i, j] = binomial_sample(seeds, probability)*od_particle*saturation
     return grain
 
 def add_micro_structure(density_cmy_out, micro_structure, pixel_size_um):
@@ -109,7 +128,7 @@ def apply_grain_to_density(density_cmy,
 
 
 # experimental
-def apply_grain_to_density_layers(density_cmy_layers, # x,y,sublayers,rgb
+def apply_grain_to_density_layers(density_cmy_layers, # x,y,sublayers,rgb array, or DensityLayers
                                   density_max_layers, # 3x3 [sublayers,rgb]
                                   pixel_size_um=10,
                                   particle_area_um2=0.2,
@@ -140,11 +159,14 @@ def apply_grain_to_density_layers(density_cmy_layers, # x,y,sublayers,rgb
     else:
         seed = [0, 1, 2]
     
-    density_cmy_layers += density_min_layers
     density_cmy_out = np.zeros(density_cmy_layers.shape[0:3])
     for ch in np.arange(3): # rgb channels
         for sl in np.arange(3): # sublayers
-            density_cmy_out[:,:,ch] += layer_particle_model(density_cmy_layers[:,:,sl,ch],
+            if isinstance(density_cmy_layers, DensityLayers):
+                density_layer = density_cmy_layers.layer(sl, ch)
+            else:
+                density_layer = density_cmy_layers[:,:,sl,ch]
+            density_cmy_out[:,:,ch] += layer_particle_model(density_layer + density_min_layers[sl,ch],
                                                             density_max=density_max_layers[sl,ch],
                                                             n_particles_per_pixel=n_particles_per_pixel[sl,ch],
                                                             grain_uniformity=grain_uniformity[ch],
@@ -190,7 +212,7 @@ def apply_grain(
             n_sub_layers=grain.n_sub_layers,
         )
 
-    density_cmy_layers = interp_density_cmy_layers(
+    density_cmy_layers = DensityLayers(
         density_cmy,
         density_curves,
         density_curves_layers,

@@ -101,11 +101,14 @@ def _fir_2d_fused(image, output, kernel, radius):
                     output[i, j] = sval
 
 
-def _gaussian_filter_2d_small(image, sigma, truncate):
-    if sigma <= 0.0:
-        return image.copy()
+def _gaussian_filter_2d_small(image, sigma, truncate, output=None):
+    if output is None:
+        output = np.empty_like(image)
+    if sigma <= 0.0 or int(truncate * sigma + 0.5) == 0:
+        # radius-0 kernel is exactly [1.0]: identity
+        output[...] = image
+        return output
     kernel, radius = _gaussian_kernel_1d(float(sigma), float(truncate))
-    output = np.empty_like(image)
     _fir_2d_fused(image, output, kernel, radius)
     return output
 
@@ -206,15 +209,17 @@ def _iir_vertical(image, output, B, B1, B2, B3):
                 s1[k] = y
 
 
-def _gaussian_filter_2d_large(image, sigma):
+def _gaussian_filter_2d_large(image, sigma, output=None):
+    if output is None:
+        output = np.empty_like(image)
     if sigma <= 0.0:
-        return image.copy()
+        output[...] = image
+        return output
     if sigma < 0.5:
         # IIR coefficients are unstable below 0.5 — fall back to direct FIR.
-        return _gaussian_filter_2d_small(image, sigma, 3.0)
+        return _gaussian_filter_2d_small(image, sigma, 3.0, output)
     B, B1, B2, B3 = _yvv_coeffs(float(sigma))
-    tmp = np.empty_like(image)
-    output = np.empty_like(image)
+    tmp = np.empty(image.shape, dtype=image.dtype)
     _iir_horizontal(image, tmp, B, B1, B2, B3)
     _iir_vertical(tmp, output, B, B1, B2, B3)
     return output
@@ -230,14 +235,15 @@ def _gaussian_filter_2d_large(image, sigma):
 SMALL_SIGMA_MAX = 3.0
 
 
-def _dispatch_2d(image, sigma, truncate):
+def _dispatch_2d(image, sigma, truncate, output=None):
     s = float(sigma)
     if s >= SMALL_SIGMA_MAX:
-        return _gaussian_filter_2d_large(image, s)
-    return _gaussian_filter_2d_small(image, s, truncate)
+        return _gaussian_filter_2d_large(image, s, output)
+    return _gaussian_filter_2d_small(image, s, truncate, output)
 
 
 def _apply_per_channel(image, sigma, truncate, filter_2d):
+    # Channels are filtered in place as strided views (no per-channel copies).
     image = np.ascontiguousarray(image)
     if image.ndim == 2:
         return filter_2d(image, sigma, truncate)
@@ -255,8 +261,7 @@ def _apply_per_channel(image, sigma, truncate, filter_2d):
                 )
         output = np.empty_like(image)
         for ch in range(c):
-            ch_in = np.ascontiguousarray(image[:, :, ch])
-            output[:, :, ch] = filter_2d(ch_in, sigmas[ch], truncate)
+            filter_2d(image[:, :, ch], sigmas[ch], truncate, output[:, :, ch])
         return output
     raise ValueError("Unsupported image dimension: {}".format(image.ndim))
 
@@ -289,7 +294,7 @@ def fast_gaussian_filter_large(image, sigma):
     pixel regardless of sigma. Max error vs analytic Gaussian ~1e-3, with
     minor edge approximation from sample-replication boundary handling.
     """
-    return _apply_per_channel(image, sigma, 0.0, lambda img, s, _t: _gaussian_filter_2d_large(img, s))
+    return _apply_per_channel(image, sigma, 0.0, lambda img, s, _t, out=None: _gaussian_filter_2d_large(img, s, out))
 
 
 # Gaussian-mixture approximations of a 2D isotropic exponential PSF

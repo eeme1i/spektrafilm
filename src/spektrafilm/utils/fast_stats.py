@@ -2,6 +2,65 @@ import numpy as np
 from numba import njit, prange
 from math import sqrt, exp
 
+@njit(cache=True)
+def binomial_sample(n_val, p_val):
+    """Draw one binomial variate; see :func:`fast_binomial` for the method."""
+    if p_val <= 0.0:
+        return 0
+    if p_val >= 1.0:
+        return n_val
+    if n_val < 25:
+        count = 0
+        for k in range(n_val):
+            if np.random.rand() < p_val:
+                count += 1
+        return count
+    mean = n_val * p_val
+    var = n_val * p_val * (1.0 - p_val)
+    if var > 10:
+        z = np.random.randn()
+        approx_int = int(np.round(mean + sqrt(var) * z))
+        if approx_int < 0:
+            approx_int = 0
+        elif approx_int > n_val:
+            approx_int = n_val
+        return approx_int
+    # Invert on the tail with p <= 0.5 (Binomial(n, p) = n - Binomial(n, 1-p)):
+    # the walk then takes ~n*min(p, 1-p) steps instead of ~n, and
+    # (1-q)**n cannot underflow to 0 for p close to 1.
+    flip = p_val > 0.5
+    q = 1.0 - p_val if flip else p_val
+    u = np.random.rand()
+    cdf = 0.0
+    prob = (1.0 - q) ** n_val
+    k = 0
+    while cdf < u and k <= n_val:
+        cdf += prob
+        if k < n_val:
+            prob = prob * ((n_val - k) / (k + 1)) * (q / (1.0 - q))
+        k += 1
+    return n_val - (k - 1) if flip else k - 1
+
+
+@njit(cache=True)
+def poisson_sample(lam):
+    """Draw one Poisson variate; see :func:`fast_poisson` for the method."""
+    if lam <= 0.0:
+        return 0
+    if lam < 30.0:
+        L = exp(-lam)
+        p_val = 1.0
+        k = 0
+        while p_val > L:
+            k += 1
+            p_val *= np.random.rand()
+        return k - 1
+    sample_int = int(np.round(lam + sqrt(lam) * np.random.randn()))
+    if sample_int < 0:
+        sample_int = 0
+    return sample_int
+
+
 @njit(parallel=True, cache=True)
 def fast_binomial(N_arr, p_arr):
     """
@@ -32,51 +91,8 @@ def fast_binomial(N_arr, p_arr):
     flat_N = N_arr.ravel()
     flat_p = p_arr.ravel()
     flat_result = result.ravel()
-    n_elements = flat_N.shape[0]
-    n_threshold = 25
-
-    for i in prange(n_elements):
-        n_val = flat_N[i]
-        p_val = flat_p[i]
-        if p_val <= 0.0:
-            flat_result[i] = 0
-        elif p_val >= 1.0:
-            flat_result[i] = n_val
-        else:
-            if n_val < n_threshold:
-                count = 0
-                for k in range(n_val):
-                    if np.random.rand() < p_val:
-                        count += 1
-                flat_result[i] = count
-            else:
-                mean = n_val * p_val
-                var = n_val * p_val * (1.0 - p_val)
-                if var > 10:
-                    z = np.random.randn()
-                    approx = mean + sqrt(var) * z
-                    approx_int = int(np.round(approx))
-                    if approx_int < 0:
-                        approx_int = 0
-                    elif approx_int > n_val:
-                        approx_int = n_val
-                    flat_result[i] = approx_int
-                else:
-                    # Invert on the tail with p <= 0.5 (Binomial(n, p) = n - Binomial(n, 1-p)):
-                    # the walk then takes ~n*min(p, 1-p) steps instead of ~n, and
-                    # (1-q)**n cannot underflow to 0 for p close to 1.
-                    flip = p_val > 0.5
-                    q = 1.0 - p_val if flip else p_val
-                    u = np.random.rand()
-                    cdf = 0.0
-                    prob = (1.0 - q) ** n_val
-                    k = 0
-                    while cdf < u and k <= n_val:
-                        cdf += prob
-                        if k < n_val:
-                            prob = prob * ((n_val - k) / (k + 1)) * (q / (1.0 - q))
-                        k += 1
-                    flat_result[i] = n_val - (k - 1) if flip else k - 1
+    for i in prange(flat_N.shape[0]):
+        flat_result[i] = binomial_sample(flat_N[i], flat_p[i])
     return result
 
 @njit(parallel=True, cache=True)
@@ -104,28 +120,8 @@ def fast_poisson(lam_arr):
     result = np.empty(lam_arr.shape, dtype=np.int64)
     flat_lam = lam_arr.ravel()
     flat_result = result.ravel()
-    n_elements = flat_lam.shape[0]
-    lam_threshold = 30.0
-
-    for i in prange(n_elements):
-        lam = flat_lam[i]
-        if lam <= 0.0:
-            flat_result[i] = 0
-        elif lam < lam_threshold:
-            L = exp(-lam)
-            p_val = 1.0
-            k = 0
-            while p_val > L:
-                k += 1
-                p_val *= np.random.rand()
-            flat_result[i] = k - 1
-        else:
-            z = np.random.randn()
-            sample = lam + sqrt(lam) * z
-            sample_int = int(np.round(sample))
-            if sample_int < 0:
-                sample_int = 0
-            flat_result[i] = sample_int
+    for i in prange(flat_lam.shape[0]):
+        flat_result[i] = poisson_sample(flat_lam[i])
     return result
 
 @njit(parallel=True, cache=True)

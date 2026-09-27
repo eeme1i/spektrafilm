@@ -3,7 +3,7 @@ from __future__ import annotations
 import numpy as np
 from skimage.transform import rescale
 
-from spektrafilm.utils.crop_resize import crop_image
+from spektrafilm.utils.crop_resize import crop_image, rescale_nearest_antialiased
 
 
 class ResizingService:
@@ -34,11 +34,6 @@ class ResizingService:
                       max_size: int = 256) -> np.ndarray:
         if max(image.shape[0:2]) > max_size:
             scale_factor = max_size / max(image.shape[0:2])
-            return rescale(
-                image,
-                scale_factor,
-                channel_axis=2,
-                order=0,
-            )
+            return rescale_nearest_antialiased(image, scale_factor)
         return image
     

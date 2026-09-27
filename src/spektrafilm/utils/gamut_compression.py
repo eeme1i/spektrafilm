@@ -30,6 +30,7 @@ from typing import Literal
 import colour
 import numpy as np 
 from matplotlib.path import Path as MplPath
+from numba import njit, prange
 from scipy.ndimage import map_coordinates
 
 from spektrafilm.utils.fast_cam16ucs import cam16ucs_to_xyz, xyz_to_cam16ucs
@@ -470,33 +471,53 @@ def _get_oklch_c_max_table(
     return _OKLCH_CMAX_TABLE_CACHE[key]
 
 
+@njit(parallel=True, cache=True)
+def _c_max_lookup_kernel(L, h, L_grid, h_grid, C_max_table, out):
+    n_L = L_grid.shape[0]
+    n_h = h_grid.shape[0]
+    L_first = L_grid[0]
+    L_last = L_grid[n_L - 1]
+    h_step = h_grid[1] - h_grid[0]
+    for i in prange(L.shape[0]):
+        L_i = L[i]
+        h_i = h[i]
+        if np.isnan(L_i) or np.isnan(h_i):
+            out[i] = np.nan
+            continue
+        L_i = min(max(L_i, L_first), L_last)
+        h_idx = (h_i - h_grid[0]) / h_step
+        h_floor = np.floor(h_idx)
+        h_lo = int(h_floor) % n_h
+        h_hi = (h_lo + 1) % n_h
+        h_frac = h_idx - h_floor
+
+        L_idx = (L_i - L_first) / (L_last - L_first) * (n_L - 1)
+        L_lo = min(max(int(np.floor(L_idx)), 0), n_L - 2)
+        L_hi = L_lo + 1
+        L_frac = L_idx - L_lo
+
+        out[i] = (
+            C_max_table[L_lo, h_lo] * (1 - L_frac) * (1 - h_frac)
+            + C_max_table[L_lo, h_hi] * (1 - L_frac) * h_frac
+            + C_max_table[L_hi, h_lo] * L_frac * (1 - h_frac)
+            + C_max_table[L_hi, h_hi] * L_frac * h_frac
+        )
+    return out
+
+
 def _c_max_lookup(
     L: np.ndarray, h: np.ndarray,
     L_grid: np.ndarray, h_grid: np.ndarray, C_max_table: np.ndarray,
 ) -> np.ndarray:
     """Bilinear lookup of C_max(L, h)."""
-    L = np.clip(L, L_grid[0], L_grid[-1])
-    h_step = h_grid[1] - h_grid[0]
-    h_idx = (h - h_grid[0]) / h_step
-    h_lo = np.floor(h_idx).astype(int) % len(h_grid)
-    h_hi = (h_lo + 1) % len(h_grid)
-    h_frac = h_idx - np.floor(h_idx)
-
-    L_idx = (L - L_grid[0]) / (L_grid[-1] - L_grid[0]) * (len(L_grid) - 1)
-    L_lo = np.clip(np.floor(L_idx).astype(int), 0, len(L_grid) - 2)
-    L_hi = L_lo + 1
-    L_frac = L_idx - L_lo
-
-    v00 = C_max_table[L_lo, h_lo]
-    v01 = C_max_table[L_lo, h_hi]
-    v10 = C_max_table[L_hi, h_lo]
-    v11 = C_max_table[L_hi, h_hi]
-    return (
-        v00 * (1 - L_frac) * (1 - h_frac)
-        + v01 * (1 - L_frac) * h_frac
-        + v10 * L_frac * (1 - h_frac)
-        + v11 * L_frac * h_frac
+    L, h = np.broadcast_arrays(np.asarray(L, dtype=np.float64), np.asarray(h, dtype=np.float64))
+    out = np.empty(L.shape)
+    _c_max_lookup_kernel(
+        np.ascontiguousarray(L).reshape(-1), np.ascontiguousarray(h).reshape(-1),
+        np.ascontiguousarray(L_grid, dtype=np.float64), np.ascontiguousarray(h_grid, dtype=np.float64),
+        np.ascontiguousarray(C_max_table, dtype=np.float64), out.reshape(-1),
     )
+    return out
 
 
 def compress_oklch_chroma(
