@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import copy
+from dataclasses import dataclass
 from time import perf_counter
+from typing import Callable
 
 import numpy as np
 
@@ -16,6 +18,21 @@ from spektrafilm.runtime.topology import Node, Tap, run_topology
 from spektrafilm.utils.dtypes import IMAGE_DTYPE
 from spektrafilm.utils.timings import format_timings
 
+
+@dataclass(frozen=True)
+class StageProgress:
+    """Progress event for one pipeline stage, sent to ``on_progress``.
+
+    Each stage reports twice: when it starts (``finished=False``,
+    ``elapsed=0.0``) and when it ends (``finished=True``, ``elapsed`` = its
+    wall time in seconds). ``index`` is 0-based among the ``count`` stages
+    this run fires; ``label`` is the node label, e.g. ``"filming.develop"``.
+    """
+    label: str
+    index: int
+    count: int
+    finished: bool
+    elapsed: float = 0.0
 
 
 class SimulationPipeline:
@@ -99,23 +116,40 @@ class SimulationPipeline:
 
         self._topology: list[Node] = self._build_topology()
 
-    def process(self, image, *, inject: str | None = None, collect: str | None = None):
+    def process(self, image, *, inject: str | None = None, collect: str | None = None,
+                on_progress: Callable[[StageProgress], None] | None = None):
         """Run the pipeline.
 
         Defaults run end-to-end (``rgb_in`` → ``rgb_out``). Pass
         ``inject`` / ``collect`` to enter or exit at a named tap.
         Call-site kwargs override the persistent :class:`TapsParams`
-        defaults.
+        defaults. ``on_progress`` receives a :class:`StageProgress` as
+        each stage starts and finishes (on the calling thread).
         """
         inject = inject or self.taps.inject or Tap.RGB_IN
         collect = collect or self.taps.collect or Tap.RGB_OUT
+
+        on_start = None
+        on_fire = self._record_node_timing
+        if on_progress is not None:
+            position = {}
+
+            def on_start(node, index, count):
+                position['index'], position['count'] = index, count
+                on_progress(StageProgress(node.label, index, count, finished=False))
+
+            def on_fire(node, elapsed):
+                self._record_node_timing(node, elapsed)
+                on_progress(StageProgress(node.label, position['index'], position['count'],
+                                          finished=True, elapsed=elapsed))
 
         self.timings.clear()
         start = perf_counter()
         try:
             return run_topology(
                 self._topology, inject, collect, image,
-                on_fire=self._record_node_timing,
+                on_start=on_start,
+                on_fire=on_fire,
             )
         finally:
             self._last_elapsed_time = perf_counter() - start

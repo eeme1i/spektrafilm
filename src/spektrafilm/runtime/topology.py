@@ -56,31 +56,52 @@ class Node:
                 state[k] = v
 
 
+def plan_topology(topology: list[Node], inject: str, collect: str) -> list[Node]:
+    """Return the nodes :func:`run_topology` fires for ``inject`` → ``collect``,
+    in firing order, without running them.
+
+    Which nodes fire depends only on tap names, never on data, so the plan
+    is known up front (e.g. to report progress as "stage 3 of 6").
+    """
+    available = {inject}
+    plan = []
+    for node in topology:
+        if all(k in available for k in node.reads):
+            plan.append(node)
+            available.update(node.writes)
+            if collect in available:
+                return plan
+    raise RuntimeError(
+        f"no node path reaches tap {collect!r} from {inject!r}"
+    )
+
+
 def run_topology(
     topology: list[Node],
     inject: str,
     collect: str,
     image: Any,
     *,
+    on_start: Callable[[Node, int, int], None] | None = None,
     on_fire: Callable[[Node, float], None] | None = None,
 ) -> Any:
     """Walk ``topology`` in declared order, firing every node whose reads
     are satisfied. Stops as soon as ``collect`` is in state and returns it.
 
-    ``on_fire`` is invoked as ``on_fire(node, elapsed_seconds)`` after each
-    node fires; the dispatcher in :class:`SimulationPipeline` uses it to
-    record per-node timings.
+    ``on_start`` is invoked as ``on_start(node, index, count)`` before each
+    node fires (``index`` is 0-based among the ``count`` nodes this run
+    fires); ``on_fire`` as ``on_fire(node, elapsed_seconds)`` after it. The
+    dispatcher in :class:`SimulationPipeline` uses them to record per-node
+    timings and report progress.
     """
+    plan = plan_topology(topology, inject, collect)
     state: dict[str, Any] = {inject: image}
-    for node in topology:
-        if all(k in state for k in node.reads):
-            t0 = perf_counter()
-            node.fire(state)
-            elapsed = perf_counter() - t0
-            if on_fire is not None:
-                on_fire(node, elapsed)
-            if collect in state:
-                return state[collect]
-    raise RuntimeError(
-        f"no node path reaches tap {collect!r} from {inject!r}"
-    )
+    for index, node in enumerate(plan):
+        if on_start is not None:
+            on_start(node, index, len(plan))
+        t0 = perf_counter()
+        node.fire(state)
+        elapsed = perf_counter() - t0
+        if on_fire is not None:
+            on_fire(node, elapsed)
+    return state[collect]

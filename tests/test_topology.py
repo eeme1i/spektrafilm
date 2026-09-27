@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import pytest
 
-from spektrafilm.runtime.topology import Node, Tap, run_topology
+from spektrafilm.runtime.topology import Node, Tap, plan_topology, run_topology
 
 
 class TestNode:
@@ -104,3 +104,28 @@ class TestRunTopology:
         )
         assert result == (5 + 1) + (5 * 10)
         assert fired == ["produce_x", "produce_y", "combine"]
+
+    def test_plan_matches_fired_nodes_without_running(self):
+        ran = []
+        topology = [
+            Node(("a",), ("b",), lambda x: ran.append("step1"), "step1"),
+            Node(("b",), ("c",), lambda x: ran.append("step2"), "step2"),
+            Node(("c",), ("d",), lambda x: ran.append("step3"), "step3"),
+        ]
+        assert [n.label for n in plan_topology(topology, "b", "c")] == ["step2"]
+        assert ran == []
+
+    def test_on_start_reports_position_before_each_node(self):
+        events = []
+        run_topology(
+            self._linear_chain(),
+            inject="a",
+            collect="c",
+            image=10,
+            on_start=lambda node, index, count: events.append(("start", node.label, index, count)),
+            on_fire=lambda node, elapsed: events.append(("fire", node.label)),
+        )
+        assert events == [
+            ("start", "step1", 0, 2), ("fire", "step1"),
+            ("start", "step2", 1, 2), ("fire", "step2"),
+        ]

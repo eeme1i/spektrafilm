@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from spektrafilm.runtime.params_schema import RuntimePhotoParams
-from spektrafilm.runtime.pipeline import SimulationPipeline
+from spektrafilm.runtime.pipeline import SimulationPipeline, StageProgress
 from spektrafilm.utils.preview import resize_for_preview
 from spektrafilm.runtime.params_builder import (
     digest_params,
@@ -19,9 +19,13 @@ class Simulator:
     def __init__(self, params: RuntimePhotoParams):
         self._pipeline = SimulationPipeline(params) # should stay private
 
-    def process(self, image):
-        """Process the input image through the simulation pipeline and return the final result."""
-        return self._pipeline.process(image)
+    def process(self, image, on_progress=None):
+        """Process the input image through the simulation pipeline and return the final result.
+
+        ``on_progress``, if given, receives a :class:`StageProgress` as each
+        pipeline stage starts and finishes.
+        """
+        return self._pipeline.process(image, on_progress=on_progress)
 
     def update_params(self, params):
         """Update the parameters of the simulation pipeline."""
@@ -107,6 +111,7 @@ def photo_params(film_profile, print_profile) -> RuntimePhotoParams:
 __all__ = [
     "RuntimePhotoParams",
     "Simulator",
+    "StageProgress",
     "simulate",
     "simulate_preview",
     "AgXPhoto", # legacy for ART

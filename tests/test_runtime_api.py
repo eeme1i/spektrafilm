@@ -26,7 +26,7 @@ class TestRuntimeApi:
                 self.label = params.label
                 self.timings = {'label': params.label}
 
-            def process(self, image):
+            def process(self, image, on_progress=None):
                 return f'processed-{self.label}-{image}'
 
             def update(self, params):
@@ -54,7 +54,7 @@ class TestRuntimeApi:
                 self.label = params.label
                 self.timings = {'label': params.label}
 
-            def process(self, image):
+            def process(self, image, on_progress=None):
                 return image
 
             def soft_update(self, **kwargs):
@@ -96,7 +96,7 @@ class TestRuntimeApi:
                 self.timings = {'previous': 1.0}
                 self._last_elapsed_time = None
 
-            def process(self, image):
+            def process(self, image, on_progress=None):
                 self.timings.clear()
                 start = pipeline_module.perf_counter()
                 try:
@@ -195,3 +195,23 @@ class TestRuntimeApi:
         shifted_output = AgXPhoto(shifted_params).process(image)
         assert shifted_output.shape == image.shape
         assert np.isfinite(shifted_output).all()
+
+def test_simulator_reports_stage_progress_in_order() -> None:
+    from spektrafilm.runtime import Simulator, StageProgress, digest_params, init_params
+
+    events: list[StageProgress] = []
+    simulator = Simulator(digest_params(init_params()))
+
+    simulator.process(np.full((8, 8, 3), 0.18), on_progress=events.append)
+
+    labels = ['preprocess', 'filming.expose', 'filming.develop',
+              'printing.expose', 'printing.develop', 'scanning.scan_print']
+    assert [(e.label, e.finished) for e in events] == [
+        (label, finished) for label in labels for finished in (False, True)
+    ]
+    assert all(e.count == len(labels) for e in events)
+    assert [e.index for e in events if not e.finished] == list(range(len(labels)))
+    timings = simulator.get_timings()
+    for event in events:
+        if event.finished:
+            assert event.elapsed == pytest.approx(timings[event.label])

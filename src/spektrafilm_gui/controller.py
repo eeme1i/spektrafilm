@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from importlib import import_module
 from pathlib import Path
+from time import perf_counter
 from typing import TYPE_CHECKING
 
 import numpy as np
@@ -41,6 +42,7 @@ if TYPE_CHECKING:
 
 QThreadPool = getattr(QtCore, 'QThreadPool')
 QTimer = getattr(QtCore, 'QTimer')
+PROGRESS_REFRESH_MS = 100
 QFileDialog = QtWidgets.QFileDialog
 QMessageBox = QtWidgets.QMessageBox
 SimulationRequest = runtime.SimulationRequest
@@ -156,6 +158,8 @@ class GuiController:
         self._auto_preview_scheduled = False
         self._pending_auto_preview = False
         self._active_simulation_reports_status = True
+        self._simulation_progress: runtime.SimulationProgress | None = None
+        self._progress_timer = None
 
     def show_startup_placeholder(self) -> None:
         if self._white_border_layer() is not None:
@@ -626,7 +630,7 @@ class GuiController:
             pil_image_module=PILImage,
         )
 
-    def _process_image_with_runtime(self, image_data: np.ndarray, params) -> np.ndarray:
+    def _process_image_with_runtime(self, image_data: np.ndarray, params, on_progress=None) -> np.ndarray:
         apply_stocks_specifics = (
             self._runtime_simulator is None
             or self._next_runtime_digest_applies_stock_specifics
@@ -641,7 +645,7 @@ class GuiController:
             else:
                 self._runtime_simulator.update_params(digested_params)
             self._next_runtime_digest_applies_stock_specifics = False
-            return self._runtime_simulator.process(image_data)
+            return self._runtime_simulator.process(image_data, on_progress=on_progress)
         except Exception:
             self._runtime_simulator = None
             raise
@@ -672,11 +676,12 @@ class GuiController:
         is_checked = getattr(toggle, 'isChecked', None)
         self.set_gray_18_canvas_enabled(bool(is_checked()) if callable(is_checked) else False)
 
-    def _execute_simulation_request(self, request: SimulationRequest) -> SimulationResult:
+    def _execute_simulation_request(self, request: SimulationRequest, on_progress=None) -> SimulationResult:
         return runtime.execute_simulation_request(
             request,
             run_simulation_fn=self._process_image_with_runtime,
             prepare_output_display_image_fn=self._prepare_output_display_image,
+            on_progress=on_progress,
         )
 
     @staticmethod
@@ -720,11 +725,46 @@ class GuiController:
         self._active_simulation_reports_status = report_status
         self._set_simulation_controls_enabled(False)
         if report_status:
+            worker.signals.progress.connect(self._on_simulation_progress)
+            self._simulation_progress = runtime.SimulationProgress(mode_label, started_at=perf_counter())
             set_status(self._viewer, f'Computing {mode_label.lower()}...', timeout_ms=0)
+            self._start_progress_timer()
         self._thread_pool.start(worker)
+
+    def _start_progress_timer(self) -> None:
+        # Re-render the running status so step and total clocks tick during long stages.
+        if self._progress_timer is None:
+            self._progress_timer = QTimer()
+            self._progress_timer.setInterval(PROGRESS_REFRESH_MS)
+            self._progress_timer.timeout.connect(self._refresh_progress_status)
+        self._progress_timer.start()
+
+    def _stop_progress_timer(self) -> None:
+        if self._progress_timer is not None:
+            self._progress_timer.stop()
+
+    def _on_simulation_progress(self, step: runtime.ProgressStep) -> None:
+        if self._simulation_progress is None:
+            return
+        self._simulation_progress.update(step, perf_counter())
+        self._refresh_progress_status()
+
+    def _refresh_progress_status(self) -> None:
+        if self._simulation_progress is None:
+            return
+        set_status(self._viewer, self._simulation_progress.running_message(perf_counter()), timeout_ms=0)
+
+    def _finish_simulation_progress(self) -> str | None:
+        """Stop live progress; return the timing summary if progress was tracked."""
+        self._stop_progress_timer()
+        progress, self._simulation_progress = self._simulation_progress, None
+        if progress is None:
+            return None
+        return progress.summary_message(perf_counter())
 
     def _on_simulation_finished(self, result: SimulationResult) -> None:
         report_status = self._active_simulation_reports_status
+        timing_summary = self._finish_simulation_progress()
         self._active_simulation_worker = None
         self._active_simulation_label = None
         self._active_simulation_reports_status = True
@@ -737,10 +777,15 @@ class GuiController:
             use_display_transform=result.use_display_transform,
         )
         if report_status:
-            set_status(self._viewer, f'{result.mode_label} completed. {result.status_message}')
+            if timing_summary is None:
+                set_status(self._viewer, f'{result.mode_label} completed. {result.status_message}')
+            else:
+                # Persistent, so the timing breakdown stays readable.
+                set_status(self._viewer, f'{timing_summary} · {result.status_message}', timeout_ms=0)
         self._replay_pending_auto_preview()
 
     def _on_simulation_failed(self, message: str) -> None:
+        self._finish_simulation_progress()
         self._active_simulation_worker = None
         mode_label = self._active_simulation_label or 'Simulation'
         self._active_simulation_label = None

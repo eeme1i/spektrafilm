@@ -748,7 +748,7 @@ def test_execute_simulation_request_routes_through_runtime_simulator_path(monkey
     )
     captured: dict[str, object] = {}
 
-    def fake_process_image_with_runtime(image, params):
+    def fake_process_image_with_runtime(image, params, on_progress=None):
         captured['runtime_call'] = (image.copy(), params)
         return np.full((2, 2, 3), 0.5, dtype=np.float32)
 
@@ -792,7 +792,7 @@ def test_process_image_with_runtime_reuses_cached_simulator(monkeypatch) -> None
         def update_params(self, params) -> None:
             captured['updated'].append(params)
 
-        def process(self, image):
+        def process(self, image, on_progress=None):
             captured['processed'].append(np.array(image, copy=True))
             return np.asarray(image) + 0.1
 
@@ -833,7 +833,7 @@ def test_process_image_with_runtime_reapplies_stock_specific_digest_after_profil
         def update_params(self, runtime_params) -> None:
             captured['updated'].append(runtime_params)
 
-        def process(self, runtime_image):
+        def process(self, runtime_image, on_progress=None):
             captured['processed'].append(np.array(runtime_image, copy=True))
             return np.asarray(runtime_image) + 0.2
 
@@ -874,6 +874,41 @@ def test_on_simulation_finished_reports_completed_status(monkeypatch) -> None:
     )
 
     assert captured['status'] == ('Preview completed. Display transform: disabled', 5000)
+
+
+def test_simulation_progress_drives_status_and_completion_summary(monkeypatch) -> None:
+    controller = GuiController(viewer=object(), widgets=SimpleNamespace(simulation=SimpleNamespace(preview_button=None, scan_button=None, save_button=None)))
+    controller._active_simulation_label = 'Scan'
+    clock = {'now': 100.0}
+    status_calls: list[tuple[str, int]] = []
+
+    monkeypatch.setattr(controller_module, 'perf_counter', lambda: clock['now'])
+    monkeypatch.setattr(controller, '_set_or_add_output_layer', lambda image, **kwargs: None)
+    monkeypatch.setattr(controller_module, 'set_status', lambda viewer, message, timeout_ms=5000: status_calls.append((message, timeout_ms)))
+    controller._simulation_progress = controller_module.runtime.SimulationProgress('Scan', started_at=100.0)
+
+    clock['now'] = 101.0
+    controller._on_simulation_progress(controller_module.runtime.ProgressStep('filming.develop', finished=False, index=1, count=4))
+    clock['now'] = 104.0
+    controller._refresh_progress_status()
+    controller._on_simulation_progress(controller_module.runtime.ProgressStep('filming.develop', finished=True, elapsed=3.0, index=1, count=4))
+    controller._on_simulation_finished(
+        controller_module.SimulationResult(
+            mode_label='Scan',
+            display_image=np.full((2, 2, 3), 9, dtype=np.uint8),
+            float_image=np.full((2, 2, 3), 0.5, dtype=np.float32),
+            output_color_space='sRGB',
+            use_display_transform=False,
+            status_message='Display transform: disabled',
+        )
+    )
+
+    assert status_calls[0] == ('Scan: Developing film (2/4) · 0.0 s · 1.0 s total', 0)
+    assert status_calls[1] == ('Scan: Developing film (2/4) · 3.0 s · 4.0 s total', 0)
+    assert status_calls[-1] == (
+        'Scan completed in 4.0 s · Developing film 3.0 s (75%) · Display transform: disabled', 0
+    )
+    assert controller._simulation_progress is None
 
 
 def test_on_simulation_finished_skips_completed_status_for_silent_preview(monkeypatch) -> None:
