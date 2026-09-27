@@ -9,6 +9,7 @@ import scipy.special
 
 from spektrafilm.profiles.io import Hanatos2025SensitivityAdaptation
 from spektrafilm.utils.fast_interp_lut import apply_lut_cubic_2d
+from spektrafilm.utils.fast_colour import rgb_to_rgb, rgb_to_xyz
 from spektrafilm.config import SPECTRAL_SHAPE, STANDARD_OBSERVER_CMFS
 from spektrafilm.model.illuminants import standard_illuminant
 
@@ -130,10 +131,10 @@ def _rgb_to_tc_b(rgb, color_space='ITU-R BT.2020', apply_cctf_decoding=False, re
     # CIECAM16 and the spektrafilm output-side CAM16-UCS algorithm use
     # internally, so the input chromaticity projection stays in the
     # same adaptation family as the output gamut compression.
-    xyz = colour.RGB_to_XYZ(rgb, colourspace=color_space,
-                            apply_cctf_decoding=apply_cctf_decoding,
-                            illuminant=illu_xy,
-                            chromatic_adaptation_transform='CAT16')
+    xyz = rgb_to_xyz(rgb, colourspace=color_space,
+                     apply_cctf_decoding=apply_cctf_decoding,
+                     illuminant=illu_xy,
+                     chromatic_adaptation_transform='CAT16')
     b = np.sum(xyz, axis=-1)
     xy = xyz[...,0:2] / np.fmax(b[...,None], 1e-10)
     # Previously: xy = np.clip(xy, 0, 1). Removed because the input gamut
@@ -317,9 +318,9 @@ def rgb_to_raw_mallett2019(RGB, sensitivity,
     """
     illuminant = standard_illuminant(reference_illuminant)[:]
     basis_set_with_illuminant = np.array(MALLETT2019_BASIS[:])*np.array(illuminant)[:, None]
-    lrgb = colour.RGB_to_RGB(RGB, color_space, 'sRGB',
-                    apply_cctf_decoding=apply_cctf_decoding,
-                    apply_cctf_encoding=False)
+    lrgb = rgb_to_rgb(RGB, color_space, 'sRGB',
+                      apply_cctf_decoding=apply_cctf_decoding,
+                      apply_cctf_encoding=False)
     raw  = contract('ijk,lk,lm->ijm', lrgb, basis_set_with_illuminant, sensitivity)
     raw = np.nan_to_num(raw)
     raw = np.ascontiguousarray(raw)

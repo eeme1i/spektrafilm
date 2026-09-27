@@ -62,16 +62,21 @@ def fast_binomial(N_arr, p_arr):
                         approx_int = n_val
                     flat_result[i] = approx_int
                 else:
+                    # Invert on the tail with p <= 0.5 (Binomial(n, p) = n - Binomial(n, 1-p)):
+                    # the walk then takes ~n*min(p, 1-p) steps instead of ~n, and
+                    # (1-q)**n cannot underflow to 0 for p close to 1.
+                    flip = p_val > 0.5
+                    q = 1.0 - p_val if flip else p_val
                     u = np.random.rand()
                     cdf = 0.0
-                    prob = (1.0 - p_val) ** n_val
+                    prob = (1.0 - q) ** n_val
                     k = 0
                     while cdf < u and k <= n_val:
                         cdf += prob
                         if k < n_val:
-                            prob = prob * ((n_val - k) / (k + 1)) * (p_val / (1.0 - p_val))
+                            prob = prob * ((n_val - k) / (k + 1)) * (q / (1.0 - q))
                         k += 1
-                    flat_result[i] = k - 1
+                    flat_result[i] = n_val - (k - 1) if flip else k - 1
     return result
 
 @njit(parallel=True, cache=True)

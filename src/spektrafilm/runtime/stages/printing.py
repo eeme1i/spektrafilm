@@ -4,9 +4,9 @@ import numpy as np
 from opt_einsum import contract
 
 from spektrafilm.model.diffusion import apply_diffusion_filter_um
-from spektrafilm.model.develop import compute_density_spectral, develop_print_morph
+from spektrafilm.model.develop import develop_print_morph
 from spektrafilm.model.illuminants import standard_illuminant
-from spektrafilm.utils.conversions import density_to_light
+from spektrafilm.utils.conversions import cmy_density_to_weighted_light, density_to_light
 
 
 class PrintingStage:
@@ -77,15 +77,14 @@ class PrintingStage:
         sensitivity = np.nan_to_num(sensitivity)
         enlarger_light_source = standard_illuminant(self._enlarger.illuminant)
 
-        raw = np.zeros_like(cmy_film_density)
-        density_spectral = compute_density_spectral(
-            self._film.data.channel_density,
-            cmy_film_density,
-            base_density=self._film.data.base_density,
-        )
         print_illuminant = self._enlarger_service.enlarger_filtered_illuminant(enlarger_light_source)
-        light = density_to_light(density_spectral, print_illuminant)
-        raw = contract("ijk, kl->ijl", light, sensitivity)
+        raw = cmy_density_to_weighted_light(
+            cmy_film_density,
+            self._film.data.channel_density,
+            self._film.data.base_density,
+            print_illuminant,
+            sensitivity,
+        )
         raw *= self._compute_exposure_factor_midgray(sensitivity, print_illuminant)
         raw += self._compute_raw_preflash(enlarger_light_source, sensitivity)
         return np.log10(np.fmax(raw, 0.0) + 1e-10)

@@ -32,6 +32,9 @@ import numpy as np
 from matplotlib.path import Path as MplPath
 from scipy.ndimage import map_coordinates
 
+from spektrafilm.utils.fast_cam16ucs import cam16ucs_to_xyz, xyz_to_cam16ucs
+from spektrafilm.utils.fast_colour import rgb_to_xyz, xyz_to_rgb
+
 
 # ---------------------------------------------------------------------------
 # Spec dataclass
@@ -772,7 +775,7 @@ def _build_polar_perceptual_c_max_table(
         b = mid * np.sin(h_mesh)
         lab = np.stack([L_mesh, a, b], axis=-1).reshape(-1, 3)
         xyz = polar_to_xyz_unit(lab)
-        rgb = np.asarray(colour.XYZ_to_RGB(
+        rgb = np.asarray(xyz_to_rgb(
             xyz, colourspace=output_color_space,
             illuminant=white, apply_cctf_encoding=False,
         ))
@@ -908,7 +911,7 @@ def compress_rgb_oklch_chroma(
     white = np.asarray(cs.whitepoint, dtype=float)
 
     # RGB → XYZ → OkLab → OkLch (L, C, h).
-    xyz = np.asarray(colour.RGB_to_XYZ(
+    xyz = np.asarray(rgb_to_xyz(
         rgb, colourspace=output_color_space,
         illuminant=white, apply_cctf_decoding=False,
     ))
@@ -941,7 +944,7 @@ def compress_rgb_oklch_chroma(
     b_new = C_new * np.sin(h)
     lab_new = np.stack([L, a_new, b_new], axis=-1)
     xyz_new = np.asarray(colour.Oklab_to_XYZ(lab_new))
-    rgb_new = np.asarray(colour.XYZ_to_RGB(
+    rgb_new = np.asarray(xyz_to_rgb(
         xyz_new, colourspace=output_color_space,
         illuminant=white, apply_cctf_encoding=False,
     ))
@@ -977,7 +980,7 @@ def compress_rgb_oklrab_chroma(
     cs = colour.RGB_COLOURSPACES[output_color_space]
     white = np.asarray(cs.whitepoint, dtype=float)
 
-    xyz = np.asarray(colour.RGB_to_XYZ(
+    xyz = np.asarray(rgb_to_xyz(
         rgb, colourspace=output_color_space,
         illuminant=white, apply_cctf_decoding=False,
     ))
@@ -1009,7 +1012,7 @@ def compress_rgb_oklrab_chroma(
     # changes L, and its result already lives in `L` here.
     lab_new = np.stack([L, a_new, b_new], axis=-1)
     xyz_new = np.asarray(colour.Oklab_to_XYZ(lab_new))
-    rgb_new = np.asarray(colour.XYZ_to_RGB(
+    rgb_new = np.asarray(xyz_to_rgb(
         xyz_new, colourspace=output_color_space,
         illuminant=white, apply_cctf_encoding=False,
     ))
@@ -1060,7 +1063,7 @@ def compress_rgb_jzazbz_chroma(
     white = np.asarray(cs.whitepoint, dtype=float)
 
     # RGB → XYZ (cd/m² at Y_w) → JzAzBz → polar.
-    xyz = np.asarray(colour.RGB_to_XYZ(
+    xyz = np.asarray(rgb_to_xyz(
         rgb, colourspace=output_color_space,
         illuminant=white, apply_cctf_decoding=False,
     ))
@@ -1093,7 +1096,7 @@ def compress_rgb_jzazbz_chroma(
     bz_new = Cz_new * np.sin(hz)
     jab_new = np.stack([Jz, az_new, bz_new], axis=-1)
     xyz_new = np.asarray(colour.Jzazbz_to_XYZ(jab_new)) / _JZAZBZ_Y_W_CDM2
-    rgb_new = np.asarray(colour.XYZ_to_RGB(
+    rgb_new = np.asarray(xyz_to_rgb(
         xyz_new, colourspace=output_color_space,
         illuminant=white, apply_cctf_encoding=False,
     ))
@@ -1147,13 +1150,11 @@ def compress_rgb_cam16ucs_chroma(
     xyz_w = _output_cs_whitepoint_xyz(output_color_space)
 
     # RGB → XYZ → CAM16-UCS → polar.
-    xyz = np.asarray(colour.RGB_to_XYZ(
+    xyz = np.asarray(rgb_to_xyz(
         rgb, colourspace=output_color_space,
         illuminant=white, apply_cctf_decoding=False,
     ))
-    jab = np.asarray(colour.XYZ_to_CAM16UCS(
-        xyz, XYZ_w=xyz_w, L_A=_CAM16UCS_L_A, Y_b=_CAM16UCS_Y_B,
-    ))
+    jab = xyz_to_cam16ucs(xyz, xyz_w, _CAM16UCS_L_A, _CAM16UCS_Y_B)
     Jp = jab[..., 0]
     ap = jab[..., 1]
     bp = jab[..., 2]
@@ -1181,10 +1182,8 @@ def compress_rgb_cam16ucs_chroma(
     ap_new = Cp_new * np.cos(hp)
     bp_new = Cp_new * np.sin(hp)
     jab_new = np.stack([Jp, ap_new, bp_new], axis=-1)
-    xyz_new = np.asarray(colour.CAM16UCS_to_XYZ(
-        jab_new, XYZ_w=xyz_w, L_A=_CAM16UCS_L_A, Y_b=_CAM16UCS_Y_B,
-    ))
-    rgb_new = np.asarray(colour.XYZ_to_RGB(
+    xyz_new = cam16ucs_to_xyz(jab_new, xyz_w, _CAM16UCS_L_A, _CAM16UCS_Y_B)
+    rgb_new = np.asarray(xyz_to_rgb(
         xyz_new, colourspace=output_color_space,
         illuminant=white, apply_cctf_encoding=False,
     ))

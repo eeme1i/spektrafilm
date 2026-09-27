@@ -6,11 +6,11 @@ from opt_einsum import contract
 
 from spektrafilm.config import STANDARD_OBSERVER_CMFS
 from spektrafilm.model.diffusion import apply_gaussian_blur, apply_unsharp_mask
-from spektrafilm.model.develop import compute_density_spectral
 from spektrafilm.model.glare import add_glare
 from spektrafilm.model.illuminants import standard_illuminant
-from spektrafilm.utils.conversions import density_to_light
+from spektrafilm.utils.conversions import cmy_density_to_weighted_light
 from spektrafilm.utils.gamut_compression import compress_rgb
+from spektrafilm.utils.fast_colour import rgb_to_rgb, xyz_to_rgb
 
 
 class ScanningStage:
@@ -76,7 +76,7 @@ class ScanningStage:
         illuminant_xyz = contract("k,kl->l", scan_illuminant, STANDARD_OBSERVER_CMFS[:]) / normalization
         illuminant_xy = colour.XYZ_to_xy(illuminant_xyz)
         xyz = add_glare(xyz, illuminant_xyz, glare)
-        rgb = colour.XYZ_to_RGB(
+        rgb = xyz_to_rgb(
             xyz,
             colourspace=self._io.output_color_space,
             apply_cctf_encoding=False,
@@ -110,13 +110,13 @@ class ScanningStage:
         normalization = np.sum(scan_illuminant * STANDARD_OBSERVER_CMFS[:, 1], axis=0)
 
         def cmy_to_log_xyz(density_cmy: np.ndarray) -> np.ndarray:
-            density_spectral = compute_density_spectral(
-                channel_density,
+            xyz = cmy_density_to_weighted_light(
                 density_cmy,
+                channel_density,
                 base_density,
-            )
-            light = density_to_light(density_spectral, scan_illuminant)
-            xyz = contract("ijk,kl->ijl", light, STANDARD_OBSERVER_CMFS[:]) / normalization
+                scan_illuminant,
+                STANDARD_OBSERVER_CMFS[:],
+            ) / normalization
             return np.log10(np.fmax(xyz, 0.0) + 1e-10)
         return cmy_to_log_xyz
 
@@ -129,7 +129,7 @@ class ScanningStage:
 
     def _apply_cctf_encoding(self, rgb: np.ndarray) -> np.ndarray:
         if self._io.output_cctf_encoding:
-            rgb = colour.RGB_to_RGB(
+            rgb = rgb_to_rgb(
                 rgb,
                 self._io.output_color_space,
                 self._io.output_color_space,
