@@ -6,6 +6,7 @@ from spektrafilm.model.density_curves import DensityLayers
 from spektrafilm.runtime.params_schema import GrainParams
 from spektrafilm.utils.fast_stats import binomial_sample, fast_lognormal_from_mean_std, poisson_sample
 from spektrafilm.utils.fast_gaussian_filter import fast_gaussian_filter
+from spektrafilm.utils import gpu_grain
 
 ################################################################################
 # Grain (very simple model)
@@ -19,14 +20,22 @@ def layer_particle_model(density,
                          blur_particle=0.0,
                          method='poisson_binomial',
                          use_fast_stats=False,
+                         use_gpu=False,
                          ):
     if seed is not None:
         np.random.seed(seed) # scipy uses np.random
     
     od_particle = density_max/n_particles_per_pixel
     if method=='poisson_binomial' and use_fast_stats:
-        grain = _fast_poisson_binomial_grain(density, float(density_max),
-                                             float(n_particles_per_pixel), float(grain_uniformity))
+        grain = None
+        if use_gpu:
+            # seeded from np.random, so per-layer seeds carry over to the GPU
+            grain = gpu_grain.poisson_binomial_grain(density, float(density_max),
+                                                     float(n_particles_per_pixel), float(grain_uniformity))
+        if grain is None:
+            grain = _fast_poisson_binomial_grain(density, float(density_max),
+                                                 float(n_particles_per_pixel), float(grain_uniformity))
+        grain = grain.astype(np.asarray(density).dtype, copy=False)
         if blur_particle>0:
             grain = fast_gaussian_filter(grain, blur_particle*np.sqrt(od_particle))
         return grain
@@ -141,6 +150,7 @@ def apply_grain_to_density_layers(density_cmy_layers, # x,y,sublayers,rgb array,
                                   grain_micro_structure=(0.1, 30),
                                   fixed_seed=None,
                                   use_fast_stats=False,
+                                  use_gpu=False,
                                   ):
     density_max_total = np.sum(density_max_layers, axis=0) # [sublayers,rgb]
     density_max_fractions = density_max_layers/density_max_total[None,:]
@@ -172,7 +182,8 @@ def apply_grain_to_density_layers(density_cmy_layers, # x,y,sublayers,rgb array,
                                                             grain_uniformity=grain_uniformity[ch],
                                                             seed=seed[ch] + sl*10,
                                                             blur_particle=grain_blur_dye_clouds_um,
-                                                            use_fast_stats=use_fast_stats)
+                                                            use_fast_stats=use_fast_stats,
+                                                            use_gpu=use_gpu)
     
     # micro-structure
     density_cmy_out = add_micro_structure(density_cmy_out, grain_micro_structure, pixel_size_um)
@@ -194,6 +205,7 @@ def apply_grain(
     profile_type,
     bypass_grain=False,
     use_fast_stats=False,
+    use_gpu=False,
 ):
     if not grain.active or bypass_grain:
         return density_cmy
@@ -232,6 +244,7 @@ def apply_grain(
         grain_blur_dye_clouds_um=grain.blur_dye_clouds_um,
         grain_micro_structure=grain.micro_structure,
         use_fast_stats=use_fast_stats,
+        use_gpu=use_gpu,
     )
 
 # TODO: make grain parameter with RMS granularity

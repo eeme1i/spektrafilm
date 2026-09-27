@@ -227,6 +227,9 @@ class SettingsParams:
     use_scanner_lut: bool = False
     lut_resolution: int = 17
     use_fast_stats: bool = False
+    # Run grain sampling on the GPU when MLX (the optional 'gpu' extra) is
+    # installed and a Metal device is present; otherwise numba on the CPU.
+    use_gpu: bool = True
     preview_max_size: int = 640
     preview_mode: bool = False
     neutral_print_filters_from_database: bool = True

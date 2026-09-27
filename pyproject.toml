@@ -49,6 +49,11 @@ dev = [
     "pytest",
     "opencolorio~=2.5",   # PyOpenColorIO; validates emitted config.ocio files
 ]
+# GPU grain sampling on Apple silicon (see spektrafilm/utils/gpu_grain.py);
+# without it grain runs on the CPU.
+gpu = [
+    "mlx>=0.32; sys_platform == 'darwin' and platform_machine == 'arm64'",
+]
 
 [project.scripts]
 spektrafilm = "spektrafilm_gui.app:main"

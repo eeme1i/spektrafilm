@@ -82,6 +82,7 @@ class FilmingStage:
             self._film.info.type,
             gamma_factor=self._film_render.density_curve_gamma,
             use_fast_stats=self._settings.use_fast_stats,
+            use_gpu=self._settings.use_gpu,
         )
 
     # private methods

@@ -8,6 +8,7 @@ from spektrafilm.utils.numba_boost_hightlights import warmup_boost_highlights
 from spektrafilm.utils.fast_cam16ucs import warmup_fast_cam16ucs
 from spektrafilm.utils.conversions import warmup_conversions
 from spektrafilm.utils.fast_colour import warmup_fast_colour
+from spektrafilm.utils.gpu_grain import warmup_gpu_grain
 
 # precompile numba functions
 def warmup():
@@ -20,6 +21,7 @@ def warmup():
     warmup_conversions()
     warmup_fast_colour()
     warmup_float32()
+    warmup_gpu_grain()
 
 
 def warmup_float32():

@@ -50,6 +50,7 @@ def develop(
     gamma_factor: float = 1.0,
     bypass_grain: bool = False,
     use_fast_stats: bool = False,
+    use_gpu: bool = False,
 ) -> FloatArray:
     density_curves = np.asarray(density_curves)
     normalized_density_curves = density_curves - np.nanmin(density_curves, axis=0)
@@ -79,6 +80,7 @@ def develop(
         profile_type,
         bypass_grain=bypass_grain,
         use_fast_stats=use_fast_stats,
+        use_gpu=use_gpu,
     )
 
 def develop_print_morph(
