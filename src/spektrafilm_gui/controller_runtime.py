@@ -62,10 +62,6 @@ STEP_NAMES = {
     'display': 'Preparing display',
 }
 
-# Steps below this share of the total are left out of the completion summary.
-SUMMARY_MIN_SHARE = 0.02
-
-
 def step_name(label: str) -> str:
     return STEP_NAMES.get(label, label)
 
@@ -104,14 +100,8 @@ class SimulationProgress:
                 f' · {step_elapsed:.1f} s · {total:.1f} s total')
 
     def summary_message(self, now: float) -> str:
-        total = now - self.started_at
-        parts = [f'{self.mode_label} completed in {total:.1f} s']
-        if total > 0:
-            for label, elapsed in self.durations.items():
-                share = elapsed / total
-                if share >= SUMMARY_MIN_SHARE:
-                    parts.append(f'{step_name(label)} {elapsed:.1f} s ({share:.0%})')
-        return ' · '.join(parts)
+        # Total only: a per-step breakdown overflows the status bar.
+        return f'{self.mode_label} completed in {now - self.started_at:.1f} s'
 
 
 class SimulationWorkerSignals(QObject):

@@ -159,7 +159,4 @@ def test_simulation_progress_messages() -> None:
     progress.update(step('filming.develop', finished=True, elapsed=6.0, index=1, count=4), now=17.0)
     progress.update(step('display', finished=False, index=3, count=4), now=17.0)
     progress.update(step('display', finished=True, elapsed=0.1, index=3, count=4), now=17.1)
-    # display is under 2 % of the total, so it is left out of the summary
-    assert progress.summary_message(20.0) == (
-        'Scan completed in 10.0 s · Setting up 1.0 s (10%) · Developing film 6.0 s (60%)'
-    )
+    assert progress.summary_message(20.0) == 'Scan completed in 10.0 s'

@@ -1,13 +1,29 @@
 import numpy as np
 import pytest
 
-from spektrafilm.model.density_curves import interp_density_cmy_layers
+from spektrafilm.model.density_curves import DensityLayers, interp_density_cmy_layers
 from spektrafilm.model.grain import apply_grain_to_density, apply_grain_to_density_layers
 from spektrafilm.model.grain import apply_grain
 from spektrafilm.runtime.params_schema import GrainParams
 
 
 pytestmark = pytest.mark.unit
+
+
+@pytest.mark.parametrize('dtype', [np.float32, np.float64])
+@pytest.mark.parametrize('positive_film', [False, True])
+def test_channel_layers_matches_individual_interpolation_exactly(dtype, positive_film):
+    rng = np.random.default_rng(29)
+    exposure = np.linspace(0.0, 2.5, 35)
+    curves = np.stack([exposure, exposure * 0.9, exposure * 0.8], axis=-1)
+    curve_layers = np.stack([curves * 0.5, curves * 0.3, curves * 0.2], axis=1)
+    density = rng.uniform(-0.5, 3.0, size=(32, 47, 3)).astype(dtype)
+    layers = DensityLayers(density, curves, curve_layers, positive_film=positive_film)
+
+    for channel in range(3):
+        shared = layers.channel_layers(channel)
+        for layer in range(3):
+            np.testing.assert_array_equal(shared[layer], layers.layer(layer, channel))
 
 
 class TestApplyGrain:

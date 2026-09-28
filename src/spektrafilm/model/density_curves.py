@@ -53,6 +53,30 @@ def _interp_density_layer_kernel(density, x_axis, inv_dx, y_layer, sign, out):
     return out
 
 
+@numba.njit(parallel=True, fastmath=True, cache=True)
+def _interp_density_channel_layers_kernel(density, x_axis, inv_dx, y_layers, sign, channel):
+    """Interpolate all three sublayers with one density-axis lookup per pixel."""
+    n_rows, n_cols = density.shape[:2]
+    out = np.empty((3, n_rows, n_cols), dtype=density.dtype)
+    K = x_axis.shape[1]
+    for i in numba.prange(n_rows):
+        for j in range(n_cols):
+            x = sign * density[i, j, channel]
+            if x <= x_axis[channel, 0]:
+                for layer in range(3):
+                    out[layer, i, j] = y_layers[layer, channel, 0]
+            elif x >= x_axis[channel, K - 1]:
+                for layer in range(3):
+                    out[layer, i, j] = y_layers[layer, channel, K - 1]
+            else:
+                low = np.searchsorted(x_axis[channel], x, side='right') - 1
+                t = (x - x_axis[channel, low]) * inv_dx[channel, low]
+                for layer in range(3):
+                    y_layer = y_layers[layer, channel]
+                    out[layer, i, j] = y_layer[low] + t * (y_layer[low + 1] - y_layer[low])
+    return out
+
+
 class DensityLayers:
     """Per-layer densities (x, y, layer, rgb) of ``density_cmy``, interpolated
     one (layer, channel) plane at a time so the full 4D array is never held.
@@ -75,6 +99,13 @@ class DensityLayers:
                                      self._inv_dx[channel], self._y_layers[layer, channel],
                                      self._sign, out)
         return out
+
+    def channel_layers(self, channel):
+        """Return the three density sublayers of one colour channel."""
+        return _interp_density_channel_layers_kernel(
+            self._density_cmy, self._x_axes, self._inv_dx,
+            self._y_layers, self._sign, channel,
+        )
 
 
 def interp_density_cmy_layers(density_cmy, density_curves, density_curves_layers, positive_film=False):

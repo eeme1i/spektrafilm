@@ -1,6 +1,11 @@
 import numpy as np
 from spektrafilm.utils.dtypes import as_float_array
-from spektrafilm.utils.fast_interp_lut import apply_lut_3d, apply_lut_cubic_2d
+from spektrafilm.utils.fast_interp_lut import (
+    apply_lut_3d,
+    apply_lut_cubic_2d,
+    apply_lut_pchip_3d_prepared,
+    prepare_lut_pchip_3d,
+)
 
 def _as_channel_bounds(bounds):
     bounds_array = np.asarray(bounds, dtype=np.float64)
@@ -31,11 +36,14 @@ def _create_lut_3d(function, xmin=(0.0, 0.0, 0.0), xmax=(1.0, 1.0, 1.0), steps=3
 #     lut = np.reshape(function(X), (steps, steps, 3))
 #     return lut
 
-def compute_with_lut(data, function, xmin=(0.0, 0.0, 0.0), xmax=(1.0, 1.0, 1.0), steps=32, lut=None):
+def compute_with_lut(data, function, xmin=(0.0, 0.0, 0.0), xmax=(1.0, 1.0, 1.0), steps=32,
+                     lut=None, *, prepared_lut=None, return_prepared=False):
     # Computes the function on the data using a 3D LUT for acceleration.
     # The data is assumed to be in the range [xmin, xmax] and will be normalized for LUT indexing.
     # The lut is created on the fly in the range [xmin, xmax] with the specified number of steps.
     # Note: apply_lut_3d expects the data to be normalized to [0, 1] for proper indexing into the LUT.
+    if prepared_lut is not None and (lut is None or prepared_lut[0] is not lut):
+        raise ValueError('prepared_lut must belong to lut')
     xmin = _as_channel_bounds(xmin)
     xmax = _as_channel_bounds(xmax)
     if np.any(xmax <= xmin):
@@ -48,7 +56,12 @@ def compute_with_lut(data, function, xmin=(0.0, 0.0, 0.0), xmax=(1.0, 1.0, 1.0),
     xmin_d = xmin.astype(data.dtype)
     inv_span = (1.0 / (xmax - xmin)).astype(data.dtype)
     data_normalized = (data - xmin_d) * inv_span
-    return apply_lut_3d(lut, data_normalized), lut
+    if prepared_lut is None:
+        prepared_lut = prepare_lut_pchip_3d(lut)
+    result = apply_lut_pchip_3d_prepared(prepared_lut, data_normalized)
+    if return_prepared:
+        return result, lut, prepared_lut
+    return result, lut
 
 def warmup_luts():
     """

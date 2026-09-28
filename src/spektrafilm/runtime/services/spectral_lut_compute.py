@@ -25,6 +25,8 @@ class SpectralLUTService:
         self.filming_tc_lut_memory : np.ndarray | None = None # tc_lut memory
         self.enlarger_lut_memory : np.ndarray | None = None # enlarger lut memory
         self.scanner_lut_memory : np.ndarray | None = None # scanner lut memory
+        self._enlarger_prepared_lut = None
+        self._scanner_prepared_lut = None
 
         # local memory
         self._film_sensitivity = None # to track if tc_lut needs to be recomputed when film sensitivity changes
@@ -115,14 +117,17 @@ class SpectralLUTService:
                                            xmin=data_min,
                                            xmax=data_max,
                                            steps=self._lut_resolution,
-                                           lut=self.enlarger_lut_memory)
+                                           lut=self.enlarger_lut_memory,
+                                           prepared_lut=self._enlarger_prepared_lut)
         else:
-            data_out, lut = compute_with_lut(cmy_data,
-                                             spectral_calculation,
-                                             xmin=data_min,
-                                             xmax=data_max,
-                                             steps=self._lut_resolution)
+            data_out, lut, prepared_lut = compute_with_lut(cmy_data,
+                                                            spectral_calculation,
+                                                            xmin=data_min,
+                                                            xmax=data_max,
+                                                            steps=self._lut_resolution,
+                                                            return_prepared=True)
             self.enlarger_lut_memory = lut
+            self._enlarger_prepared_lut = prepared_lut
             self._enlarger_test_results_memory = np.array(test_results, copy=True)
 
         if data_out is None:
@@ -156,14 +161,17 @@ class SpectralLUTService:
                                            xmin=data_min,
                                            xmax=data_max,
                                            steps=self._lut_resolution,
-                                           lut=self.scanner_lut_memory)
+                                           lut=self.scanner_lut_memory,
+                                           prepared_lut=self._scanner_prepared_lut)
         else:
-            data_out, lut = compute_with_lut(cmy_data,
-                                             spectral_calculation,
-                                             xmin=data_min,
-                                             xmax=data_max,
-                                             steps=self._lut_resolution)
+            data_out, lut, prepared_lut = compute_with_lut(cmy_data,
+                                                            spectral_calculation,
+                                                            xmin=data_min,
+                                                            xmax=data_max,
+                                                            steps=self._lut_resolution,
+                                                            return_prepared=True)
             self.scanner_lut_memory = lut
+            self._scanner_prepared_lut = prepared_lut
             self._scanner_test_results_memory = np.array(test_results, copy=True)
 
         if data_out is None:

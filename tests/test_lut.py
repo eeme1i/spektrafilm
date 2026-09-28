@@ -7,6 +7,7 @@ from spektrafilm.utils.fast_interp_lut import (
     apply_lut_pchip_3d,
 )
 from spektrafilm.utils.lut import compute_with_lut
+from spektrafilm.runtime.services.spectral_lut_compute import SpectralLUTService
 
 
 pytestmark = pytest.mark.unit
@@ -207,3 +208,28 @@ def test_compute_with_lut_rejects_invalid_input_range():
 
     with pytest.raises(ValueError, match='xmax must be greater than xmin'):
         compute_with_lut(data, affine_transform, xmin=1.0, xmax=1.0)
+
+
+@pytest.mark.parametrize('method_name,cache_name,prepared_name', [
+    ('spectral_compute_enlarger', 'enlarger_lut_memory', '_enlarger_prepared_lut'),
+    ('spectral_compute_scanner', 'scanner_lut_memory', '_scanner_prepared_lut'),
+])
+def test_spectral_lut_reuses_preparation_and_rebuilds_on_change(method_name, cache_name, prepared_name):
+    service = SpectralLUTService(9)
+    data = np.random.default_rng(13).random((7, 11, 3), dtype=np.float32)
+    compute = getattr(service, method_name)
+
+    first = compute(data, lambda x: x * 0.7, data_min=0.0, data_max=1.0, use_lut=True)
+    first_lut = getattr(service, cache_name)
+    first_prepared = getattr(service, prepared_name)
+    second = compute(data, lambda x: x * 0.7, data_min=0.0, data_max=1.0, use_lut=True)
+
+    np.testing.assert_array_equal(first, second)
+    assert getattr(service, cache_name) is first_lut
+    assert getattr(service, prepared_name) is first_prepared
+    assert first_prepared[0] is first_lut
+
+    changed = compute(data, lambda x: x * 0.6, data_min=0.0, data_max=1.0, use_lut=True)
+    assert getattr(service, cache_name) is not first_lut
+    assert getattr(service, prepared_name) is not first_prepared
+    assert not np.array_equal(changed, first)

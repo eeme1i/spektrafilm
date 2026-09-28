@@ -171,9 +171,13 @@ def apply_grain_to_density_layers(density_cmy_layers, # x,y,sublayers,rgb array,
     
     density_cmy_out = np.zeros(density_cmy_layers.shape[0:3], dtype=density_cmy_layers.dtype)
     for ch in np.arange(3): # rgb channels
+        channel_layers = (
+            density_cmy_layers.channel_layers(ch)
+            if isinstance(density_cmy_layers, DensityLayers) else None
+        )
         for sl in np.arange(3): # sublayers
-            if isinstance(density_cmy_layers, DensityLayers):
-                density_layer = density_cmy_layers.layer(sl, ch)
+            if channel_layers is not None:
+                density_layer = channel_layers[sl]
             else:
                 density_layer = density_cmy_layers[:,:,sl,ch]
             density_cmy_out[:,:,ch] += layer_particle_model(density_layer + float(density_min_layers[sl,ch]),
