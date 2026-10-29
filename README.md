@@ -162,6 +162,12 @@ params = create_params(
 result = simulate(image, params)
 ```
 
+For offline BRAW video processing on macOS, use
+[`scripts/process_braw.py`](scripts/process_braw.py). It decodes through the
+installed Blackmagic RAW SDK and exports H.264 previews or 10-bit ProRes with
+audio and timecode. See the [BRAW usage guide](docs/process-braw.md) for setup,
+examples, and supported settings.
+
 Minimal LUT-bake API:
 
 ```python

@@ -19,13 +19,18 @@ class Simulator:
     def __init__(self, params: RuntimePhotoParams):
         self._pipeline = SimulationPipeline(params) # should stay private
 
-    def process(self, image, on_progress=None):
+    def process(self, image, on_progress=None, *, grain_seed: int | None = None):
         """Process the input image through the simulation pipeline and return the final result.
 
         ``on_progress``, if given, receives a :class:`StageProgress` as each
         pipeline stage starts and finishes.
+
+        ``grain_seed`` overrides the grain RNG for this frame only. The same
+        seed and input reproduce the same grain; other calls keep their defaults.
         """
-        return self._pipeline.process(image, on_progress=on_progress)
+        if grain_seed is None:
+            return self._pipeline.process(image, on_progress=on_progress)
+        return self._pipeline.process(image, on_progress=on_progress, grain_seed=grain_seed)
 
     def update_params(self, params):
         """Update the parameters of the simulation pipeline."""

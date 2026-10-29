@@ -117,7 +117,8 @@ class SimulationPipeline:
         self._topology: list[Node] = self._build_topology()
 
     def process(self, image, *, inject: str | None = None, collect: str | None = None,
-                on_progress: Callable[[StageProgress], None] | None = None):
+                on_progress: Callable[[StageProgress], None] | None = None,
+                grain_seed: int | None = None):
         """Run the pipeline.
 
         Defaults run end-to-end (``rgb_in`` → ``rgb_out``). Pass
@@ -145,6 +146,9 @@ class SimulationPipeline:
 
         self.timings.clear()
         start = perf_counter()
+        previous_grain_seed = self.film_render.grain.seed
+        if grain_seed is not None:
+            self.film_render.grain.seed = grain_seed
         try:
             return run_topology(
                 self._topology, inject, collect, image,
@@ -152,6 +156,7 @@ class SimulationPipeline:
                 on_fire=on_fire,
             )
         finally:
+            self.film_render.grain.seed = previous_grain_seed
             self._last_elapsed_time = perf_counter() - start
 
     def get_timings(self):

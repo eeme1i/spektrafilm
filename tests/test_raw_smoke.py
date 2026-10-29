@@ -67,6 +67,21 @@ def test_load_and_process_raw_file_smoke_without_external_raw(monkeypatch) -> No
         _assert_valid_rgb(image)
         assert image.shape == daylight.shape
 
+    for colorspace in ('ProPhoto RGB', 'sRGB'):
+        for encoded in (False, True):
+            converted = raw_file_processor.load_and_process_raw_file(
+                'synthetic.nef', white_balance='daylight',
+                output_colorspace=colorspace, output_cctf_encoding=encoded,
+            )
+            expected = raw_file_processor.colour.RGB_to_RGB(
+                daylight,
+                input_colourspace=raw_file_processor._ACES_COLOURSPACE,
+                output_colourspace=raw_file_processor.colour.RGB_COLOURSPACES[colorspace],
+                apply_cctf_decoding=False, apply_cctf_encoding=encoded,
+            ).astype(np.float32)
+            _assert_valid_rgb(converted)
+            np.testing.assert_array_equal(converted, expected)
+
     # 6504 K should be the daylight identity point for the simplified WB path.
     np.testing.assert_allclose(custom_daylight, daylight, atol=1e-6)
 

@@ -440,7 +440,9 @@ def load_and_process_raw_file(
             apply_cctf_encoding=output_cctf_encoding,
         )
 
-    return rgb
+    # Colour conversion can promote to float64; keep the documented import
+    # precision without changing the precision of the conversion itself.
+    return np.asarray(rgb, dtype=np.float32)
 
 
 __all__ = ['load_and_process_raw_file']

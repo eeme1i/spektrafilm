@@ -1,0 +1,1071 @@
+{
+  "seed": 20261011,
+  "profiles": {
+    "fujifilm_c200": {
+      "curve_split_error": {
+        "mean_abs": 0.0009842760245726604,
+        "p99_abs": 0.004034488209864378,
+        "max_abs": 0.006023363077661381
+      },
+      "runtime_split_error": {
+        "mean_abs": 0.0012266562762000765,
+        "p99_abs": 0.004413237467860027,
+        "max_abs": 0.00601956321812569
+      },
+      "dir_corrected_axis_min_step": 0.011226055018304981,
+      "sensitivity_shape": [
+        81,
+        3
+      ]
+    },
+    "fujifilm_natura_1600": {
+      "curve_split_error": {
+        "mean_abs": 1.1162983432726923e-05,
+        "p99_abs": 1.4367416381957931e-05,
+        "max_abs": 1.4367416381957931e-05
+      },
+      "runtime_split_error": {
+        "mean_abs": 1.116298343272667e-05,
+        "p99_abs": 1.4367416382166098e-05,
+        "max_abs": 1.4367416382388143e-05
+      },
+      "dir_corrected_axis_min_step": 0.009254351369609282,
+      "sensitivity_shape": [
+        81,
+        3
+      ]
+    },
+    "fujifilm_pro_400h": {
+      "curve_split_error": {
+        "mean_abs": 0.0009235725408706054,
+        "p99_abs": 0.003406448692002636,
+        "max_abs": 0.004930695292232556
+      },
+      "runtime_split_error": {
+        "mean_abs": 0.0011405197557925791,
+        "p99_abs": 0.003657716126191047,
+        "max_abs": 0.00493018899864639
+      },
+      "dir_corrected_axis_min_step": 0.012984563468030341,
+      "sensitivity_shape": [
+        81,
+        3
+      ]
+    },
+    "fujifilm_provia_100f": {
+      "curve_split_error": {
+        "mean_abs": 0.001379411872793063,
+        "p99_abs": 0.003802884756770143,
+        "max_abs": 0.004610999451715836
+      },
+      "runtime_split_error": {
+        "mean_abs": 0.0016407727170437674,
+        "p99_abs": 0.0041085509724907935,
+        "max_abs": 0.0045473737016820115
+      },
+      "dir_corrected_axis_min_step": 0.013005372568640094,
+      "sensitivity_shape": [
+        81,
+        3
+      ]
+    },
+    "fujifilm_velvia_100": {
+      "curve_split_error": {
+        "mean_abs": 0.0013673998332833642,
+        "p99_abs": 0.0036545764576790384,
+        "max_abs": 0.004580915506675831
+      },
+      "runtime_split_error": {
+        "mean_abs": 0.001647884887823297,
+        "p99_abs": 0.004139453588873493,
+        "max_abs": 0.004569628619314869
+      },
+      "dir_corrected_axis_min_step": 0.011071994979520827,
+      "sensitivity_shape": [
+        81,
+        3
+      ]
+    },
+    "fujifilm_xtra_400": {
+      "curve_split_error": {
+        "mean_abs": 0.0011747033989102356,
+        "p99_abs": 0.0042272141996226595,
+        "max_abs": 0.005997117382033235
+      },
+      "runtime_split_error": {
+        "mean_abs": 0.0013937429467780693,
+        "p99_abs": 0.004733226769344616,
+        "max_abs": 0.005994929971026242
+      },
+      "dir_corrected_axis_min_step": 0.009880309861018066,
+      "sensitivity_shape": [
+        81,
+        3
+      ]
+    },
+    "kodak_ektachrome_100": {
+      "curve_split_error": {
+        "mean_abs": 0.001368095827365301,
+        "p99_abs": 0.003717517920151772,
+        "max_abs": 0.00415356338086359
+      },
+      "runtime_split_error": {
+        "mean_abs": 0.0016231611401749345,
+        "p99_abs": 0.003988475476037335,
+        "max_abs": 0.004088351327836859
+      },
+      "dir_corrected_axis_min_step": 0.014570630494177506,
+      "sensitivity_shape": [
+        81,
+        3
+      ]
+    },
+    "kodak_ektar_100": {
+      "curve_split_error": {
+        "mean_abs": 0.0010652916659645284,
+        "p99_abs": 0.0037184899159869874,
+        "max_abs": 0.005327612110210822
+      },
+      "runtime_split_error": {
+        "mean_abs": 0.001303838069550062,
+        "p99_abs": 0.003924848966772425,
+        "max_abs": 0.005321313830818353
+      },
+      "dir_corrected_axis_min_step": 0.011748653963722266,
+      "sensitivity_shape": [
+        81,
+        3
+      ]
+    },
+    "kodak_gold_200": {
+      "curve_split_error": {
+        "mean_abs": 0.0008327945453873296,
+        "p99_abs": 0.0031024315523621032,
+        "max_abs": 0.003950338751201432
+      },
+      "runtime_split_error": {
+        "mean_abs": 0.0010685685765466505,
+        "p99_abs": 0.0033206940701221155,
+        "max_abs": 0.0039388715566184285
+      },
+      "dir_corrected_axis_min_step": 0.012739888434334823,
+      "sensitivity_shape": [
+        81,
+        3
+      ]
+    },
+    "kodak_kodachrome_64": {
+      "curve_split_error": {
+        "mean_abs": 0.0013663710943954365,
+        "p99_abs": 0.0036284627627540733,
+        "max_abs": 0.004264381780713644
+      },
+      "runtime_split_error": {
+        "mean_abs": 0.0016225776857093947,
+        "p99_abs": 0.004052569997879656,
+        "max_abs": 0.0042583676795746594
+      },
+      "dir_corrected_axis_min_step": 0.014224500722349376,
+      "sensitivity_shape": [
+        81,
+        3
+      ]
+    },
+    "kodak_portra_160": {
+      "curve_split_error": {
+        "mean_abs": 0.0009446277324858756,
+        "p99_abs": 0.003354911406641758,
+        "max_abs": 0.0046930987889495235
+      },
+      "runtime_split_error": {
+        "mean_abs": 0.0011732748189662303,
+        "p99_abs": 0.0036822553217722926,
+        "max_abs": 0.004692334010647059
+      },
+      "dir_corrected_axis_min_step": 0.012179104907569127,
+      "sensitivity_shape": [
+        81,
+        3
+      ]
+    },
+    "kodak_portra_400": {
+      "curve_split_error": {
+        "mean_abs": 0.0010325123036280372,
+        "p99_abs": 0.003651777002498078,
+        "max_abs": 0.00501794914885112
+      },
+      "runtime_split_error": {
+        "mean_abs": 0.0012697920531747192,
+        "p99_abs": 0.00394446851021004,
+        "max_abs": 0.0050179078092975615
+      },
+      "dir_corrected_axis_min_step": 0.01163839662014965,
+      "sensitivity_shape": [
+        81,
+        3
+      ]
+    },
+    "kodak_portra_800": {
+      "curve_split_error": {
+        "mean_abs": 0.0010006950363850842,
+        "p99_abs": 0.003722562061527894,
+        "max_abs": 0.0046577283717712525
+      },
+      "runtime_split_error": {
+        "mean_abs": 0.0012228214377254332,
+        "p99_abs": 0.003905348505370691,
+        "max_abs": 0.004656116771729613
+      },
+      "dir_corrected_axis_min_step": 0.013069790974350681,
+      "sensitivity_shape": [
+        81,
+        3
+      ]
+    },
+    "kodak_portra_800_push1": {
+      "curve_split_error": {
+        "mean_abs": 0.0010970041089371754,
+        "p99_abs": 0.003930946305659212,
+        "max_abs": 0.005192397635424673
+      },
+      "runtime_split_error": {
+        "mean_abs": 0.0013456381390889855,
+        "p99_abs": 0.004293844009142965,
+        "max_abs": 0.00519236385092392
+      },
+      "dir_corrected_axis_min_step": 0.010075917381797694,
+      "sensitivity_shape": [
+        81,
+        3
+      ]
+    },
+    "kodak_portra_800_push2": {
+      "curve_split_error": {
+        "mean_abs": 0.0011480949557518601,
+        "p99_abs": 0.004130590414252567,
+        "max_abs": 0.005809774318596084
+      },
+      "runtime_split_error": {
+        "mean_abs": 0.0014022907621430002,
+        "p99_abs": 0.004480832645763078,
+        "max_abs": 0.005807247356938161
+      },
+      "dir_corrected_axis_min_step": 0.008819494396400396,
+      "sensitivity_shape": [
+        81,
+        3
+      ]
+    },
+    "kodak_ultramax_400": {
+      "curve_split_error": {
+        "mean_abs": 0.0009727127911755887,
+        "p99_abs": 0.0036149787311802,
+        "max_abs": 0.004731177704490497
+      },
+      "runtime_split_error": {
+        "mean_abs": 0.0011977920899152348,
+        "p99_abs": 0.00380189325568354,
+        "max_abs": 0.004729543689090843
+      },
+      "dir_corrected_axis_min_step": 0.013088418019780224,
+      "sensitivity_shape": [
+        81,
+        3
+      ]
+    },
+    "kodak_verita_200d": {
+      "curve_split_error": {
+        "mean_abs": 0.0009914837133809923,
+        "p99_abs": 0.0034753592109954324,
+        "max_abs": 0.004577490194614509
+      },
+      "runtime_split_error": {
+        "mean_abs": 0.0011994383996106804,
+        "p99_abs": 0.0037301507511560425,
+        "max_abs": 0.004571884544035676
+      },
+      "dir_corrected_axis_min_step": 0.012212448393951636,
+      "sensitivity_shape": [
+        81,
+        3
+      ]
+    },
+    "kodak_vision3_200t": {
+      "curve_split_error": {
+        "mean_abs": 0.000887571104085659,
+        "p99_abs": 0.003255368415984455,
+        "max_abs": 0.004230353882849425
+      },
+      "runtime_split_error": {
+        "mean_abs": 0.00108494910921462,
+        "p99_abs": 0.003540051696564548,
+        "max_abs": 0.00422645779916575
+      },
+      "dir_corrected_axis_min_step": 0.014111025958187584,
+      "sensitivity_shape": [
+        81,
+        3
+      ]
+    },
+    "kodak_vision3_250d": {
+      "curve_split_error": {
+        "mean_abs": 0.0008070390628955117,
+        "p99_abs": 0.0031362186610829216,
+        "max_abs": 0.004093442422324678
+      },
+      "runtime_split_error": {
+        "mean_abs": 0.0010354733812042646,
+        "p99_abs": 0.0034819437142287984,
+        "max_abs": 0.004093336996046748
+      },
+      "dir_corrected_axis_min_step": 0.014597783607396053,
+      "sensitivity_shape": [
+        81,
+        3
+      ]
+    },
+    "kodak_vision3_500t": {
+      "curve_split_error": {
+        "mean_abs": 0.0007676565023622597,
+        "p99_abs": 0.00308050859624307,
+        "max_abs": 0.00415644340427912
+      },
+      "runtime_split_error": {
+        "mean_abs": 0.0010029108568623075,
+        "p99_abs": 0.003232811633565903,
+        "max_abs": 0.004155435703772081
+      },
+      "dir_corrected_axis_min_step": 0.014918492661444294,
+      "sensitivity_shape": [
+        81,
+        3
+      ]
+    },
+    "kodak_vision3_50d": {
+      "curve_split_error": {
+        "mean_abs": 0.0009193817578158392,
+        "p99_abs": 0.0032659467862614588,
+        "max_abs": 0.004404663872666914
+      },
+      "runtime_split_error": {
+        "mean_abs": 0.0011249204709701378,
+        "p99_abs": 0.003618720526519011,
+        "max_abs": 0.004402428031689443
+      },
+      "dir_corrected_axis_min_step": 0.013471888303040913,
+      "sensitivity_shape": [
+        81,
+        3
+      ]
+    }
+  },
+  "pipeline_luts": {
+    "kodak_portra_400": {
+      "target_pixels": 2916,
+      "in_gamut_pixels": 2916,
+      "resolutions": {
+        "17": {
+          "rgb_error": {
+            "mean_abs": 1.4693399862153456e-05,
+            "p99_abs": 0.0001185607907245867,
+            "max_abs": 0.000232696533203125
+          },
+          "delta_e_00_mean": 0.0035370777650203136,
+          "delta_e_00_p99": 0.018899968018646945,
+          "delta_e_00_max": 0.02671231272081956,
+          "in_gamut_delta_e_00_p99": 0.018899968018646945,
+          "enlarger_in_bounds_log_exposure_error": {
+            "mean_abs": 7.203062962140958e-06,
+            "p99_abs": 4.3210534303999625e-05,
+            "max_abs": 9.294603115034272e-05
+          },
+          "cold_seconds": 0.031128667062148452,
+          "warm_seconds": 0.004583874950185418
+        },
+        "33": {
+          "rgb_error": {
+            "mean_abs": 1.572388896420307e-06,
+            "p99_abs": 1.2071728633600287e-05,
+            "max_abs": 2.396106719970703e-05
+          },
+          "delta_e_00_mean": 0.0003939621584525715,
+          "delta_e_00_p99": 0.0024388035632087147,
+          "delta_e_00_max": 0.0035029952384809638,
+          "in_gamut_delta_e_00_p99": 0.0024388035632087147,
+          "enlarger_in_bounds_log_exposure_error": {
+            "mean_abs": 8.460620840260531e-07,
+            "p99_abs": 4.908999960095968e-06,
+            "max_abs": 9.201646655021545e-06
+          },
+          "cold_seconds": 0.09709570789709687,
+          "warm_seconds": 0.004898875020444393
+        },
+        "65": {
+          "rgb_error": {
+            "mean_abs": 1.977987409418347e-07,
+            "p99_abs": 1.5497207641601562e-06,
+            "max_abs": 3.635883331298828e-06
+          },
+          "delta_e_00_mean": 4.973056722523807e-05,
+          "delta_e_00_p99": 0.00032844571206823973,
+          "delta_e_00_max": 0.0005064229422666719,
+          "in_gamut_delta_e_00_p99": 0.00032844571206823973,
+          "enlarger_in_bounds_log_exposure_error": {
+            "mean_abs": 1.1175849098751188e-07,
+            "p99_abs": 5.690602429753166e-07,
+            "max_abs": 1.2683879341834903e-06
+          },
+          "cold_seconds": 0.44370412500575185,
+          "warm_seconds": 0.005133624887093902
+        }
+      },
+      "enlarger_above_bound_0_1D_log_exposure_error": {
+        "mean_abs": 0.10240500867721265,
+        "p99_abs": 0.11506280594492635,
+        "max_abs": 0.11506280594492635
+      }
+    },
+    "fujifilm_pro_400h": {
+      "target_pixels": 2916,
+      "in_gamut_pixels": 2916,
+      "resolutions": {
+        "17": {
+          "rgb_error": {
+            "mean_abs": 1.3936084542365279e-05,
+            "p99_abs": 0.00010976731573464349,
+            "max_abs": 0.00023233890533447266
+          },
+          "delta_e_00_mean": 0.0034045808694991436,
+          "delta_e_00_p99": 0.019605748527488434,
+          "delta_e_00_max": 0.027438600433685862,
+          "in_gamut_delta_e_00_p99": 0.019605748527488434,
+          "enlarger_in_bounds_log_exposure_error": {
+            "mean_abs": 5.762387064585424e-06,
+            "p99_abs": 3.47275251133824e-05,
+            "max_abs": 6.159128796645597e-05
+          },
+          "cold_seconds": 0.028045334154739976,
+          "warm_seconds": 0.004663374973461032
+        },
+        "33": {
+          "rgb_error": {
+            "mean_abs": 1.4934204273231444e-06,
+            "p99_abs": 1.1594891475397162e-05,
+            "max_abs": 2.4199485778808594e-05
+          },
+          "delta_e_00_mean": 0.0003785727747046285,
+          "delta_e_00_p99": 0.002306645949922666,
+          "delta_e_00_max": 0.0030825947014482664,
+          "in_gamut_delta_e_00_p99": 0.002306645949922666,
+          "enlarger_in_bounds_log_exposure_error": {
+            "mean_abs": 6.585221828708746e-07,
+            "p99_abs": 3.922653452579916e-06,
+            "max_abs": 9.966839970676489e-06
+          },
+          "cold_seconds": 0.09909258410334587,
+          "warm_seconds": 0.00488416594453156
+        },
+        "65": {
+          "rgb_error": {
+            "mean_abs": 2.0381740739594534e-07,
+            "p99_abs": 1.6689300537109375e-06,
+            "max_abs": 3.6954879760742188e-06
+          },
+          "delta_e_00_mean": 5.298959693414292e-05,
+          "delta_e_00_p99": 0.0003798892455586943,
+          "delta_e_00_max": 0.0005417557692527426,
+          "in_gamut_delta_e_00_p99": 0.0003798892455586943,
+          "enlarger_in_bounds_log_exposure_error": {
+            "mean_abs": 8.911088843125421e-08,
+            "p99_abs": 4.992608234014038e-07,
+            "max_abs": 1.79669293198792e-06
+          },
+          "cold_seconds": 0.44552462501451373,
+          "warm_seconds": 0.005194999976083636
+        }
+      },
+      "enlarger_above_bound_0_1D_log_exposure_error": {
+        "mean_abs": 0.10904624928002778,
+        "p99_abs": 0.11803621927181118,
+        "max_abs": 0.11803621927181118
+      }
+    },
+    "fujifilm_xtra_400": {
+      "target_pixels": 2916,
+      "in_gamut_pixels": 2916,
+      "resolutions": {
+        "17": {
+          "rgb_error": {
+            "mean_abs": 1.4777323485759553e-05,
+            "p99_abs": 0.00010687112808227539,
+            "max_abs": 0.0002167820930480957
+          },
+          "delta_e_00_mean": 0.003584258988060007,
+          "delta_e_00_p99": 0.01942902367635661,
+          "delta_e_00_max": 0.026695751836291484,
+          "in_gamut_delta_e_00_p99": 0.01942902367635661,
+          "enlarger_in_bounds_log_exposure_error": {
+            "mean_abs": 9.562096203381117e-06,
+            "p99_abs": 6.848784796875173e-05,
+            "max_abs": 0.00013000253790562688
+          },
+          "cold_seconds": 0.028274958953261375,
+          "warm_seconds": 0.0044984580017626286
+        },
+        "33": {
+          "rgb_error": {
+            "mean_abs": 1.8033344986179145e-06,
+            "p99_abs": 1.3530254364013672e-05,
+            "max_abs": 2.7239322662353516e-05
+          },
+          "delta_e_00_mean": 0.0004532796381476903,
+          "delta_e_00_p99": 0.002710734619526051,
+          "delta_e_00_max": 0.004015178390916505,
+          "in_gamut_delta_e_00_p99": 0.002710734619526051,
+          "enlarger_in_bounds_log_exposure_error": {
+            "mean_abs": 1.0824409305719448e-06,
+            "p99_abs": 7.033576557394778e-06,
+            "max_abs": 1.7111340701037037e-05
+          },
+          "cold_seconds": 0.09768458409234881,
+          "warm_seconds": 0.004604666959494352
+        },
+        "65": {
+          "rgb_error": {
+            "mean_abs": 2.0735043904096528e-07,
+            "p99_abs": 1.4901161193847656e-06,
+            "max_abs": 3.635883331298828e-06
+          },
+          "delta_e_00_mean": 5.078232261825082e-05,
+          "delta_e_00_p99": 0.00030682870418218846,
+          "delta_e_00_max": 0.00048653411916754893,
+          "in_gamut_delta_e_00_p99": 0.00030682870418218846,
+          "enlarger_in_bounds_log_exposure_error": {
+            "mean_abs": 1.3460558828920595e-07,
+            "p99_abs": 8.470340503263784e-07,
+            "max_abs": 1.8533735952341868e-06
+          },
+          "cold_seconds": 0.4550770411733538,
+          "warm_seconds": 0.004962417064234614
+        }
+      },
+      "enlarger_above_bound_0_1D_log_exposure_error": {
+        "mean_abs": 0.10314422539347283,
+        "p99_abs": 0.10890026276075138,
+        "max_abs": 0.10890026276075138
+      }
+    }
+  },
+  "grain_sampling": [
+    {
+      "particles_per_pixel": 1.0,
+      "development_probability": 0.01,
+      "expected_mean": 0.022000000000000002,
+      "expected_variance": 0.047925680474320005,
+      "scipy": {
+        "mean": 0.022736403421004074,
+        "variance": 0.04991809727891226,
+        "skewness": 9.898494125754937,
+        "above_dmax_fraction": 9.5367431640625e-05
+      },
+      "fast": {
+        "mean": 0.022578513249754906,
+        "variance": 0.04936406388878822,
+        "skewness": 9.873443603515625,
+        "above_dmax_fraction": 7.2479248046875e-05
+      }
+    },
+    {
+      "particles_per_pixel": 1.0,
+      "development_probability": 0.5,
+      "expected_mean": 1.1,
+      "expected_variance": 1.2342011858000002,
+      "scipy": {
+        "mean": 1.102479518169457,
+        "variance": 1.235420704996168,
+        "skewness": 1.0077520563330613,
+        "above_dmax_fraction": 0.2581367492675781
+      },
+      "fast": {
+        "mean": 1.1028988361358643,
+        "variance": 1.2352160215377808,
+        "skewness": 1.008164882659912,
+        "above_dmax_fraction": 0.2577362060546875
+      }
+    },
+    {
+      "particles_per_pixel": 1.0,
+      "development_probability": 0.99,
+      "expected_mean": 2.178,
+      "expected_variance": 0.14279432881032028,
+      "scipy": {
+        "mean": 2.1772873983003596,
+        "variance": 0.1431758122873797,
+        "skewness": 0.17506973072728976,
+        "above_dmax_fraction": 0.46845245361328125
+      },
+      "fast": {
+        "mean": 2.17842435836792,
+        "variance": 0.14442813396453857,
+        "skewness": 0.012754200026392937,
+        "above_dmax_fraction": 0.4801368713378906
+      }
+    },
+    {
+      "particles_per_pixel": 10.0,
+      "development_probability": 0.01,
+      "expected_mean": 0.022000000000000002,
+      "expected_variance": 0.0047925680474320016,
+      "scipy": {
+        "mean": 0.022135583988497277,
+        "variance": 0.00483357392608482,
+        "skewness": 3.145382192189382,
+        "above_dmax_fraction": 0.0
+      },
+      "fast": {
+        "mean": 0.022019244730472565,
+        "variance": 0.004796350374817848,
+        "skewness": 3.1442508697509766,
+        "above_dmax_fraction": 0.0
+      }
+    },
+    {
+      "particles_per_pixel": 10.0,
+      "development_probability": 0.5,
+      "expected_mean": 1.1,
+      "expected_variance": 0.12342011858000003,
+      "scipy": {
+        "mean": 1.1004867062849009,
+        "variance": 0.12350197523222897,
+        "skewness": 0.3211591080135173,
+        "above_dmax_fraction": 0.00275421142578125
+      },
+      "fast": {
+        "mean": 1.1001999378204346,
+        "variance": 0.12304142117500305,
+        "skewness": 0.3165878355503082,
+        "above_dmax_fraction": 0.00281524658203125
+      }
+    },
+    {
+      "particles_per_pixel": 10.0,
+      "development_probability": 0.99,
+      "expected_mean": 2.178,
+      "expected_variance": 0.014279432881032028,
+      "scipy": {
+        "mean": 2.1778220121418057,
+        "variance": 0.01429495188036111,
+        "skewness": 0.05373665285667638,
+        "above_dmax_fraction": 0.4249763488769531
+      },
+      "fast": {
+        "mean": 2.177762031555176,
+        "variance": 0.014186263084411621,
+        "skewness": -0.001980070024728775,
+        "above_dmax_fraction": 0.4270133972167969
+      }
+    },
+    {
+      "particles_per_pixel": 100.0,
+      "development_probability": 0.01,
+      "expected_mean": 0.022000000000000002,
+      "expected_variance": 0.00047925680474320004,
+      "scipy": {
+        "mean": 0.02205771845485151,
+        "variance": 0.00048093909416115245,
+        "skewness": 0.9960049177798704,
+        "above_dmax_fraction": 0.0
+      },
+      "fast": {
+        "mean": 0.02196863293647766,
+        "variance": 0.00047784444177523255,
+        "skewness": 0.9975603222846985,
+        "above_dmax_fraction": 0.0
+      }
+    },
+    {
+      "particles_per_pixel": 100.0,
+      "development_probability": 0.5,
+      "expected_mean": 1.1,
+      "expected_variance": 0.012342011858000003,
+      "scipy": {
+        "mean": 1.0999122320341594,
+        "variance": 0.012289504495070588,
+        "skewness": 0.0967153908185191,
+        "above_dmax_fraction": 0.0
+      },
+      "fast": {
+        "mean": 1.099739909172058,
+        "variance": 0.012339640408754349,
+        "skewness": 0.0789542868733406,
+        "above_dmax_fraction": 0.0
+      }
+    },
+    {
+      "particles_per_pixel": 100.0,
+      "development_probability": 0.99,
+      "expected_mean": 2.178,
+      "expected_variance": 0.0014279432881032028,
+      "scipy": {
+        "mean": 2.177937693413429,
+        "variance": 0.0014291971120743681,
+        "skewness": 0.016106510145302257,
+        "above_dmax_fraction": 0.27996826171875
+      },
+      "fast": {
+        "mean": 2.1778969764709473,
+        "variance": 0.0014316714368760586,
+        "skewness": 0.003425383707508445,
+        "above_dmax_fraction": 0.27881622314453125
+      }
+    }
+  ],
+  "grain_lut_bounds": [
+    {
+      "stock": "kodak_portra_400",
+      "fraction_of_dmax": 0.0,
+      "pixel_size_um": 4.340277777777778,
+      "any_channel_outside_fraction": 0.0,
+      "clipping_mean_density_shift": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "clipping_log_print_exposure_error": {
+        "mean_abs": 0.0,
+        "p99_abs": 0.0,
+        "max_abs": 0.0
+      },
+      "grain_mean_density_shift": [
+        3.6110526707489043e-05,
+        4.466412974579725e-06,
+        -3.7070694816065952e-06
+      ]
+    },
+    {
+      "stock": "kodak_portra_400",
+      "fraction_of_dmax": 0.5,
+      "pixel_size_um": 4.340277777777778,
+      "any_channel_outside_fraction": 0.0,
+      "clipping_mean_density_shift": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "clipping_log_print_exposure_error": {
+        "mean_abs": 0.0,
+        "p99_abs": 0.0,
+        "max_abs": 0.0
+      },
+      "grain_mean_density_shift": [
+        -0.0018934598192572594,
+        -0.0019086668035015464,
+        -0.0013723986921831965
+      ]
+    },
+    {
+      "stock": "kodak_portra_400",
+      "fraction_of_dmax": 0.95,
+      "pixel_size_um": 4.340277777777778,
+      "any_channel_outside_fraction": 0.003814697265625,
+      "clipping_mean_density_shift": [
+        -1.1996614125912204e-06,
+        0.0,
+        -5.002193837006289e-05
+      ],
+      "clipping_log_print_exposure_error": {
+        "mean_abs": 1.6433183260501914e-05,
+        "p99_abs": 0.0,
+        "max_abs": 0.06069092731625059
+      },
+      "grain_mean_density_shift": [
+        -0.002182454103603959,
+        -0.00045202806359156966,
+        -0.0017804433591663837
+      ]
+    },
+    {
+      "stock": "kodak_portra_400",
+      "fraction_of_dmax": 1.0,
+      "pixel_size_um": 4.340277777777778,
+      "any_channel_outside_fraction": 0.8678131103515625,
+      "clipping_mean_density_shift": [
+        -0.008628150667902948,
+        -0.004402839045407571,
+        -0.012609314304376742
+      ],
+      "clipping_log_print_exposure_error": {
+        "mean_abs": 0.008395125595390856,
+        "p99_abs": 0.05358629478013451,
+        "max_abs": 0.10347425872984983
+      },
+      "grain_mean_density_shift": [
+        -0.0007151962490752339,
+        -0.0009279530495405197,
+        -0.0013408814556896687
+      ]
+    },
+    {
+      "stock": "fujifilm_pro_400h",
+      "fraction_of_dmax": 0.0,
+      "pixel_size_um": 4.340277777777778,
+      "any_channel_outside_fraction": 0.0,
+      "clipping_mean_density_shift": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "clipping_log_print_exposure_error": {
+        "mean_abs": 0.0,
+        "p99_abs": 0.0,
+        "max_abs": 0.0
+      },
+      "grain_mean_density_shift": [
+        1.1382977390894666e-05,
+        -0.00012596271699294448,
+        -7.0654132287018e-05
+      ]
+    },
+    {
+      "stock": "fujifilm_pro_400h",
+      "fraction_of_dmax": 0.5,
+      "pixel_size_um": 4.340277777777778,
+      "any_channel_outside_fraction": 0.0,
+      "clipping_mean_density_shift": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "clipping_log_print_exposure_error": {
+        "mean_abs": 0.0,
+        "p99_abs": 0.0,
+        "max_abs": 0.0
+      },
+      "grain_mean_density_shift": [
+        0.00046597872278653085,
+        -0.0011767075629904866,
+        -0.001814520568586886
+      ]
+    },
+    {
+      "stock": "fujifilm_pro_400h",
+      "fraction_of_dmax": 0.95,
+      "pixel_size_um": 4.340277777777778,
+      "any_channel_outside_fraction": 0.00457763671875,
+      "clipping_mean_density_shift": [
+        -1.4711335022453066e-06,
+        0.0,
+        -5.95687926330664e-05
+      ],
+      "clipping_log_print_exposure_error": {
+        "mean_abs": 1.3579550881249707e-05,
+        "p99_abs": 0.0,
+        "max_abs": 0.03568913273228591
+      },
+      "grain_mean_density_shift": [
+        -0.00152272277045995,
+        -0.0005206361529417336,
+        7.666910823900253e-05
+      ]
+    },
+    {
+      "stock": "fujifilm_pro_400h",
+      "fraction_of_dmax": 1.0,
+      "pixel_size_um": 4.340277777777778,
+      "any_channel_outside_fraction": 0.8659210205078125,
+      "clipping_mean_density_shift": [
+        -0.006833622645254494,
+        -0.003970242759552382,
+        -0.0123267628716765
+      ],
+      "clipping_log_print_exposure_error": {
+        "mean_abs": 0.008140985177299694,
+        "p99_abs": 0.05423404393485848,
+        "max_abs": 0.10422535625371987
+      },
+      "grain_mean_density_shift": [
+        -0.0009095865534618497,
+        -0.0008225498022511601,
+        -0.0016607025172561407
+      ]
+    },
+    {
+      "stock": "fujifilm_xtra_400",
+      "fraction_of_dmax": 0.0,
+      "pixel_size_um": 4.340277777777778,
+      "any_channel_outside_fraction": 0.0,
+      "clipping_mean_density_shift": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "clipping_log_print_exposure_error": {
+        "mean_abs": 0.0,
+        "p99_abs": 0.0,
+        "max_abs": 0.0
+      },
+      "grain_mean_density_shift": [
+        0.00013029172259848565,
+        8.75497207744047e-05,
+        -0.0006172076100483537
+      ]
+    },
+    {
+      "stock": "fujifilm_xtra_400",
+      "fraction_of_dmax": 0.5,
+      "pixel_size_um": 4.340277777777778,
+      "any_channel_outside_fraction": 0.0,
+      "clipping_mean_density_shift": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "clipping_log_print_exposure_error": {
+        "mean_abs": 0.0,
+        "p99_abs": 0.0,
+        "max_abs": 0.0
+      },
+      "grain_mean_density_shift": [
+        0.00024817814119160175,
+        -0.0011733663268387318,
+        0.0012060134904459119
+      ]
+    },
+    {
+      "stock": "fujifilm_xtra_400",
+      "fraction_of_dmax": 0.95,
+      "pixel_size_um": 4.340277777777778,
+      "any_channel_outside_fraction": 0.0045623779296875,
+      "clipping_mean_density_shift": [
+        -1.36344041075409e-06,
+        0.0,
+        -8.029875037479211e-05
+      ],
+      "clipping_log_print_exposure_error": {
+        "mean_abs": 4.052398025773182e-05,
+        "p99_abs": 0.0,
+        "max_abs": 0.06175787353717421
+      },
+      "grain_mean_density_shift": [
+        -0.0013833018019795418,
+        -0.0017636354314163327,
+        0.0004277139960322529
+      ]
+    },
+    {
+      "stock": "fujifilm_xtra_400",
+      "fraction_of_dmax": 1.0,
+      "pixel_size_um": 4.340277777777778,
+      "any_channel_outside_fraction": 0.8730316162109375,
+      "clipping_mean_density_shift": [
+        -0.009261780547161173,
+        -0.005415553425096345,
+        -0.01695804042221488
+      ],
+      "clipping_log_print_exposure_error": {
+        "mean_abs": 0.010335540075869615,
+        "p99_abs": 0.06600996817628171,
+        "max_abs": 0.1285013867570659
+      },
+      "grain_mean_density_shift": [
+        -0.0006230088183656335,
+        -0.0013349298387765884,
+        -0.00022345551406033337
+      ]
+    }
+  ],
+  "gaussian": [
+    {
+      "sigma_px": 1.0,
+      "l1_error": 0.0,
+      "energy": 1.0,
+      "center_ratio": 1.0
+    },
+    {
+      "sigma_px": 3.0,
+      "l1_error": 0.0986691564321518,
+      "energy": 0.9999999403953552,
+      "center_ratio": 1.0465755462646484
+    },
+    {
+      "sigma_px": 10.0,
+      "l1_error": 0.0671129897236824,
+      "energy": 1.0,
+      "center_ratio": 0.989739179611206
+    },
+    {
+      "sigma_px": 30.0,
+      "l1_error": 0.03920721262693405,
+      "energy": 0.999893307685852,
+      "center_ratio": 1.0156499147415161
+    }
+  ],
+  "exponential_mtf": {
+    "2": {
+      "mean_abs": 0.010402184534156124,
+      "p99_abs": 0.07119449162494812,
+      "max_abs": 0.07160634483758155
+    },
+    "3": {
+      "mean_abs": 0.001902708785124035,
+      "p99_abs": 0.01565999617596542,
+      "max_abs": 0.015853876755384196
+    },
+    "candidate_3_same_pass_count": {
+      "fit": [
+        [
+          0.08610278505207285,
+          0.46295730714091954
+        ],
+        [
+          0.5144845716274523,
+          1.1913089365274925
+        ],
+        [
+          0.3994126433204749,
+          2.374179418502381
+        ]
+      ],
+      "error": {
+        "mean_abs": 0.0010541755981264252,
+        "p99_abs": 0.004457217850270034,
+        "max_abs": 0.004494525734912047
+      },
+      "weighted_sigma_squared": 3.0000000000000004,
+      "note": "Analytic MTF fit only; discrete filtering and measured film validation still required."
+    },
+    "discrete_psf": [
+      {
+        "decay_px": 5.0,
+        "current": {
+          "l1_error": 0.08015244469526986,
+          "center_ratio": 0.8717534912652697
+        },
+        "candidate": {
+          "l1_error": 0.05970823199236784,
+          "center_ratio": 0.8322211817439523
+        }
+      },
+      {
+        "decay_px": 20.0,
+        "current": {
+          "l1_error": 0.06730013356511014,
+          "center_ratio": 0.8773314442409551
+        },
+        "candidate": {
+          "l1_error": 0.04111230966320935,
+          "center_ratio": 0.840217505022717
+        }
+      }
+    ]
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+    "numpy": "2.4.6",
+    "scipy": "1.18.0",
+    "colour": "0.4.7",
+    "numba": "0.66.0"
+  },
+  "randomness": "Targets are seeded; fast parallel Numba grain draws are not reproducibly seeded."
+}

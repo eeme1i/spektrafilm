@@ -4,6 +4,7 @@ See studies/a40_lut_system/n020_dispatcher_design.md for the design rationale.
 """
 from __future__ import annotations
 
+from collections import Counter
 from dataclasses import dataclass
 from time import perf_counter
 from typing import Any, Callable
@@ -95,13 +96,22 @@ def run_topology(
     timings and report progress.
     """
     plan = plan_topology(topology, inject, collect)
+    remaining_reads = Counter(tap for node in plan for tap in node.reads)
     state: dict[str, Any] = {inject: image}
+    del image
     for index, node in enumerate(plan):
         if on_start is not None:
             on_start(node, index, len(plan))
         t0 = perf_counter()
         node.fire(state)
         elapsed = perf_counter() - t0
+        # Keep shared taps until their last planned consumer, but release
+        # image-sized intermediates before the next stage allocates its work.
+        for tap in node.reads:
+            remaining_reads[tap] -= 1
+        for tap in list(state):
+            if tap != collect and remaining_reads[tap] == 0:
+                del state[tap]
         if on_fire is not None:
             on_fire(node, elapsed)
     return state[collect]

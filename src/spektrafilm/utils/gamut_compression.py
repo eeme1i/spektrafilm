@@ -1215,6 +1215,9 @@ def compress_rgb_cam16ucs_chroma(
     return rgb_new
 
 
+_OUTPUT_GAMUT_BLOCK_PIXELS = 768 * 1024
+
+
 def compress_rgb(
     rgb: np.ndarray,
     spec: "OutputGamutCompressSpec",
@@ -1243,6 +1246,27 @@ def compress_rgb(
     rgb = as_float_array(rgb)
     if spec.algorithm == "off":
         return rgb
+    if rgb.size // 3 <= _OUTPUT_GAMUT_BLOCK_PIXELS:
+        return _compress_rgb_block(rgb, spec, output_color_space=output_color_space)
+
+    # These transforms are per-pixel: bound their temporary arrays while
+    # retaining the same tables, parameters, and working precision.
+    flat = rgb.reshape(-1, 3)
+    out = np.empty_like(flat)
+    for start in range(0, len(flat), _OUTPUT_GAMUT_BLOCK_PIXELS):
+        end = start + _OUTPUT_GAMUT_BLOCK_PIXELS
+        out[start:end] = _compress_rgb_block(
+            flat[start:end], spec, output_color_space=output_color_space,
+        )
+    return out.reshape(rgb.shape)
+
+
+def _compress_rgb_block(
+    rgb: np.ndarray,
+    spec: "OutputGamutCompressSpec",
+    *,
+    output_color_space: str | None,
+) -> np.ndarray:
     threshold, limit, power = spec.knee
     if spec.algorithm == "aces_rgc":
         return np.asarray(compress_rgb_aces_rgc(

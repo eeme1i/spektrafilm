@@ -1,0 +1,2428 @@
+{
+  "initial_gpu_scaling": {
+    "raw": "/Users/em/Downloads/img/ILCE-7C.ARW",
+    "film": "kodak_vision3_50d",
+    "print": "kodak_2393",
+    "machine": "arm64",
+    "numba_threads": 8,
+    "gpu_requested": true,
+    "gpu_available": true,
+    "runs": [
+      {
+        "scale": 0.5,
+        "repeat": 1,
+        "shape": [
+          2012,
+          3012,
+          3
+        ],
+        "megapixels": 6.060144,
+        "seconds": 4.080947707872838,
+        "timings": {
+          "preprocess": 0.13638937496580184,
+          "SpectralLUTService.get_filming_tc_lut": 2.7833040803670883e-05,
+          "filming.expose": 1.053233667043969,
+          "filming.develop": 0.9032522919587791,
+          "SpectralLUTService.spectral_compute_enlarger": 0.2301638328935951,
+          "printing.expose": 0.3631549160927534,
+          "printing.develop": 0.10853529185988009,
+          "SpectralLUTService.spectral_compute_scanner": 0.23255779221653938,
+          "scanning.scan_print": 1.5151497500482947
+        },
+        "grain_layers": [
+          {
+            "seconds": 0.037205500062555075,
+            "density_max": 0.5360294414048813,
+            "particles_per_pixel": 68.27848096738069,
+            "mean_development_probability": 0.8578078949454939
+          },
+          {
+            "seconds": 0.010052249999716878,
+            "density_max": 0.562562821148552,
+            "particles_per_pixel": 143.3165117799353,
+            "mean_development_probability": 0.29908365955312893
+          },
+          {
+            "seconds": 0.014120584120973945,
+            "density_max": 0.5577533935891551,
+            "particles_per_pixel": 284.18255809873745,
+            "mean_development_probability": 0.04015892608370027
+          },
+          {
+            "seconds": 0.009980166098102927,
+            "density_max": 0.5363963283339527,
+            "particles_per_pixel": 65.51112294946635,
+            "mean_development_probability": 0.8659811877665095
+          },
+          {
+            "seconds": 0.01287649990990758,
+            "density_max": 0.6021641654536515,
+            "particles_per_pixel": 147.08695266920967,
+            "mean_development_probability": 0.27373478350332053
+          },
+          {
+            "seconds": 0.011333416914567351,
+            "density_max": 0.5889350358156824,
+            "particles_per_pixel": 287.71110839184615,
+            "mean_development_probability": 0.03619635131042859
+          },
+          {
+            "seconds": 0.0068822079338133335,
+            "density_max": 0.5992304312414094,
+            "particles_per_pixel": 32.51020124491883,
+            "mean_development_probability": 0.7438735978437807
+          },
+          {
+            "seconds": 0.0089630838483572,
+            "density_max": 0.6801759648321146,
+            "particles_per_pixel": 73.80351980068399,
+            "mean_development_probability": 0.21359472815115993
+          },
+          {
+            "seconds": 0.009674750035628676,
+            "density_max": 0.6650149784866021,
+            "particles_per_pixel": 144.31690818302212,
+            "mean_development_probability": 0.03725750608006171
+          }
+        ]
+      },
+      {
+        "scale": 0.5,
+        "repeat": 2,
+        "shape": [
+          2012,
+          3012,
+          3
+        ],
+        "megapixels": 6.060144,
+        "seconds": 3.611069583101198,
+        "timings": {
+          "preprocess": 0.12822695914655924,
+          "SpectralLUTService.get_filming_tc_lut": 2.037500962615013e-05,
+          "filming.expose": 0.9912132499739528,
+          "filming.develop": 0.8259026249870658,
+          "SpectralLUTService.spectral_compute_enlarger": 0.20200683316215873,
+          "printing.expose": 0.3297649589367211,
+          "printing.develop": 0.113303542137146,
+          "SpectralLUTService.spectral_compute_scanner": 0.21079041715711355,
+          "scanning.scan_print": 1.2223979169502854
+        },
+        "grain_layers": [
+          {
+            "seconds": 0.014683207962661982,
+            "density_max": 0.5360294414048813,
+            "particles_per_pixel": 68.27848096738069,
+            "mean_development_probability": 0.8578078949454939
+          },
+          {
+            "seconds": 0.010234707966446877,
+            "density_max": 0.562562821148552,
+            "particles_per_pixel": 143.3165117799353,
+            "mean_development_probability": 0.29908365955312893
+          },
+          {
+            "seconds": 0.013027624925598502,
+            "density_max": 0.5577533935891551,
+            "particles_per_pixel": 284.18255809873745,
+            "mean_development_probability": 0.04015892608370027
+          },
+          {
+            "seconds": 0.009199958061799407,
+            "density_max": 0.5363963283339527,
+            "particles_per_pixel": 65.51112294946635,
+            "mean_development_probability": 0.8659811877665095
+          },
+          {
+            "seconds": 0.01371979177929461,
+            "density_max": 0.6021641654536515,
+            "particles_per_pixel": 147.08695266920967,
+            "mean_development_probability": 0.27373478350332053
+          },
+          {
+            "seconds": 0.010771917179226875,
+            "density_max": 0.5889350358156824,
+            "particles_per_pixel": 287.71110839184615,
+            "mean_development_probability": 0.03619635131042859
+          },
+          {
+            "seconds": 0.013080749893561006,
+            "density_max": 0.5992304312414094,
+            "particles_per_pixel": 32.51020124491883,
+            "mean_development_probability": 0.7438735978437807
+          },
+          {
+            "seconds": 0.012181084137409925,
+            "density_max": 0.6801759648321146,
+            "particles_per_pixel": 73.80351980068399,
+            "mean_development_probability": 0.21359472815115993
+          },
+          {
+            "seconds": 0.011331124929711223,
+            "density_max": 0.6650149784866021,
+            "particles_per_pixel": 144.31690818302212,
+            "mean_development_probability": 0.03725750608006171
+          }
+        ]
+      },
+      {
+        "scale": 1.0,
+        "repeat": 1,
+        "shape": [
+          4024,
+          6024,
+          3
+        ],
+        "megapixels": 24.240576,
+        "seconds": 18.392661374993622,
+        "timings": {
+          "preprocess": 0.734239666024223,
+          "SpectralLUTService.get_filming_tc_lut": 0.00010604085400700569,
+          "filming.expose": 5.359889999963343,
+          "filming.develop": 3.685844625113532,
+          "SpectralLUTService.spectral_compute_enlarger": 0.9056572080589831,
+          "printing.expose": 1.6085706248413771,
+          "printing.develop": 0.5795617080293596,
+          "SpectralLUTService.spectral_compute_scanner": 0.9218095000833273,
+          "scanning.scan_print": 6.422874209005386
+        },
+        "grain_layers": [
+          {
+            "seconds": 0.16359349992126226,
+            "density_max": 0.5360294414048813,
+            "particles_per_pixel": 17.069620241845172,
+            "mean_development_probability": 0.8577660294302358
+          },
+          {
+            "seconds": 0.033391417004168034,
+            "density_max": 0.562562821148552,
+            "particles_per_pixel": 35.829127944983824,
+            "mean_development_probability": 0.2991348873354592
+          },
+          {
+            "seconds": 0.023985124891623855,
+            "density_max": 0.5577533935891551,
+            "particles_per_pixel": 71.04563952468436,
+            "mean_development_probability": 0.040172100607061625
+          },
+          {
+            "seconds": 0.058273208094760776,
+            "density_max": 0.5363963283339527,
+            "particles_per_pixel": 16.37778073736659,
+            "mean_development_probability": 0.8658174516642335
+          },
+          {
+            "seconds": 0.028141541872173548,
+            "density_max": 0.6021641654536515,
+            "particles_per_pixel": 36.771738167302416,
+            "mean_development_probability": 0.27387808765428834
+          },
+          {
+            "seconds": 0.022420958848670125,
+            "density_max": 0.5889350358156824,
+            "particles_per_pixel": 71.92777709796154,
+            "mean_development_probability": 0.036217677629084205
+          },
+          {
+            "seconds": 0.07283754087984562,
+            "density_max": 0.5992304312414094,
+            "particles_per_pixel": 8.127550311229708,
+            "mean_development_probability": 0.7434841780611234
+          },
+          {
+            "seconds": 0.08037745906040072,
+            "density_max": 0.6801759648321146,
+            "particles_per_pixel": 18.450879950170997,
+            "mean_development_probability": 0.2137336893469968
+          },
+          {
+            "seconds": 0.03081166697666049,
+            "density_max": 0.6650149784866021,
+            "particles_per_pixel": 36.07922704575553,
+            "mean_development_probability": 0.03727277382445382
+          }
+        ]
+      },
+      {
+        "scale": 1.0,
+        "repeat": 2,
+        "shape": [
+          4024,
+          6024,
+          3
+        ],
+        "megapixels": 24.240576,
+        "seconds": 23.338705916889012,
+        "timings": {
+          "preprocess": 3.404685040935874,
+          "SpectralLUTService.get_filming_tc_lut": 0.00039466703310608864,
+          "filming.expose": 6.258324166992679,
+          "filming.develop": 5.322554500075057,
+          "SpectralLUTService.spectral_compute_enlarger": 0.824742958182469,
+          "printing.expose": 1.3922562911175191,
+          "printing.develop": 0.3708506249822676,
+          "SpectralLUTService.spectral_compute_scanner": 0.846689207945019,
+          "scanning.scan_print": 6.588217499898747
+        },
+        "grain_layers": [
+          {
+            "seconds": 0.4994234580080956,
+            "density_max": 0.5360294414048813,
+            "particles_per_pixel": 17.069620241845172,
+            "mean_development_probability": 0.8577660294302358
+          },
+          {
+            "seconds": 0.04598400020040572,
+            "density_max": 0.562562821148552,
+            "particles_per_pixel": 35.829127944983824,
+            "mean_development_probability": 0.2991348873354592
+          },
+          {
+            "seconds": 0.021222665905952454,
+            "density_max": 0.5577533935891551,
+            "particles_per_pixel": 71.04563952468436,
+            "mean_development_probability": 0.040172100607061625
+          },
+          {
+            "seconds": 0.05271695903502405,
+            "density_max": 0.5363963283339527,
+            "particles_per_pixel": 16.37778073736659,
+            "mean_development_probability": 0.8658174516642335
+          },
+          {
+            "seconds": 0.033311374951153994,
+            "density_max": 0.6021641654536515,
+            "particles_per_pixel": 36.771738167302416,
+            "mean_development_probability": 0.27387808765428834
+          },
+          {
+            "seconds": 0.020894833141937852,
+            "density_max": 0.5889350358156824,
+            "particles_per_pixel": 71.92777709796154,
+            "mean_development_probability": 0.036217677629084205
+          },
+          {
+            "seconds": 0.07152595790103078,
+            "density_max": 0.5992304312414094,
+            "particles_per_pixel": 8.127550311229708,
+            "mean_development_probability": 0.7434841780611234
+          },
+          {
+            "seconds": 0.07998612499795854,
+            "density_max": 0.6801759648321146,
+            "particles_per_pixel": 18.450879950170997,
+            "mean_development_probability": 0.2137336893469968
+          },
+          {
+            "seconds": 0.03185387491248548,
+            "density_max": 0.6650149784866021,
+            "particles_per_pixel": 36.07922704575553,
+            "mean_development_probability": 0.03727277382445382
+          }
+        ]
+      }
+    ],
+    "raw_import_seconds": 2.8705481661017984,
+    "input_shape": [
+      4024,
+      6024,
+      3
+    ],
+    "import_dtype": "float64",
+    "warmup_seconds": 1.057230208069086
+  },
+  "release_and_float32": {
+    "raw": "/Users/em/Downloads/img/ILCE-7C.ARW",
+    "film": "kodak_vision3_50d",
+    "print": "kodak_2393",
+    "machine": "arm64",
+    "numba_threads": 8,
+    "gpu_requested": true,
+    "release_taps_experiment": true,
+    "float32_input_experiment": true,
+    "gpu_available": true,
+    "runs": [
+      {
+        "scale": 1.0,
+        "repeat": 1,
+        "shape": [
+          4024,
+          6024,
+          3
+        ],
+        "megapixels": 24.240576,
+        "seconds": 19.250239707995206,
+        "timings": {
+          "preprocess": 0.3576722501311451,
+          "SpectralLUTService.get_filming_tc_lut": 2.6082852855324745e-05,
+          "filming.expose": 5.97483841702342,
+          "filming.develop": 4.014566999860108,
+          "SpectralLUTService.spectral_compute_enlarger": 0.905731791863218,
+          "printing.expose": 1.4124405409675092,
+          "printing.develop": 0.46700774994678795,
+          "SpectralLUTService.spectral_compute_scanner": 0.9126559579744935,
+          "scanning.scan_print": 7.021393834147602
+        },
+        "grain_layers": [
+          {
+            "seconds": 0.14885741705074906,
+            "density_max": 0.5360294414048813,
+            "particles_per_pixel": 17.069620241845172,
+            "mean_development_probability": 0.8577660294302358
+          },
+          {
+            "seconds": 0.04189495905302465,
+            "density_max": 0.562562821148552,
+            "particles_per_pixel": 35.829127944983824,
+            "mean_development_probability": 0.2991348873354592
+          },
+          {
+            "seconds": 0.024667332880198956,
+            "density_max": 0.5577533935891551,
+            "particles_per_pixel": 71.04563952468436,
+            "mean_development_probability": 0.040172100607061625
+          },
+          {
+            "seconds": 0.05785933299921453,
+            "density_max": 0.5363963283339527,
+            "particles_per_pixel": 16.37778073736659,
+            "mean_development_probability": 0.8658174516642335
+          },
+          {
+            "seconds": 0.02928762510418892,
+            "density_max": 0.6021641654536515,
+            "particles_per_pixel": 36.771738167302416,
+            "mean_development_probability": 0.27387808765428834
+          },
+          {
+            "seconds": 0.021535958163440228,
+            "density_max": 0.5889350358156824,
+            "particles_per_pixel": 71.92777709796154,
+            "mean_development_probability": 0.036217677629084205
+          },
+          {
+            "seconds": 0.08173916698433459,
+            "density_max": 0.5992304312414094,
+            "particles_per_pixel": 8.127550311229708,
+            "mean_development_probability": 0.7434841780611234
+          },
+          {
+            "seconds": 0.08114079106599092,
+            "density_max": 0.6801759648321146,
+            "particles_per_pixel": 18.450879950170997,
+            "mean_development_probability": 0.2137336893469968
+          },
+          {
+            "seconds": 0.02934070909395814,
+            "density_max": 0.6650149784866021,
+            "particles_per_pixel": 36.07922704575553,
+            "mean_development_probability": 0.03727277382445382
+          }
+        ]
+      },
+      {
+        "scale": 1.0,
+        "repeat": 2,
+        "shape": [
+          4024,
+          6024,
+          3
+        ],
+        "megapixels": 24.240576,
+        "seconds": 17.312316166004166,
+        "timings": {
+          "preprocess": 0.7925337080378085,
+          "SpectralLUTService.get_filming_tc_lut": 0.00013566715642809868,
+          "filming.expose": 4.375664958031848,
+          "filming.develop": 4.410195207921788,
+          "SpectralLUTService.spectral_compute_enlarger": 0.9589937920682132,
+          "printing.expose": 1.4526924998499453,
+          "printing.develop": 0.6749727078713477,
+          "SpectralLUTService.spectral_compute_scanner": 0.9749615408945829,
+          "scanning.scan_print": 5.605107499985024
+        },
+        "grain_layers": [
+          {
+            "seconds": 0.1574780000373721,
+            "density_max": 0.5360294414048813,
+            "particles_per_pixel": 17.069620241845172,
+            "mean_development_probability": 0.8577660294302358
+          },
+          {
+            "seconds": 0.03275620797649026,
+            "density_max": 0.562562821148552,
+            "particles_per_pixel": 35.829127944983824,
+            "mean_development_probability": 0.2991348873354592
+          },
+          {
+            "seconds": 0.02356179105117917,
+            "density_max": 0.5577533935891551,
+            "particles_per_pixel": 71.04563952468436,
+            "mean_development_probability": 0.040172100607061625
+          },
+          {
+            "seconds": 0.05655370815657079,
+            "density_max": 0.5363963283339527,
+            "particles_per_pixel": 16.37778073736659,
+            "mean_development_probability": 0.8658174516642335
+          },
+          {
+            "seconds": 0.02764716697856784,
+            "density_max": 0.6021641654536515,
+            "particles_per_pixel": 36.771738167302416,
+            "mean_development_probability": 0.27387808765428834
+          },
+          {
+            "seconds": 0.021898875012993813,
+            "density_max": 0.5889350358156824,
+            "particles_per_pixel": 71.92777709796154,
+            "mean_development_probability": 0.036217677629084205
+          },
+          {
+            "seconds": 0.0758321660105139,
+            "density_max": 0.5992304312414094,
+            "particles_per_pixel": 8.127550311229708,
+            "mean_development_probability": 0.7434841780611234
+          },
+          {
+            "seconds": 0.08330045803450048,
+            "density_max": 0.6801759648321146,
+            "particles_per_pixel": 18.450879950170997,
+            "mean_development_probability": 0.2137336893469968
+          },
+          {
+            "seconds": 0.031327374977990985,
+            "density_max": 0.6650149784866021,
+            "particles_per_pixel": 36.07922704575553,
+            "mean_development_probability": 0.03727277382445382
+          }
+        ]
+      }
+    ],
+    "raw_import_seconds": 1.5701612920966,
+    "input_shape": [
+      4024,
+      6024,
+      3
+    ],
+    "import_dtype": "float64",
+    "retained_input_bytes": 290886912,
+    "release_taps_deterministic_output_identical": true,
+    "warmup_seconds": 0.11663920804858208
+  },
+  "chunked_experiment": {
+    "raw": "/Users/em/Downloads/img/ILCE-7C.ARW",
+    "film": "kodak_vision3_50d",
+    "print": "kodak_2393",
+    "machine": "arm64",
+    "numba_threads": 8,
+    "gpu_requested": true,
+    "release_taps_experiment": true,
+    "float32_input_experiment": true,
+    "chunk_gamut_rows_experiment": 128,
+    "output_gamut_algorithm": "cam16ucs",
+    "gpu_available": true,
+    "runs": [
+      {
+        "scale": 0.5,
+        "repeat": 1,
+        "shape": [
+          2012,
+          3012,
+          3
+        ],
+        "megapixels": 6.060144,
+        "seconds": 4.271946666995063,
+        "timings": {
+          "preprocess": 0.11312912497669458,
+          "SpectralLUTService.get_filming_tc_lut": 1.950003206729889e-05,
+          "filming.expose": 1.6329549162182957,
+          "filming.develop": 0.8894403330050409,
+          "SpectralLUTService.spectral_compute_enlarger": 0.20820933301001787,
+          "printing.expose": 0.3297874580603093,
+          "printing.develop": 0.09501000004820526,
+          "SpectralLUTService.spectral_compute_scanner": 0.22017162502743304,
+          "scanning.scan_print": 1.2112372918054461
+        },
+        "grain_layers": [
+          {
+            "seconds": 0.02827245811931789,
+            "density_max": 0.5360294414048813,
+            "particles_per_pixel": 68.27848096738069,
+            "mean_development_probability": 0.8578078949454939
+          },
+          {
+            "seconds": 0.01558583416044712,
+            "density_max": 0.562562821148552,
+            "particles_per_pixel": 143.3165117799353,
+            "mean_development_probability": 0.29908365955312893
+          },
+          {
+            "seconds": 0.011702749878168106,
+            "density_max": 0.5577533935891551,
+            "particles_per_pixel": 284.18255809873745,
+            "mean_development_probability": 0.04015892608370027
+          },
+          {
+            "seconds": 0.007017291849479079,
+            "density_max": 0.5363963283339527,
+            "particles_per_pixel": 65.51112294946635,
+            "mean_development_probability": 0.8659811322062441
+          },
+          {
+            "seconds": 0.00803454197011888,
+            "density_max": 0.6021641654536515,
+            "particles_per_pixel": 147.08695266920967,
+            "mean_development_probability": 0.27373478350332053
+          },
+          {
+            "seconds": 0.011950832791626453,
+            "density_max": 0.5889350358156824,
+            "particles_per_pixel": 287.71110839184615,
+            "mean_development_probability": 0.03619635131042859
+          },
+          {
+            "seconds": 0.016756874974817038,
+            "density_max": 0.5992304312414094,
+            "particles_per_pixel": 32.51020124491883,
+            "mean_development_probability": 0.7438735978437807
+          },
+          {
+            "seconds": 0.009672333020716906,
+            "density_max": 0.6801759648321146,
+            "particles_per_pixel": 73.80351980068399,
+            "mean_development_probability": 0.21359472815115993
+          },
+          {
+            "seconds": 0.008551583858206868,
+            "density_max": 0.6650149784866021,
+            "particles_per_pixel": 144.31690818302212,
+            "mean_development_probability": 0.03725750608006171
+          }
+        ],
+        "retained_buffers_after_node_before_release": [
+          {
+            "stage": "preprocess",
+            "buffers": {
+              "rgb_in": {
+                "bytes": 145443456,
+                "dtype": "float64"
+              },
+              "rgb_pre": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "filming.expose",
+            "buffers": {
+              "rgb_pre": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              },
+              "log_e_film": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "filming.develop",
+            "buffers": {
+              "log_e_film": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              },
+              "cmy_film": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "printing.expose",
+            "buffers": {
+              "cmy_film": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              },
+              "log_e_print": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "printing.develop",
+            "buffers": {
+              "log_e_print": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              },
+              "cmy_print": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "scanning.scan_print",
+            "buffers": {
+              "cmy_print": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              },
+              "rgb_out": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "scale": 0.5,
+        "repeat": 2,
+        "shape": [
+          2012,
+          3012,
+          3
+        ],
+        "megapixels": 6.060144,
+        "seconds": 3.456672792090103,
+        "timings": {
+          "preprocess": 0.13266495917923748,
+          "SpectralLUTService.get_filming_tc_lut": 5.237502045929432e-05,
+          "filming.expose": 0.9484286671504378,
+          "filming.develop": 0.8071007500402629,
+          "SpectralLUTService.spectral_compute_enlarger": 0.21189408283680677,
+          "printing.expose": 0.3321502080652863,
+          "printing.develop": 0.09303370793350041,
+          "SpectralLUTService.spectral_compute_scanner": 0.18891799985431135,
+          "scanning.scan_print": 1.1430174161214381
+        },
+        "grain_layers": [
+          {
+            "seconds": 0.017701416974887252,
+            "density_max": 0.5360294414048813,
+            "particles_per_pixel": 68.27848096738069,
+            "mean_development_probability": 0.8578078949454939
+          },
+          {
+            "seconds": 0.010684791952371597,
+            "density_max": 0.562562821148552,
+            "particles_per_pixel": 143.3165117799353,
+            "mean_development_probability": 0.29908365955312893
+          },
+          {
+            "seconds": 0.010908375028520823,
+            "density_max": 0.5577533935891551,
+            "particles_per_pixel": 284.18255809873745,
+            "mean_development_probability": 0.04015892608370027
+          },
+          {
+            "seconds": 0.009914417052641511,
+            "density_max": 0.5363963283339527,
+            "particles_per_pixel": 65.51112294946635,
+            "mean_development_probability": 0.8659811322062441
+          },
+          {
+            "seconds": 0.01215700013563037,
+            "density_max": 0.6021641654536515,
+            "particles_per_pixel": 147.08695266920967,
+            "mean_development_probability": 0.27373478350332053
+          },
+          {
+            "seconds": 0.011262916959822178,
+            "density_max": 0.5889350358156824,
+            "particles_per_pixel": 287.71110839184615,
+            "mean_development_probability": 0.03619635131042859
+          },
+          {
+            "seconds": 0.007194750010967255,
+            "density_max": 0.5992304312414094,
+            "particles_per_pixel": 32.51020124491883,
+            "mean_development_probability": 0.7438735978437807
+          },
+          {
+            "seconds": 0.009293207898736,
+            "density_max": 0.6801759648321146,
+            "particles_per_pixel": 73.80351980068399,
+            "mean_development_probability": 0.21359472815115993
+          },
+          {
+            "seconds": 0.00847587501630187,
+            "density_max": 0.6650149784866021,
+            "particles_per_pixel": 144.31690818302212,
+            "mean_development_probability": 0.03725750608006171
+          }
+        ],
+        "retained_buffers_after_node_before_release": [
+          {
+            "stage": "preprocess",
+            "buffers": {
+              "rgb_in": {
+                "bytes": 145443456,
+                "dtype": "float64"
+              },
+              "rgb_pre": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "filming.expose",
+            "buffers": {
+              "rgb_pre": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              },
+              "log_e_film": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "filming.develop",
+            "buffers": {
+              "log_e_film": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              },
+              "cmy_film": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "printing.expose",
+            "buffers": {
+              "cmy_film": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              },
+              "log_e_print": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "printing.develop",
+            "buffers": {
+              "log_e_print": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              },
+              "cmy_print": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "scanning.scan_print",
+            "buffers": {
+              "cmy_print": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              },
+              "rgb_out": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "scale": 1.0,
+        "repeat": 1,
+        "shape": [
+          4024,
+          6024,
+          3
+        ],
+        "megapixels": 24.240576,
+        "seconds": 16.796022083144635,
+        "timings": {
+          "preprocess": 0.48031724989414215,
+          "SpectralLUTService.get_filming_tc_lut": 1.850002445280552e-05,
+          "filming.expose": 5.3805335408542305,
+          "filming.develop": 3.641385499853641,
+          "SpectralLUTService.spectral_compute_enlarger": 0.8152273329906166,
+          "printing.expose": 1.303050042130053,
+          "printing.develop": 0.3719200841151178,
+          "SpectralLUTService.spectral_compute_scanner": 1.356546208029613,
+          "scanning.scan_print": 5.618329084012657
+        },
+        "grain_layers": [
+          {
+            "seconds": 0.07586566708050668,
+            "density_max": 0.5360294414048813,
+            "particles_per_pixel": 17.069620241845172,
+            "mean_development_probability": 0.8577660294302358
+          },
+          {
+            "seconds": 0.030847500078380108,
+            "density_max": 0.562562821148552,
+            "particles_per_pixel": 35.829127944983824,
+            "mean_development_probability": 0.2991348873354592
+          },
+          {
+            "seconds": 0.022566040977835655,
+            "density_max": 0.5577533935891551,
+            "particles_per_pixel": 71.04563952468436,
+            "mean_development_probability": 0.040172100607061625
+          },
+          {
+            "seconds": 0.05397616699337959,
+            "density_max": 0.5363963283339527,
+            "particles_per_pixel": 16.37778073736659,
+            "mean_development_probability": 0.8658174516642335
+          },
+          {
+            "seconds": 0.028425166849046946,
+            "density_max": 0.6021641654536515,
+            "particles_per_pixel": 36.771738167302416,
+            "mean_development_probability": 0.27387808765428834
+          },
+          {
+            "seconds": 0.023675000062212348,
+            "density_max": 0.5889350358156824,
+            "particles_per_pixel": 71.92777709796154,
+            "mean_development_probability": 0.036217677629084205
+          },
+          {
+            "seconds": 0.07918629189953208,
+            "density_max": 0.5992304312414094,
+            "particles_per_pixel": 8.127550311229708,
+            "mean_development_probability": 0.7434841780611234
+          },
+          {
+            "seconds": 0.08380066696554422,
+            "density_max": 0.6801759648321146,
+            "particles_per_pixel": 18.450879950170997,
+            "mean_development_probability": 0.2137336893469968
+          },
+          {
+            "seconds": 0.03146616602316499,
+            "density_max": 0.6650149784866021,
+            "particles_per_pixel": 36.07922704575553,
+            "mean_development_probability": 0.03727277382445382
+          }
+        ],
+        "retained_buffers_after_node_before_release": [
+          {
+            "stage": "preprocess",
+            "buffers": {
+              "rgb_in": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "rgb_pre": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "filming.expose",
+            "buffers": {
+              "rgb_pre": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "log_e_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "filming.develop",
+            "buffers": {
+              "log_e_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "cmy_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "printing.expose",
+            "buffers": {
+              "cmy_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "log_e_print": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "printing.develop",
+            "buffers": {
+              "log_e_print": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "cmy_print": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "scanning.scan_print",
+            "buffers": {
+              "cmy_print": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "rgb_out": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "scale": 1.0,
+        "repeat": 2,
+        "shape": [
+          4024,
+          6024,
+          3
+        ],
+        "megapixels": 24.240576,
+        "seconds": 15.74426554189995,
+        "timings": {
+          "preprocess": 0.501360374968499,
+          "SpectralLUTService.get_filming_tc_lut": 0.00013445783406496048,
+          "filming.expose": 4.49082983401604,
+          "filming.develop": 4.0185407910030335,
+          "SpectralLUTService.spectral_compute_enlarger": 0.9250476669985801,
+          "printing.expose": 1.4091482078656554,
+          "printing.develop": 0.5200514160096645,
+          "SpectralLUTService.spectral_compute_scanner": 0.8205122919753194,
+          "scanning.scan_print": 4.803810625104234
+        },
+        "grain_layers": [
+          {
+            "seconds": 0.13604883290827274,
+            "density_max": 0.5360294414048813,
+            "particles_per_pixel": 17.069620241845172,
+            "mean_development_probability": 0.8577660294302358
+          },
+          {
+            "seconds": 0.032608167035505176,
+            "density_max": 0.562562821148552,
+            "particles_per_pixel": 35.829127944983824,
+            "mean_development_probability": 0.2991348873354592
+          },
+          {
+            "seconds": 0.022878458024933934,
+            "density_max": 0.5577533935891551,
+            "particles_per_pixel": 71.04563952468436,
+            "mean_development_probability": 0.040172100607061625
+          },
+          {
+            "seconds": 0.06397333391942084,
+            "density_max": 0.5363963283339527,
+            "particles_per_pixel": 16.37778073736659,
+            "mean_development_probability": 0.8658174516642335
+          },
+          {
+            "seconds": 0.030965999932959676,
+            "density_max": 0.6021641654536515,
+            "particles_per_pixel": 36.771738167302416,
+            "mean_development_probability": 0.27387808765428834
+          },
+          {
+            "seconds": 0.021950750146061182,
+            "density_max": 0.5889350358156824,
+            "particles_per_pixel": 71.92777709796154,
+            "mean_development_probability": 0.036217677629084205
+          },
+          {
+            "seconds": 0.07575650000944734,
+            "density_max": 0.5992304312414094,
+            "particles_per_pixel": 8.127550311229708,
+            "mean_development_probability": 0.7434841780611234
+          },
+          {
+            "seconds": 0.08024991699494421,
+            "density_max": 0.6801759648321146,
+            "particles_per_pixel": 18.450879950170997,
+            "mean_development_probability": 0.2137336893469968
+          },
+          {
+            "seconds": 0.028866125037893653,
+            "density_max": 0.6650149784866021,
+            "particles_per_pixel": 36.07922704575553,
+            "mean_development_probability": 0.03727277382445382
+          }
+        ],
+        "retained_buffers_after_node_before_release": [
+          {
+            "stage": "preprocess",
+            "buffers": {
+              "rgb_in": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "rgb_pre": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "filming.expose",
+            "buffers": {
+              "rgb_pre": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "log_e_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "filming.develop",
+            "buffers": {
+              "log_e_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "cmy_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "printing.expose",
+            "buffers": {
+              "cmy_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "log_e_print": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "printing.develop",
+            "buffers": {
+              "log_e_print": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "cmy_print": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "scanning.scan_print",
+            "buffers": {
+              "cmy_print": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "rgb_out": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "raw_import_seconds": 1.5743577498942614,
+    "input_shape": [
+      4024,
+      6024,
+      3
+    ],
+    "import_dtype": "float64",
+    "retained_input_bytes": 290886912,
+    "experiments_deterministic_output_identical": true,
+    "warmup_seconds": 0.11732449987903237
+  },
+  "instrumented_baseline": {
+    "raw": "/Users/em/Downloads/img/ILCE-7C.ARW",
+    "film": "kodak_vision3_50d",
+    "print": "kodak_2393",
+    "machine": "arm64",
+    "numba_threads": 8,
+    "gpu_requested": true,
+    "release_taps_experiment": false,
+    "float32_input_experiment": false,
+    "chunk_gamut_rows_experiment": 0,
+    "output_gamut_algorithm": "cam16ucs",
+    "gpu_available": true,
+    "runs": [
+      {
+        "scale": 0.5,
+        "repeat": 1,
+        "shape": [
+          2012,
+          3012,
+          3
+        ],
+        "megapixels": 6.060144,
+        "seconds": 4.339690332999453,
+        "timings": {
+          "preprocess": 0.14421766600571573,
+          "SpectralLUTService.get_filming_tc_lut": 2.308306284248829e-05,
+          "filming.expose": 1.473251999821514,
+          "filming.develop": 0.8744024578481913,
+          "SpectralLUTService.spectral_compute_enlarger": 0.21081129182130098,
+          "printing.expose": 0.33479525009170175,
+          "printing.develop": 0.0935911659616977,
+          "SpectralLUTService.spectral_compute_scanner": 0.21488937502726912,
+          "scanning.scan_print": 1.4189731671940535
+        },
+        "grain_layers": [
+          {
+            "seconds": 0.029252209002152085,
+            "density_max": 0.5360294414048813,
+            "particles_per_pixel": 68.27848096738069,
+            "mean_development_probability": 0.8578078949454939
+          },
+          {
+            "seconds": 0.009739750064909458,
+            "density_max": 0.562562821148552,
+            "particles_per_pixel": 143.3165117799353,
+            "mean_development_probability": 0.29908365955312893
+          },
+          {
+            "seconds": 0.012420957908034325,
+            "density_max": 0.5577533935891551,
+            "particles_per_pixel": 284.18255809873745,
+            "mean_development_probability": 0.04015892608370027
+          },
+          {
+            "seconds": 0.006192374974489212,
+            "density_max": 0.5363963283339527,
+            "particles_per_pixel": 65.51112294946635,
+            "mean_development_probability": 0.8659811877665095
+          },
+          {
+            "seconds": 0.008995584212243557,
+            "density_max": 0.6021641654536515,
+            "particles_per_pixel": 147.08695266920967,
+            "mean_development_probability": 0.27373478350332053
+          },
+          {
+            "seconds": 0.01379554090090096,
+            "density_max": 0.5889350358156824,
+            "particles_per_pixel": 287.71110839184615,
+            "mean_development_probability": 0.03619635131042859
+          },
+          {
+            "seconds": 0.009792541153728962,
+            "density_max": 0.5992304312414094,
+            "particles_per_pixel": 32.51020124491883,
+            "mean_development_probability": 0.7438735978437807
+          },
+          {
+            "seconds": 0.009011375019326806,
+            "density_max": 0.6801759648321146,
+            "particles_per_pixel": 73.80351980068399,
+            "mean_development_probability": 0.21359472815115993
+          },
+          {
+            "seconds": 0.008154042065143585,
+            "density_max": 0.6650149784866021,
+            "particles_per_pixel": 144.31690818302212,
+            "mean_development_probability": 0.03725750608006171
+          }
+        ],
+        "retained_buffers_after_node_before_release": [
+          {
+            "stage": "preprocess",
+            "buffers": {
+              "rgb_in": {
+                "bytes": 145443456,
+                "dtype": "float64"
+              },
+              "rgb_pre": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "filming.expose",
+            "buffers": {
+              "rgb_in": {
+                "bytes": 145443456,
+                "dtype": "float64"
+              },
+              "rgb_pre": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              },
+              "log_e_film": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "filming.develop",
+            "buffers": {
+              "rgb_in": {
+                "bytes": 145443456,
+                "dtype": "float64"
+              },
+              "rgb_pre": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              },
+              "log_e_film": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              },
+              "cmy_film": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "printing.expose",
+            "buffers": {
+              "rgb_in": {
+                "bytes": 145443456,
+                "dtype": "float64"
+              },
+              "rgb_pre": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              },
+              "log_e_film": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              },
+              "cmy_film": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              },
+              "log_e_print": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "printing.develop",
+            "buffers": {
+              "rgb_in": {
+                "bytes": 145443456,
+                "dtype": "float64"
+              },
+              "rgb_pre": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              },
+              "log_e_film": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              },
+              "cmy_film": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              },
+              "log_e_print": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              },
+              "cmy_print": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "scanning.scan_print",
+            "buffers": {
+              "rgb_in": {
+                "bytes": 145443456,
+                "dtype": "float64"
+              },
+              "rgb_pre": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              },
+              "log_e_film": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              },
+              "cmy_film": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              },
+              "log_e_print": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              },
+              "cmy_print": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              },
+              "rgb_out": {
+                "bytes": 72721728,
+                "dtype": "float32"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "scale": 1.0,
+        "repeat": 1,
+        "shape": [
+          4024,
+          6024,
+          3
+        ],
+        "megapixels": 24.240576,
+        "seconds": 28.492330416105688,
+        "timings": {
+          "preprocess": 0.6627377918921411,
+          "SpectralLUTService.get_filming_tc_lut": 2.450007013976574e-05,
+          "filming.expose": 7.294199417112395,
+          "filming.develop": 5.576225499855354,
+          "SpectralLUTService.spectral_compute_enlarger": 0.9923959171865135,
+          "printing.expose": 2.5186018750537187,
+          "printing.develop": 0.5901301659177989,
+          "SpectralLUTService.spectral_compute_scanner": 1.500670999987051,
+          "scanning.scan_print": 11.848553499905393
+        },
+        "grain_layers": [
+          {
+            "seconds": 0.1347397081553936,
+            "density_max": 0.5360294414048813,
+            "particles_per_pixel": 17.069620241845172,
+            "mean_development_probability": 0.8577660294302358
+          },
+          {
+            "seconds": 0.04636437492445111,
+            "density_max": 0.562562821148552,
+            "particles_per_pixel": 35.829127944983824,
+            "mean_development_probability": 0.2991348873354592
+          },
+          {
+            "seconds": 0.022331207990646362,
+            "density_max": 0.5577533935891551,
+            "particles_per_pixel": 71.04563952468436,
+            "mean_development_probability": 0.040172100607061625
+          },
+          {
+            "seconds": 0.054644082905724645,
+            "density_max": 0.5363963283339527,
+            "particles_per_pixel": 16.37778073736659,
+            "mean_development_probability": 0.8658174516642335
+          },
+          {
+            "seconds": 0.02975595905445516,
+            "density_max": 0.6021641654536515,
+            "particles_per_pixel": 36.771738167302416,
+            "mean_development_probability": 0.27387808765428834
+          },
+          {
+            "seconds": 0.023402791935950518,
+            "density_max": 0.5889350358156824,
+            "particles_per_pixel": 71.92777709796154,
+            "mean_development_probability": 0.036217677629084205
+          },
+          {
+            "seconds": 0.07466350006870925,
+            "density_max": 0.5992304312414094,
+            "particles_per_pixel": 8.127550311229708,
+            "mean_development_probability": 0.7434841780611234
+          },
+          {
+            "seconds": 0.08302700007334352,
+            "density_max": 0.6801759648321146,
+            "particles_per_pixel": 18.450879950170997,
+            "mean_development_probability": 0.2137336893469968
+          },
+          {
+            "seconds": 0.03478991612792015,
+            "density_max": 0.6650149784866021,
+            "particles_per_pixel": 36.07922704575553,
+            "mean_development_probability": 0.03727277382445382
+          }
+        ],
+        "retained_buffers_after_node_before_release": [
+          {
+            "stage": "preprocess",
+            "buffers": {
+              "rgb_in": {
+                "bytes": 581773824,
+                "dtype": "float64"
+              },
+              "rgb_pre": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "filming.expose",
+            "buffers": {
+              "rgb_in": {
+                "bytes": 581773824,
+                "dtype": "float64"
+              },
+              "rgb_pre": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "log_e_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "filming.develop",
+            "buffers": {
+              "rgb_in": {
+                "bytes": 581773824,
+                "dtype": "float64"
+              },
+              "rgb_pre": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "log_e_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "cmy_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "printing.expose",
+            "buffers": {
+              "rgb_in": {
+                "bytes": 581773824,
+                "dtype": "float64"
+              },
+              "rgb_pre": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "log_e_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "cmy_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "log_e_print": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "printing.develop",
+            "buffers": {
+              "rgb_in": {
+                "bytes": 581773824,
+                "dtype": "float64"
+              },
+              "rgb_pre": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "log_e_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "cmy_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "log_e_print": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "cmy_print": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "scanning.scan_print",
+            "buffers": {
+              "rgb_in": {
+                "bytes": 581773824,
+                "dtype": "float64"
+              },
+              "rgb_pre": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "log_e_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "cmy_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "log_e_print": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "cmy_print": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "rgb_out": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "raw_import_seconds": 1.5866182500030845,
+    "input_shape": [
+      4024,
+      6024,
+      3
+    ],
+    "import_dtype": "float64",
+    "retained_input_bytes": 581773824,
+    "warmup_seconds": 0.2137867920100689
+  },
+  "deterministic_validation": {
+    "raw": "/Users/em/Downloads/img/ILCE-7C.ARW",
+    "film": "kodak_vision3_50d",
+    "print": "kodak_2393",
+    "machine": "arm64",
+    "numba_threads": 8,
+    "gpu_requested": true,
+    "release_taps_experiment": true,
+    "float32_input_experiment": true,
+    "chunk_gamut_rows_experiment": 128,
+    "output_gamut_algorithm": "cam16ucs",
+    "gpu_available": false,
+    "runs": [],
+    "raw_import_seconds": 3.6841935000848025,
+    "input_shape": [
+      4024,
+      6024,
+      3
+    ],
+    "import_dtype": "float64",
+    "retained_input_bytes": 290886912,
+    "experiments_deterministic_output_identical": true,
+    "deterministic_validation_shape": [
+      252,
+      377,
+      3
+    ],
+    "warmup_seconds": 0.12504049995914102
+  },
+  "final_sequential_baseline": {
+    "raw": "/Users/em/Downloads/img/ILCE-7C.ARW",
+    "film": "kodak_vision3_50d",
+    "print": "kodak_2393",
+    "machine": "arm64",
+    "numba_threads": 8,
+    "gpu_requested": true,
+    "release_taps_experiment": false,
+    "float32_input_experiment": false,
+    "chunk_gamut_rows_experiment": 0,
+    "output_gamut_algorithm": "cam16ucs",
+    "gpu_available": true,
+    "runs": [
+      {
+        "scale": 1.0,
+        "repeat": 1,
+        "shape": [
+          4024,
+          6024,
+          3
+        ],
+        "megapixels": 24.240576,
+        "seconds": 20.029115250101313,
+        "timings": {
+          "preprocess": 0.3603107910603285,
+          "SpectralLUTService.get_filming_tc_lut": 2.1666986867785454e-05,
+          "filming.expose": 5.710846500005573,
+          "filming.develop": 4.918681291863322,
+          "SpectralLUTService.spectral_compute_enlarger": 0.7968430409673601,
+          "printing.expose": 1.3252110830508173,
+          "printing.develop": 0.5833685419056565,
+          "SpectralLUTService.spectral_compute_scanner": 0.8494892918970436,
+          "scanning.scan_print": 7.124869458843023
+        },
+        "grain_layers": [
+          {
+            "seconds": 0.07572045805864036,
+            "density_max": 0.5360294414048813,
+            "particles_per_pixel": 17.069620241845172,
+            "mean_development_probability": 0.8577660294302358
+          },
+          {
+            "seconds": 0.03441487508825958,
+            "density_max": 0.562562821148552,
+            "particles_per_pixel": 35.829127944983824,
+            "mean_development_probability": 0.2991348873354592
+          },
+          {
+            "seconds": 0.024296417133882642,
+            "density_max": 0.5577533935891551,
+            "particles_per_pixel": 71.04563952468436,
+            "mean_development_probability": 0.040172100607061625
+          },
+          {
+            "seconds": 0.05312525015324354,
+            "density_max": 0.5363963283339527,
+            "particles_per_pixel": 16.37778073736659,
+            "mean_development_probability": 0.8658174516642335
+          },
+          {
+            "seconds": 0.028085291851311922,
+            "density_max": 0.6021641654536515,
+            "particles_per_pixel": 36.771738167302416,
+            "mean_development_probability": 0.27387808765428834
+          },
+          {
+            "seconds": 0.02330549992620945,
+            "density_max": 0.5889350358156824,
+            "particles_per_pixel": 71.92777709796154,
+            "mean_development_probability": 0.036217677629084205
+          },
+          {
+            "seconds": 0.07476512482389808,
+            "density_max": 0.5992304312414094,
+            "particles_per_pixel": 8.127550311229708,
+            "mean_development_probability": 0.7434841780611234
+          },
+          {
+            "seconds": 0.0876884579192847,
+            "density_max": 0.6801759648321146,
+            "particles_per_pixel": 18.450879950170997,
+            "mean_development_probability": 0.2137336893469968
+          },
+          {
+            "seconds": 0.0322203750256449,
+            "density_max": 0.6650149784866021,
+            "particles_per_pixel": 36.07922704575553,
+            "mean_development_probability": 0.03727277382445382
+          }
+        ],
+        "retained_buffers_after_node_before_release": [
+          {
+            "stage": "preprocess",
+            "buffers": {
+              "rgb_in": {
+                "bytes": 581773824,
+                "dtype": "float64"
+              },
+              "rgb_pre": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "filming.expose",
+            "buffers": {
+              "rgb_in": {
+                "bytes": 581773824,
+                "dtype": "float64"
+              },
+              "rgb_pre": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "log_e_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "filming.develop",
+            "buffers": {
+              "rgb_in": {
+                "bytes": 581773824,
+                "dtype": "float64"
+              },
+              "rgb_pre": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "log_e_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "cmy_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "printing.expose",
+            "buffers": {
+              "rgb_in": {
+                "bytes": 581773824,
+                "dtype": "float64"
+              },
+              "rgb_pre": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "log_e_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "cmy_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "log_e_print": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "printing.develop",
+            "buffers": {
+              "rgb_in": {
+                "bytes": 581773824,
+                "dtype": "float64"
+              },
+              "rgb_pre": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "log_e_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "cmy_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "log_e_print": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "cmy_print": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "scanning.scan_print",
+            "buffers": {
+              "rgb_in": {
+                "bytes": 581773824,
+                "dtype": "float64"
+              },
+              "rgb_pre": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "log_e_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "cmy_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "log_e_print": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "cmy_print": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "rgb_out": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "raw_import_seconds": 1.5727282501757145,
+    "input_shape": [
+      4024,
+      6024,
+      3
+    ],
+    "import_dtype": "float64",
+    "retained_input_bytes": 581773824,
+    "warmup_seconds": 0.19087362522259355
+  },
+  "final_sequential_experiment": {
+    "raw": "/Users/em/Downloads/img/ILCE-7C.ARW",
+    "film": "kodak_vision3_50d",
+    "print": "kodak_2393",
+    "machine": "arm64",
+    "numba_threads": 8,
+    "gpu_requested": true,
+    "release_taps_experiment": true,
+    "float32_input_experiment": true,
+    "chunk_gamut_rows_experiment": 128,
+    "output_gamut_algorithm": "cam16ucs",
+    "gpu_available": true,
+    "runs": [
+      {
+        "scale": 1.0,
+        "repeat": 1,
+        "shape": [
+          4024,
+          6024,
+          3
+        ],
+        "megapixels": 24.240576,
+        "seconds": 17.61245141690597,
+        "timings": {
+          "preprocess": 0.359790249960497,
+          "SpectralLUTService.get_filming_tc_lut": 2.13750172406435e-05,
+          "filming.expose": 6.29316541692242,
+          "filming.develop": 4.119145166827366,
+          "SpectralLUTService.spectral_compute_enlarger": 0.7996172078419477,
+          "printing.expose": 1.283788917120546,
+          "printing.develop": 0.4357777500990778,
+          "SpectralLUTService.spectral_compute_scanner": 0.8621644580271095,
+          "scanning.scan_print": 5.1187474159523845
+        },
+        "grain_layers": [
+          {
+            "seconds": 0.18418400012888014,
+            "density_max": 0.5360294414048813,
+            "particles_per_pixel": 17.069620241845172,
+            "mean_development_probability": 0.8577660294302358
+          },
+          {
+            "seconds": 0.031714958837255836,
+            "density_max": 0.562562821148552,
+            "particles_per_pixel": 35.829127944983824,
+            "mean_development_probability": 0.2991348873354592
+          },
+          {
+            "seconds": 0.022975541884079576,
+            "density_max": 0.5577533935891551,
+            "particles_per_pixel": 71.04563952468436,
+            "mean_development_probability": 0.040172100607061625
+          },
+          {
+            "seconds": 0.05738008301705122,
+            "density_max": 0.5363963283339527,
+            "particles_per_pixel": 16.37778073736659,
+            "mean_development_probability": 0.8658174516642335
+          },
+          {
+            "seconds": 0.028190582990646362,
+            "density_max": 0.6021641654536515,
+            "particles_per_pixel": 36.771738167302416,
+            "mean_development_probability": 0.27387808765428834
+          },
+          {
+            "seconds": 0.0225512501783669,
+            "density_max": 0.5889350358156824,
+            "particles_per_pixel": 71.92777709796154,
+            "mean_development_probability": 0.036217677629084205
+          },
+          {
+            "seconds": 0.07767949998378754,
+            "density_max": 0.5992304312414094,
+            "particles_per_pixel": 8.127550311229708,
+            "mean_development_probability": 0.7434841780611234
+          },
+          {
+            "seconds": 0.08214095793664455,
+            "density_max": 0.6801759648321146,
+            "particles_per_pixel": 18.450879950170997,
+            "mean_development_probability": 0.2137336893469968
+          },
+          {
+            "seconds": 0.030953458044677973,
+            "density_max": 0.6650149784866021,
+            "particles_per_pixel": 36.07922704575553,
+            "mean_development_probability": 0.03727277382445382
+          }
+        ],
+        "retained_buffers_after_node_before_release": [
+          {
+            "stage": "preprocess",
+            "buffers": {
+              "rgb_in": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "rgb_pre": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "filming.expose",
+            "buffers": {
+              "rgb_pre": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "log_e_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "filming.develop",
+            "buffers": {
+              "log_e_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "cmy_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "printing.expose",
+            "buffers": {
+              "cmy_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "log_e_print": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "printing.develop",
+            "buffers": {
+              "log_e_print": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "cmy_print": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "scanning.scan_print",
+            "buffers": {
+              "cmy_print": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "rgb_out": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "raw_import_seconds": 1.585111916065216,
+    "input_shape": [
+      4024,
+      6024,
+      3
+    ],
+    "import_dtype": "float64",
+    "retained_input_bytes": 290886912,
+    "experiments_deterministic_output_identical": true,
+    "deterministic_validation_shape": [
+      252,
+      377,
+      3
+    ],
+    "warmup_seconds": 0.11141841695643961
+  },
+  "production_memory_changes": {
+    "raw": "/Users/em/Downloads/img/ILCE-7C.ARW",
+    "film": "kodak_vision3_50d",
+    "print": "kodak_2393",
+    "machine": "arm64",
+    "numba_threads": 8,
+    "gpu_requested": true,
+    "release_taps_experiment": false,
+    "float32_input_experiment": false,
+    "chunk_gamut_rows_experiment": 0,
+    "output_gamut_algorithm": "cam16ucs",
+    "gpu_available": true,
+    "runs": [
+      {
+        "scale": 1.0,
+        "repeat": 1,
+        "shape": [
+          4024,
+          6024,
+          3
+        ],
+        "megapixels": 24.240576,
+        "seconds": 18.587808500044048,
+        "timings": {
+          "preprocess": 0.4109930000267923,
+          "SpectralLUTService.get_filming_tc_lut": 2.3166881874203682e-05,
+          "filming.expose": 6.460846999892965,
+          "filming.develop": 4.777413458796218,
+          "SpectralLUTService.spectral_compute_enlarger": 0.8842434589751065,
+          "printing.expose": 1.3687652919907123,
+          "printing.develop": 0.39110799995251,
+          "SpectralLUTService.spectral_compute_scanner": 0.859274041838944,
+          "scanning.scan_print": 5.17623829189688
+        },
+        "grain_layers": [
+          {
+            "seconds": 0.12407308304682374,
+            "density_max": 0.5360294414048813,
+            "particles_per_pixel": 17.069620241845172,
+            "mean_development_probability": 0.8577660294302358
+          },
+          {
+            "seconds": 0.03213054104708135,
+            "density_max": 0.562562821148552,
+            "particles_per_pixel": 35.829127944983824,
+            "mean_development_probability": 0.2991348873354592
+          },
+          {
+            "seconds": 0.023483125027269125,
+            "density_max": 0.5577533935891551,
+            "particles_per_pixel": 71.04563952468436,
+            "mean_development_probability": 0.040172100607061625
+          },
+          {
+            "seconds": 0.05795779195614159,
+            "density_max": 0.5363963283339527,
+            "particles_per_pixel": 16.37778073736659,
+            "mean_development_probability": 0.8658174516642335
+          },
+          {
+            "seconds": 0.028804583940654993,
+            "density_max": 0.6021641654536515,
+            "particles_per_pixel": 36.771738167302416,
+            "mean_development_probability": 0.27387808765428834
+          },
+          {
+            "seconds": 0.02352666691876948,
+            "density_max": 0.5889350358156824,
+            "particles_per_pixel": 71.92777709796154,
+            "mean_development_probability": 0.036217677629084205
+          },
+          {
+            "seconds": 0.07287358399480581,
+            "density_max": 0.5992304312414094,
+            "particles_per_pixel": 8.127550311229708,
+            "mean_development_probability": 0.7434841780611234
+          },
+          {
+            "seconds": 0.0811841250397265,
+            "density_max": 0.6801759648321146,
+            "particles_per_pixel": 18.450879950170997,
+            "mean_development_probability": 0.2137336893469968
+          },
+          {
+            "seconds": 0.031101124826818705,
+            "density_max": 0.6650149784866021,
+            "particles_per_pixel": 36.07922704575553,
+            "mean_development_probability": 0.03727277382445382
+          }
+        ],
+        "retained_buffers_after_node_before_release": [
+          {
+            "stage": "preprocess",
+            "buffers": {
+              "rgb_in": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "rgb_pre": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "filming.expose",
+            "buffers": {
+              "rgb_pre": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "log_e_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "filming.develop",
+            "buffers": {
+              "log_e_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "cmy_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "printing.expose",
+            "buffers": {
+              "cmy_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "log_e_print": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "printing.develop",
+            "buffers": {
+              "log_e_print": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "cmy_print": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "scanning.scan_print",
+            "buffers": {
+              "cmy_print": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "rgb_out": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "scale": 1.0,
+        "repeat": 2,
+        "shape": [
+          4024,
+          6024,
+          3
+        ],
+        "megapixels": 24.240576,
+        "seconds": 16.39439724991098,
+        "timings": {
+          "preprocess": 0.8798949171323329,
+          "SpectralLUTService.get_filming_tc_lut": 5.1167095080018044e-05,
+          "filming.expose": 4.475563250016421,
+          "filming.develop": 4.172501750057563,
+          "SpectralLUTService.spectral_compute_enlarger": 0.9122184999287128,
+          "printing.expose": 1.3942362919915468,
+          "printing.develop": 0.5246057920157909,
+          "SpectralLUTService.spectral_compute_scanner": 0.882842083927244,
+          "scanning.scan_print": 4.9470889589283615
+        },
+        "grain_layers": [
+          {
+            "seconds": 0.1353925841394812,
+            "density_max": 0.5360294414048813,
+            "particles_per_pixel": 17.069620241845172,
+            "mean_development_probability": 0.8577660294302358
+          },
+          {
+            "seconds": 0.03333916701376438,
+            "density_max": 0.562562821148552,
+            "particles_per_pixel": 35.829127944983824,
+            "mean_development_probability": 0.2991348873354592
+          },
+          {
+            "seconds": 0.022010042099282146,
+            "density_max": 0.5577533935891551,
+            "particles_per_pixel": 71.04563952468436,
+            "mean_development_probability": 0.040172100607061625
+          },
+          {
+            "seconds": 0.0590739999897778,
+            "density_max": 0.5363963283339527,
+            "particles_per_pixel": 16.37778073736659,
+            "mean_development_probability": 0.8658174516642335
+          },
+          {
+            "seconds": 0.028561750194057822,
+            "density_max": 0.6021641654536515,
+            "particles_per_pixel": 36.771738167302416,
+            "mean_development_probability": 0.27387808765428834
+          },
+          {
+            "seconds": 0.02223520795814693,
+            "density_max": 0.5889350358156824,
+            "particles_per_pixel": 71.92777709796154,
+            "mean_development_probability": 0.036217677629084205
+          },
+          {
+            "seconds": 0.07990133296698332,
+            "density_max": 0.5992304312414094,
+            "particles_per_pixel": 8.127550311229708,
+            "mean_development_probability": 0.7434841780611234
+          },
+          {
+            "seconds": 0.08356458391062915,
+            "density_max": 0.6801759648321146,
+            "particles_per_pixel": 18.450879950170997,
+            "mean_development_probability": 0.2137336893469968
+          },
+          {
+            "seconds": 0.031303249998018146,
+            "density_max": 0.6650149784866021,
+            "particles_per_pixel": 36.07922704575553,
+            "mean_development_probability": 0.03727277382445382
+          }
+        ],
+        "retained_buffers_after_node_before_release": [
+          {
+            "stage": "preprocess",
+            "buffers": {
+              "rgb_in": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "rgb_pre": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "filming.expose",
+            "buffers": {
+              "rgb_pre": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "log_e_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "filming.develop",
+            "buffers": {
+              "log_e_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "cmy_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "printing.expose",
+            "buffers": {
+              "cmy_film": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "log_e_print": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "printing.develop",
+            "buffers": {
+              "log_e_print": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "cmy_print": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          },
+          {
+            "stage": "scanning.scan_print",
+            "buffers": {
+              "cmy_print": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              },
+              "rgb_out": {
+                "bytes": 290886912,
+                "dtype": "float32"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "raw_import_seconds": 2.2188714160583913,
+    "input_shape": [
+      4024,
+      6024,
+      3
+    ],
+    "import_dtype": "float32",
+    "retained_input_bytes": 290886912,
+    "warmup_seconds": 0.23834737506695092
+  }
+}

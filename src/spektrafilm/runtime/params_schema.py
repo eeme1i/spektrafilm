@@ -98,6 +98,9 @@ class GrainParams:
     blur_dye_clouds_um: float = 1.0
     micro_structure: tuple[float, float] = (0.2, 30)
     n_sub_layers: int = 1
+    # An explicit seed uses a local CPU RNG for repeatable particle sampling
+    # and microstructure. None preserves the existing still-image behaviour.
+    seed: int | None = None
 
 
 @dataclass

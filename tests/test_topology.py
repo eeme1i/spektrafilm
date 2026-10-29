@@ -6,8 +6,48 @@ dispatcher's invariants in isolation.
 from __future__ import annotations
 
 import pytest
+import weakref
+import numpy as np
 
 from spektrafilm.runtime.topology import Node, Tap, plan_topology, run_topology
+
+
+def test_releases_buffers_after_last_consumer():
+    refs = {}
+
+    def split(value):
+        shared, unused = np.ones(3), np.zeros(3)
+        refs.update(shared=weakref.ref(shared), unused=weakref.ref(unused))
+        return shared, unused
+
+    def first(shared):
+        assert refs['unused']() is None
+        return shared + 1
+
+    def last(shared, other):
+        assert refs['shared']() is shared
+        return shared + other
+
+    def finish(value):
+        assert refs['shared']() is None
+        return value
+
+    topology = [
+        Node(('in',), ('shared', 'unused'), split),
+        Node(('shared',), ('other',), first),
+        Node(('shared', 'other'), ('sum',), last),
+        Node(('sum',), ('out',), finish),
+    ]
+    np.testing.assert_array_equal(run_topology(topology, 'in', 'out', None), [3, 3, 3])
+
+
+def test_release_preserves_aliased_outputs_and_repeated_reads():
+    topology = [
+        Node(('in',), ('a', 'b'), lambda x: (x, x)),
+        Node(('a', 'a'), ('c',), lambda x, y: x + y),
+        Node(('b', 'c'), ('out',), lambda x, y: x + y),
+    ]
+    np.testing.assert_array_equal(run_topology(topology, 'in', 'out', np.ones(3)), [3, 3, 3])
 
 
 class TestNode:

@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import numpy as np
 import pytest
+from spektrafilm.utils import gamut_compression as gamut_module
 
 from spektrafilm.utils.gamut_compression import (
     InputGamutCompressSpec,
@@ -332,6 +333,44 @@ class TestCompressRgbAcesRgc:
 
 
 class TestCompressRgbDispatcher:
+    @pytest.mark.parametrize('algorithm', ['aces_rgc', 'oklch', 'oklrab', 'jzazbz', 'cam16ucs'])
+    @pytest.mark.parametrize('dtype', [np.float32, np.float64])
+    @pytest.mark.parametrize('layout', ['image', 'strided', 'batch'])
+    def test_blocks_match_whole_array(self, monkeypatch, algorithm, dtype, layout):
+        rgb = np.random.default_rng(42).uniform(-0.1, 1.3, (7, 11, 3)).astype(dtype)
+        if layout == 'strided':
+            rgb = rgb.transpose(1, 0, 2)[::2]
+        elif layout == 'batch':
+            rgb = rgb.reshape(1, 7, 11, 3)
+        original = rgb.copy()
+        spec = OutputGamutCompressSpec(algorithm=algorithm)
+        expected = compress_rgb(rgb, spec, output_color_space='sRGB')
+        monkeypatch.setattr(gamut_module, '_OUTPUT_GAMUT_BLOCK_PIXELS', 13)
+        actual = compress_rgb(rgb, spec, output_color_space='sRGB')
+        assert actual.shape == rgb.shape
+        assert actual.dtype == dtype
+        # Float32 CAM16 matrix/vector kernels can round differently with
+        # different batch sizes; allow only working-precision roundoff.
+        if dtype == np.float32 and algorithm == 'cam16ucs':
+            np.testing.assert_allclose(actual, expected, rtol=0, atol=5e-7)
+        else:
+            np.testing.assert_array_equal(actual, expected)
+        np.testing.assert_array_equal(rgb, original)
+
+    def test_blocks_bound_algorithm_input(self, monkeypatch):
+        sizes = []
+
+        def transform(rgb, **kwargs):
+            sizes.append(rgb.size // 3)
+            return rgb + 1
+
+        monkeypatch.setattr(gamut_module, '_OUTPUT_GAMUT_BLOCK_PIXELS', 13)
+        monkeypatch.setattr(gamut_module, 'compress_rgb_aces_rgc', transform)
+        rgb = np.zeros((7, 11, 3), dtype=np.float32)
+        np.testing.assert_array_equal(compress_rgb(rgb, OutputGamutCompressSpec(algorithm='aces_rgc')), rgb + 1)
+        assert sizes == [13, 13, 13, 13, 13, 12]
+        assert compress_rgb(rgb, OutputGamutCompressSpec(algorithm='off')) is rgb
+
     def test_inactive_identity(self):
         rgb = np.array([1.5, -0.1, -0.05])
         spec = OutputGamutCompressSpec(algorithm="off")

@@ -22,6 +22,7 @@ class FilmStocks(Enum):
     # fuji consumer
     fujifilm_c200 = 'fujifilm_c200'
     fujifilm_xtra_400 = 'fujifilm_xtra_400'
+    fujifilm_natura_1600 = 'fujifilm_natura_1600'
     # positive
     kodak_ektachrome_100 = 'kodak_ektachrome_100'
     kodak_kodachrome_64 = 'kodak_kodachrome_64'

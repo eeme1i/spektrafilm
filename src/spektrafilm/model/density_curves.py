@@ -80,17 +80,38 @@ def _interp_density_channel_layers_kernel(density, x_axis, inv_dx, y_layers, sig
 class DensityLayers:
     """Per-layer densities (x, y, layer, rgb) of ``density_cmy``, interpolated
     one (layer, channel) plane at a time so the full 4D array is never held.
+
+    Fitted sublayers supply proportions, while the parent curve supplies total
+    density. Normalize the small tables at their knots so linear interpolation
+    conserves density throughout the parent curve's range. Out-of-range inputs
+    retain endpoint clamping, as in ordinary density-curve interpolation.
     """
 
     def __init__(self, density_cmy, density_curves, density_curves_layers, positive_film=False):
         self._density_cmy = as_float_array(density_cmy)
         self.dtype = self._density_cmy.dtype
         self._sign = -1.0 if positive_film else 1.0
-        self._x_axes = np.ascontiguousarray((self._sign * np.asarray(density_curves, dtype=np.float64)).T)
+        parent = np.maximum(np.asarray(density_curves, dtype=np.float64), 0.0)
+        fitted = np.maximum(np.asarray(density_curves_layers, dtype=np.float64), 0.0)
+        total = fitted.sum(axis=1)
+        if np.any((parent > 0.0) & (total == 0.0)):
+            raise ValueError('Positive parent density requires nonzero fitted sublayer density')
+        scale = np.zeros_like(parent)
+        np.divide(parent, total, out=scale, where=total > 0.0)
+        corrected = fitted * scale[:, None, :]
+        self._y_layers = np.ascontiguousarray(np.transpose(corrected, (1, 2, 0)))
+        self._x_axes = np.ascontiguousarray((self._sign * parent).T)
+        # Digitized curves can have small shoulder/toe reversals. Density is
+        # the lookup coordinate, so order each channel's knots together with
+        # its sublayers before using searchsorted and endpoint clamping.
+        for channel in range(3):
+            order = np.argsort(self._x_axes[channel], kind='stable')
+            self._x_axes[channel] = self._x_axes[channel, order]
+            self._y_layers[:, channel] = self._y_layers[:, channel][:, order]
         dx = np.diff(self._x_axes, axis=1)
         self._inv_dx = np.zeros_like(dx)
         np.divide(1.0, dx, out=self._inv_dx, where=dx != 0)
-        self._y_layers = np.ascontiguousarray(np.transpose(density_curves_layers, (1, 2, 0)), dtype=np.float64)
+        self.density_max_layers = corrected.max(axis=0)
         self.shape = self._density_cmy.shape[0:2] + (3, 3)
 
     def layer(self, layer, channel):
